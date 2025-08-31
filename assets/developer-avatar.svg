@@ -1,0 +1,39 @@
+<!-- Developer Avatar SVG -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="url(#backgroundGradient)"/>
+  
+  <!-- Developer figure -->
+  <circle cx="100" cy="75" r="25" fill="#fdbcb4"/>
+  
+  <!-- Hair -->
+  <path d="M75 60 Q100 40 125 60 Q125 45 100 45 Q75 45 75 60" fill="#8b4513"/>
+  
+  <!-- Eyes -->
+  <circle cx="90" cy="70" r="2" fill="#333"/>
+  <circle cx="110" cy="70" r="2" fill="#333"/>
+  
+  <!-- Smile -->
+  <path d="M85 85 Q100 95 115 85" stroke="#333" stroke-width="2" fill="none"/>
+  
+  <!-- Body -->
+  <rect x="80" y="100" width="40" height="60" rx="10" fill="#4285f4"/>
+  
+  <!-- Arms -->
+  <rect x="60" y="110" width="20" height="8" rx="4" fill="#fdbcb4"/>
+  <rect x="120" y="110" width="20" height="8" rx="4" fill="#fdbcb4"/>
+  
+  <!-- Code symbols -->
+  <text x="50" y="40" font-family="monospace" font-size="14" fill="#667eea">&lt;/&gt;</text>
+  <text x="130" y="50" font-family="monospace" font-size="12" fill="#764ba2">{}</text>
+  <text x="40" y="170" font-family="monospace" font-size="10" fill="#4285f4">01101</text>
+  <text x="150" y="180" font-family="monospace" font-size="10" fill="#34a853">Code</text>
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.1"/>
+    </linearGradient>
+  </defs>
+</svg>

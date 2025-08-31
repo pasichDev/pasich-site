@@ -1,71 +1,388 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Сайт у розробці</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pasichDev - Android Розробник</title>
+    <meta
+      name="description"
+      content="pasichDev - досвідчений Android розробник. Створюю якісні мобільні додатки з сучасним дизайном. Портфоліо, навички та контакти."
+    />
+    <meta
+      name="keywords"
+      content="pasichDev, Android, розробка, GitHub, портфоліо, мобільні додатки"
+    />
+    <meta name="author" content="pasichDev" />
 
-  body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    text-align: center;
-  }
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="icon" type="image/png" href="assets/favicon.svg" />
 
-  .container {
-    animation: fadeIn 2s ease-out forwards;
-  }
+    <!-- Open Graph -->
+    <meta property="og:title" content="pasichDev - Android Розробник" />
+    <meta
+      property="og:description"
+      content="Досвідчений Android розробник. Створюю якісні мобільні додатки з сучасним дизайном."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pasichev.xyz/" />
+    <meta property="og:image" content="https://pasichdev.xyz/preview.png" />
 
-  h1 {
-    font-size: 3em;
-    margin: 0 0 20px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: linear-gradient(90deg, #ff6a00, #ee0979);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#home">
+          <i class="fas fa-code me-2"></i>pasichDev
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Головна</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">Про мене</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#skills">Навички</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#projects">Проекти</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Контакти</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-  p {
-    font-size: 1.2em;
-    margin: 0 0 30px;
-    color: #ccc;
-  }
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+      <div class="container">
+        <div class="row align-items-center min-vh-100">
+          <div class="col-lg-6">
+            <div class="hero-content">
+              <h1 class="display-4 fw-bold mb-4">Hello World!</h1>
+              <p class="lead mb-4">
+                Створюю якісні мобільні додатки з сучасним дизайном та зручним
+                інтерфейсом. Спеціалізуюся на Android розробці з використанням
+                Kotlin та Java.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="hero-image text-center">
+              <div class="developer-avatar">
+                <img
+                  src="assets/developer-avatar.svg"
+                  alt="pasichDev Avatar"
+                  class="avatar-img"
+                />
+              </div>
+              <div class="floating-elements">
+                <div class="floating-icon floating-icon-1">
+                  <i class="fab fa-android"></i>
+                </div>
+                <div class="floating-icon floating-icon-2">
+                  <i class="fab fa-kotlin"></i>
+                </div>
+                <div class="floating-icon floating-icon-3">
+                  <i class="fas fa-code"></i>
+                </div>
+                <div class="floating-icon floating-icon-4">
+                  <i class="fab fa-java"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  .loader {
-    border: 4px solid rgba(255,255,255,0.2);
-    border-top: 4px solid #fff;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin: 0 auto;
-    animation: spin 1s linear infinite;
-  }
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title text-center mb-5">Про мене</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="about-content text-center">
+              <div class="about-avatar mb-4">
+                <div class="avatar-circle">
+                  <img
+                    src="assets/developer-avatar.svg"
+                    alt="pasichDev Avatar"
+                    class="about_avatar-img"
+                  />
+                </div>
+              </div>
+              <h3 class="mb-3">pasichDev</h3>
+              <p class="lead mb-4">
+                Досвідчений розробник з фокусом на створенні якісних мобільних
+                та веб додатків. Спеціалізуюся на Flutter, Android розробці та
+                сучасних веб-технологіях.
+              </p>
+              <p class="mb-4">
+                Маю досвід роботи з повним циклом розробки - від ідеї до релізу
+                в магазинах додатків. Завжди слідкую за новими технологіями та
+                кращими практиками в розробці.
+              </p>
+              <div class="about-stats row text-center mt-5">
+                <div class="col-md-4 mb-3">
+                  <div class="stat-card">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Років досвіду</div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Проектів</div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3" id="contributions-card">
+                  <div class="stat-card">
+                    <div class="stat-number" id="contributions">0</div>
+                    <div class="stat-label" id="contributions-label">
+                      Внесків
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+    <!-- Skills Section -->
+    <section id="skills" class="py-5">
+      <div class="container">
+        <h2 class="section-title text-center mb-5">Мої Навички</h2>
+        <div class="skills-grid">
+          <!-- Mobile Development -->
+          <div class="skill-category">
+            <div class="skill-category-title">
+              <div class="skill-category-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <span>Мобільна Розробка</span>
+            </div>
+            <div class="skills-list">
+              <span class="skill-tag">Flutter</span>
+              <span class="skill-tag">Dart</span>
+              <span class="skill-tag">Android</span>
+              <span class="skill-tag">Kotlin</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">Jetpack Compose</span>
+            </div>
+          </div>
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-</style>
-</head>
-<body>
-  <div class="container">
-    <h1>Сайт у розробці</h1>
-    <p>Щось круте готується. Повертайся трохи пізніше 🚀</p>
-    <div class="loader"></div>
-  </div>
-</body>
+          <!-- Backend & CLI -->
+          <div class="skill-category">
+            <div class="skill-category-title">
+              <div class="skill-category-icon">
+                <i class="fas fa-server"></i>
+              </div>
+              <span>Backend & CLI</span>
+            </div>
+            <div class="skills-list">
+              <span class="skill-tag">Dart CLI</span>
+              <span class="skill-tag">Go</span>
+              <span class="skill-tag">PHP</span>
+              <span class="skill-tag">REST API</span>
+              <span class="skill-tag">gRPC</span>
+              <span class="skill-tag">WebSocket</span>
+              <span class="skill-tag">TCP/UDP</span>
+            </div>
+          </div>
+
+          <!-- Web Development -->
+          <div class="skill-category">
+            <div class="skill-category-title">
+              <div class="skill-category-icon">
+                <i class="fas fa-globe"></i>
+              </div>
+              <span>Веб Розробка</span>
+            </div>
+            <div class="skills-list">
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">Vue.js</span>
+              <span class="skill-tag">Svelte</span>
+              <span class="skill-tag">Wails</span>
+              <span class="skill-tag">HTML/CSS</span>
+            </div>
+          </div>
+
+          <!-- Tools & Other -->
+          <div class="skill-category">
+            <div class="skill-category-title">
+              <div class="skill-category-icon">
+                <i class="fas fa-tools"></i>
+              </div>
+              <span>Інструменти та Інше</span>
+            </div>
+            <div class="skills-list">
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">GitHub Actions CI/CD</span>
+              <span class="skill-tag">SQL</span>
+              <span class="skill-tag">C++</span>
+              <span class="skill-tag">Linux</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title text-center mb-5">Мої Проекти</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="project-card">
+              <div class="row align-items-center">
+                <div class="col-md-4">
+                  <div class="project-image">
+                    <div class="project-logo">
+                      <img
+                        src="assets/mynotes.svg"
+                        alt="My Notes Logo"
+                        class="img-fluid"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="project-content">
+                    <h3>My Notes</h3>
+                    <p class="text-muted mb-3">
+                      Простий та зручний додаток для зберігання нотаток з
+                      підтримкою тегів, пошуку та резервного копіювання даних.
+                      Розроблений з акцентом на зручність та безпеку.
+                    </p>
+
+                    <div class="project-stats mb-3">
+                      <div class="stat-item">
+                        <i class="fas fa-download text-primary"></i>
+                        <span>10 тис.+ завантажень</span>
+                      </div>
+                      <div class="stat-item">
+                        <i class="fas fa-star text-warning"></i>
+                        <span>4,6 рейтинг</span>
+                      </div>
+                      <div class="stat-item">
+                        <i class="fas fa-shield-alt text-success"></i>
+                        <span>100% приватність</span>
+                      </div>
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                      <a href="#" class="btn btn-primary rounded-4">
+                        <i class="fas fa-globe me-2"></i>Відвідати сайт
+                      </a>
+                      <a
+                        href="https://play.google.com/store/apps/details?id=com.pasich.mynotes"
+                        target="_blank"
+                        class="btn btn-success rounded-4"
+                      >
+                        <i class="fab fa-google-play me-2"></i>Google Play
+                      </a>
+                      <a
+                        href="https://github.com/pasichDev/MyNotes"
+                        target="_blank"
+                        class="btn btn-outline-secondary rounded-4"
+                      >
+                        <i class="fab fa-github me-2"></i>GitHub
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+      <div class="container">
+        <h2 class="section-title text-center mb-5">Зв'язатися зі мною</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="contact-card">
+                  <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <h4>Email</h4>
+                  <p>pasichdev@gmail.com</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="contact-card">
+                  <div class="contact-icon">
+                    <i class="fab fa-github"></i>
+                  </div>
+                  <h4>GitHub</h4>
+                  <a href="https://github.com/pasichDev" target="_blank"
+                    >@pasichDev</a
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="contact-card">
+                  <div class="contact-icon">
+                    <i class="fab fa-telegram"></i>
+                  </div>
+                  <h4>Telegram</h4>
+                  <p>@pasichdev</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="contact-card">
+                  <div class="contact-icon">
+                    <i class="fab fa-linkedin"></i>
+                  </div>
+                  <h4>LinkedIn</h4>
+                  <p>pasichDeveloper</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container text-center">
+        <p>&copy; 2025 pasichDev. Всі права захищені.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/script.js"></script>
+    <script src="assets/github_parse.js"></script>
+  </body>
 </html>
