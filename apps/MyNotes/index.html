@@ -3,88 +3,329 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Сайт у розробці</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+    <title>My Notes - Простий додаток для нотаток</title>
+    <meta
+      name="description"
+      content="My Notes - простий та зручний додаток для зберігання ваших нотаток та важливих деталей. Доступний в Google Play Store."
+    />
+    <meta
+      name="keywords"
+      content="нотатки, заметки, notes app, Android додаток, організація, productivity, мобільний додаток, записи, ідеї, планування, категорії, пошук, резервне копіювання, безкоштовний додаток, нотатник, органайзер, планер, todo, завдання, списки, синхронізація, зберігання даних, приватність, офлайн нотатки, текстовий редактор, замітки Android, note taking, productivity app, simple notes, memo app, digital notebook, task manager, list maker, reminder app, note organizer, quick notes, voice notes, text notes, daily planner, personal organizer, студентські нотатки, робочі нотатки, ділові нотатки"
+    />
+    <meta name="author" content="pasichDev" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Ukrainian" />
+    <meta name="category" content="Mobile Apps, Productivity, Tools" />
+    <meta name="classification" content="Android Application" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="application-name" content="My Notes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="My Notes" />
 
-      body {
-        margin: 0;
-        font-family: "Roboto", sans-serif;
-        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: hidden;
-        text-align: center;
-      }
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.ico" />
+    <link rel="icon" type="image/png" href="assets/favicon.svg" />
 
-      .container {
-        animation: fadeIn 2s ease-out forwards;
-      }
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="My Notes - Простий додаток для нотаток"
+    />
+    <meta
+      property="og:description"
+      content="Простий та зручний додаток для зберігання нотаток з категоріями, пошуком та резервним копіюванням."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://pasichdev.github.io/pasich-site/apps/MyNotes/"
+    />
+    <meta property="og:site_name" content="My Notes App" />
+    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="og:locale:alternate" content="en_US" />
 
-      h1 {
-        font-size: 3em;
-        margin: 0 0 20px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        background: linear-gradient(90deg, #ff6a00, #ee0979);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
+    <!-- App Store / Google Play -->
+    <meta name="google-play-app" content="app-id=com.pasich.mynotes" />
+    <meta name="apple-itunes-app" content="app-id=com.pasich.mynotes" />
 
-      p {
-        font-size: 1.2em;
-        margin: 0 0 30px;
-        color: #ccc;
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/style.css" rel="stylesheet" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "My Notes",
+        "alternateName": "Мої Нотатки",
+        "description": "Простий та зручний додаток для зберігання нотаток, ідей та важливих деталей з категоріями, пошуком та резервним копіюванням.",
+        "applicationCategory": "NoteTakingApplication",
+        "operatingSystem": "Android",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.6",
+          "ratingCount": "250"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "pasichDev"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "pasichDev"
+        },
+        "datePublished": "2025-08-01",
+        "inLanguage": "uk",
+        "url": "https://mynotes.pasichdev.xyz/",
+        "downloadUrl": "https://play.google.com/store/apps/details?id=com.pasich.mynotes",
+        "featureList": [
+          "Простота використання",
+          "Категорії для організації",
+          "Швидкий пошук",
+          "Резервне копіювання",
+          "Сучасний дизайн",
+          "Повна приватність"
+        ]
       }
-
-      .loader {
-        border: 4px solid rgba(255, 255, 255, 0.2);
-        border-top: 4px solid #fff;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        margin: 0 auto;
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    </style>
+    </script>
   </head>
   <body>
-    <div class="container">
-      <h1>Сайт у розробці</h1>
-      <p>Щось круте готується. Повертайся трохи пізніше 🚀</p>
-      <div class="loader"></div>
-    </div>
+    <!-- Navigation -->
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#home">
+          <img
+            src="../../assets/mynotes.svg"
+            alt="My Notes"
+            class="navbar-icon me-2"
+            width="32"
+            height="32"
+          />My Notes
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Головна</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#features">Можливості</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="privacy-policy.html"
+                >Політика конфіденційності</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-    <script>
-      window.va =
-        window.va ||
-        function () {
-          (window.vaq = window.vaq || []).push(arguments);
-        };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+      <div class="container">
+        <div class="row align-items-center min-vh-100">
+          <div class="col-lg-6 order-2 order-lg-1">
+            <div class="hero-content">
+              <h1 class="display-4 fw-bold mb-4">
+                <span class="text-primary">My Notes</span><br />
+                Ваші ідеї завжди з вами
+              </h1>
+              <p class="lead mb-4">
+                Простий та зручний додаток для зберігання нотаток, ідей та
+                важливих деталей. Організуйте свої думки з категоріями, швидким
+                пошуком та надійним резервним копіюванням.
+              </p>
+              <div class="d-flex gap-3 flex-wrap">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.pasich.mynotes"
+                  target="_blank"
+                  class="btn btn-primary btn-lg"
+                >
+                  <i class="fab fa-google-play me-2"></i>Завантажити з Google
+                  Play
+                </a>
+                <a href="#features" class="btn btn-outline-primary btn-lg">
+                  <i class="fas fa-info-circle me-2"></i>Дізнатися більше
+                </a>
+              </div>
+              <div class="hero-badges mt-4">
+                <span class="badge bg-success me-2">
+                  <i class="fas fa-star me-1"></i>Безкоштовно
+                </span>
+                <span class="badge bg-info me-2">
+                  <i class="fas fa-shield-alt me-1"></i>Безпечно
+                </span>
+                <span class="badge bg-warning text-dark">
+                  <i class="fas fa-mobile-alt me-1"></i>Android
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 order-1 order-lg-2">
+            <div class="hero-app-icon">
+              <div class="app-icon-container">
+                <img
+                  src="../../assets/mynotes.svg"
+                  alt="MyNotes"
+                  class="app-icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title text-center mb-5">Чому обрати My Notes?</h2>
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon">
+                <i class="fas fa-pencil-alt"></i>
+              </div>
+              <h4>Простота використання</h4>
+              <p>
+                Інтуїтивний інтерфейс дозволяє швидко створювати та редагувати
+                нотатки без зайвих кроків.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon">
+                <i class="fas fa-tags"></i>
+              </div>
+              <h4>Теги</h4>
+              <p>
+                Організуйте нотатки за категоріями для швидкого знаходження
+                потрібної інформації.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon">
+                <i class="fas fa-search"></i>
+              </div>
+              <h4>Швидкий пошук</h4>
+              <p>
+                Миттєво знаходьте потрібні нотатки за допомогою потужної функції
+                пошуку.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+              </div>
+              <h4>Резервне копіювання</h4>
+              <p>
+                Ваші дані завжди в безпеці завдяки функції резервного копіювання
+                та відновлення.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon">
+                <i class="fas fa-palette"></i>
+              </div>
+              <h4>Сучасний дизайн</h4>
+              <p>
+                Красивий Material Design інтерфейс, який приємно використовувати
+                щодня.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon">
+                <i class="fas fa-lock"></i>
+              </div>
+              <h4>Приватність</h4>
+              <p>
+                Ваші нотатки зберігаються локально на пристрої. Повна
+                конфіденційність гарантована.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="py-5 bg-primary text-white">
+      <div class="container text-center">
+        <h2 class="mb-4">Готові почати?</h2>
+        <p class="lead mb-4">
+          Завантажте My Notes зараз та організуйте свої ідеї!
+        </p>
+        <a
+          href="https://play.google.com/store/apps/details?id=com.pasich.mynotes"
+          target="_blank"
+          class="btn btn-light btn-lg"
+        >
+          <i class="fab fa-google-play me-2"></i>Завантажити безкоштовно
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <p class="mb-0">
+              &copy; 2025 My Notes. Розроблено
+              <a href="https://pasichdev.xyz" class="text-primary">pasichDev</a>
+            </p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="privacy-policy.html" class="text-light me-3"
+              >Політика конфіденційності</a
+            >
+            <a
+              href="https://github.com/pasichDev/MyNotes"
+              target="_blank"
+              class="text-light"
+            >
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/script.js"></script>
   </body>
 </html>

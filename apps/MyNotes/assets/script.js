@@ -6,11 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateActiveNav() {
         let current = '';
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
         
         sections.forEach(section => {
-            const sectionTop = section.offsetTop;
+            const sectionTop = section.offsetTop - navbarHeight;
             const sectionHeight = section.clientHeight;
-            if (scrollY >= (sectionTop - 200)) {
+            if (scrollY >= (sectionTop - 100)) {
                 current = section.getAttribute('id');
             }
         });
@@ -53,27 +54,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbarCollapse = document.querySelector('.navbar-collapse');
     
     navLinks2.forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
             if (navbarCollapse.classList.contains('show')) {
                 const bsCollapse = new bootstrap.Collapse(navbarCollapse);
                 bsCollapse.hide();
             }
+            
+            // Прибираємо smooth scroll і додаємо власну логіку
+            const targetId = link.getAttribute('href');
+            if (targetId.startsWith('#')) {
+                e.preventDefault();
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = targetElement.offsetTop - navbarHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'auto' // Прибираємо smooth
+                    });
+                }
+            }
         });
     });
 
-    // Enhanced phone mockup animations
-    const phoneNotes = document.querySelectorAll('.note-item');
-    
-    // Restart note animations every 10 seconds
-    setInterval(() => {
-        phoneNotes.forEach((note, index) => {
-            note.style.animation = 'none';
-            setTimeout(() => {
-                note.style.animation = `slideInNote 0.6s ease forwards`;
-                note.style.animationDelay = `${index * 0.2}s`;
-            }, 100);
+    // Enhanced app icon animation
+    const appIcon = document.querySelector('.app-icon-container');
+    if (appIcon) {
+        appIcon.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) rotate(5deg)';
         });
-    }, 10000);
+        
+        appIcon.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0deg)';
+        });
+    }
 
     // Add interactive hover effects to feature cards
     featureCards.forEach(card => {
@@ -105,41 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     }
 
-    // Add parallax effect to hero section
-    let ticking = false;
-    
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        const heroSection = document.querySelector('.hero-section');
-        
-        if (heroSection) {
-            const speed = scrolled * 0.1;
-            heroSection.style.transform = `translateY(${speed}px)`;
-        }
-        
-        ticking = false;
-    }
-
-    function requestParallaxUpdate() {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    }
-
-    window.addEventListener('scroll', requestParallaxUpdate);
-
     // Add loading state management
     window.addEventListener('load', function() {
         document.body.classList.add('loaded');
-        
-        // Trigger phone animation after load
-        setTimeout(() => {
-            const phoneNotes = document.querySelectorAll('.note-item');
-            phoneNotes.forEach((note, index) => {
-                note.style.animationDelay = `${index * 0.2 + 1}s`;
-            });
-        }, 500);
     });
 
     // Feature icon rotation animation
@@ -148,19 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
         icon.style.transition = 'transform 0.3s ease';
     });
 
-    // Add intersection observer for phone mockup
-    const phoneMockup = document.querySelector('.phone-mockup');
-    if (phoneMockup) {
-        const phoneObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        phoneObserver.observe(phoneMockup);
-    }
 });
 
 // Add custom CSS for animations
@@ -182,20 +151,12 @@ document.addEventListener('DOMContentLoaded', function() {
             animation-play-state: running;
         }
         
-        .phone-mockup.visible {
-            animation-duration: 6s;
-        }
-        
-        .phone-mockup.visible .note-item {
-            animation-play-state: running;
-        }
-        
         .navbar-nav .nav-link.active {
             color: var(--primary-color) !important;
             font-weight: 600;
         }
         
-        .feature-icon {
+        .app-icon-container {
             transition: transform 0.3s ease;
         }
         
