@@ -15,8 +15,20 @@
     <meta name="author" content="pasichDev" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="icon" type="image/png" href="assets/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/assets/site.webmanifest" />
 
     <!-- Open Graph -->
     <meta property="og:title" content="pasichDev - Android Розробник" />
@@ -103,7 +115,7 @@
                   <i class="fab fa-android"></i>
                 </div>
                 <div class="floating-icon floating-icon-2">
-                  <i class="fab fa-kotlin"></i>
+                  <i class="fab fa-golang"></i>
                 </div>
                 <div class="floating-icon floating-icon-3">
                   <i class="fas fa-code"></i>
@@ -331,44 +343,86 @@
       <div class="container">
         <h2 class="section-title text-center mb-5">Зв'язатися зі мною</h2>
         <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="row g-4">
+          <div class="col-lg-10">
+            <!-- Статус доступності -->
+            <div class="text-center mb-5">
+              <div class="availability-badge">
+                <i class="fas fa-circle text-success me-2"></i>
+                <span class="fw-bold">Відкритий до нових проектів</span>
+              </div>
+              <p class="text-muted mt-2">
+                Відповідаю протягом 24 годин • UTC+2, Україна
+              </p>
+            </div>
+
+            <!-- Основні контакти -->
+            <div class="row g-4 mb-5">
               <div class="col-md-6">
-                <div class="contact-card">
-                  <div class="contact-icon">
-                    <i class="fas fa-envelope"></i>
+                <a href="mailto:pasichdev@gmail.com" class="contact-card-link">
+                  <div class="contact-card">
+                    <div class="contact-icon email-icon">
+                      <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Email</h4>
+                    <p>pasichdev@gmail.com</p>
+                    <small class="text-muted">Для бізнес-пропозицій</small>
                   </div>
-                  <h4>Email</h4>
-                  <p>pasichdev@gmail.com</p>
-                </div>
+                </a>
               </div>
               <div class="col-md-6">
-                <div class="contact-card">
-                  <div class="contact-icon">
-                    <i class="fab fa-github"></i>
+                <a
+                  href="https://t.me/pasichdev"
+                  target="_blank"
+                  class="contact-card-link"
+                >
+                  <div class="contact-card">
+                    <div class="contact-icon telegram-icon">
+                      <i class="fab fa-telegram"></i>
+                    </div>
+                    <h4>Telegram</h4>
+                    <p>@pasichdev</p>
+                    <small class="text-muted">Швидкий зв'язок</small>
                   </div>
-                  <h4>GitHub</h4>
-                  <a href="https://github.com/pasichDev" target="_blank"
-                    >@pasichDev</a
+                </a>
+              </div>
+            </div>
+
+            <!-- Соціальні мережі -->
+            <div class="social-section">
+              <h3 class="text-center mb-4">Соціальні мережі</h3>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <a
+                    href="https://github.com/pasichDev"
+                    target="_blank"
+                    class="contact-card-link"
                   >
+                    <div class="contact-card social-card">
+                      <div class="contact-icon github-icon">
+                        <i class="fab fa-github"></i>
+                      </div>
+                      <h5>GitHub</h5>
+                      <p>@pasichDev</p>
+                      <small class="text-muted">Мої проекти та код</small>
+                    </div>
+                  </a>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="contact-card">
-                  <div class="contact-icon">
-                    <i class="fab fa-telegram"></i>
-                  </div>
-                  <h4>Telegram</h4>
-                  <p>@pasichdev</p>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="contact-card">
-                  <div class="contact-icon">
-                    <i class="fab fa-linkedin"></i>
-                  </div>
-                  <h4>LinkedIn</h4>
-                  <p>pasichDeveloper</p>
+
+                <div class="col-md-6">
+                  <a
+                    href="https://instagram.com/pasichdev"
+                    target="_blank"
+                    class="contact-card-link"
+                  >
+                    <div class="contact-card social-card">
+                      <div class="contact-icon instagram-icon">
+                        <i class="fab fa-instagram"></i>
+                      </div>
+                      <h5>Instagram</h5>
+                      <p>@pasichdev</p>
+                      <small class="text-muted">Життя розробника</small>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>

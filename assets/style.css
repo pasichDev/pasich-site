@@ -464,7 +464,7 @@ html {
 }
 
 .contact-card:nth-child(1) .contact-icon {
-  background: linear-gradient(45deg, #ea4335, #fbbc04);
+  background: linear-gradient(45deg, #7a89e2, #125785);
   color: white;
 }
 
@@ -621,6 +621,36 @@ html {
   .section-title {
     font-size: 1.8rem;
   }
+
+  /* Contact Section Mobile */
+  .availability-badge {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .social-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  .social-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-card {
+    padding: 1.5rem;
+  }
+
+  .social-card {
+    padding: 1.2rem;
+  }
+
+  .contact-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 576px) {
@@ -671,6 +701,44 @@ html {
   .project-icon {
     font-size: 2.5rem;
   }
+
+  /* Contact Section Mobile Small */
+  .availability-badge {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
+  }
+
+  .social-section h3 {
+    font-size: 1.3rem;
+  }
+
+  .contact-card {
+    padding: 1.2rem;
+  }
+
+  .social-card {
+    padding: 1rem;
+  }
+
+  .contact-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .contact-card h4 {
+    font-size: 1.1rem;
+  }
+
+  .contact-card h5 {
+    font-size: 1rem;
+  }
+
+  .contact-card p,
+  .contact-card small {
+    font-size: 0.85rem;
+  }
 }
 
 /* Animation for sections */
@@ -710,6 +778,15 @@ html {
 /* Footer */
 footer {
   margin-top: 0;
+}
+
+/* Utility classes */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
 }
 
 /* Project Card */
@@ -792,27 +869,141 @@ footer {
   font-size: 1rem;
 }
 
+/* Contact Section Improvements */
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  border: 1px solid rgba(40, 167, 69, 0.2);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+  }
+}
+
+.social-section {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid #eee;
+}
+
+.social-section h3 {
+  color: var(--dark-color);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
 /* Contact Cards */
+.contact-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.contact-card-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
 .contact-card {
   background: white;
   padding: 2rem;
   border-radius: 15px;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
   border: 1px solid #eee;
   height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.contact-card:hover::before {
+  transform: scaleX(1);
 }
 
 .contact-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.social-card {
+  padding: 1.5rem;
+}
+
+.social-card h5 {
+  color: var(--dark-color);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .contact-icon {
   font-size: 2.5rem;
-  color: var(--primary-color);
   margin-bottom: 1rem;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  margin: 0 auto 1rem;
+  transition: transform 0.3s ease;
+}
+
+.contact-card:hover .contact-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Specific icon colors */
+.email-icon {
+  background: linear-gradient(135deg, #ea4335, #fbbc04);
+  color: white;
+}
+
+.telegram-icon {
+  background: linear-gradient(135deg, #0088cc, #229ed9);
+  color: white;
+}
+
+.github-icon {
+  background: linear-gradient(135deg, #333, #24292e);
+  color: white;
+}
+
+.discord-icon {
+  background: linear-gradient(135deg, #5865f2, #7289da);
+  color: white;
+}
+
+.instagram-icon {
+  background: linear-gradient(135deg, #e4405f, #fd1d1d, #fcb045);
+  color: white;
 }
 
 .contact-card h4 {
@@ -826,6 +1017,13 @@ footer {
   color: var(--secondary-color);
   text-decoration: none;
   font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-card small {
+  color: #888;
+  font-size: 0.8rem;
+  font-style: italic;
 }
 
 .contact-card a:hover {
