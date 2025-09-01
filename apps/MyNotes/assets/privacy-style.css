@@ -21,7 +21,7 @@ body {
   font-family: "Google Sans", "Roboto", -apple-system, sans-serif;
   line-height: 1.7;
   color: #333;
-  padding-top: 76px;
+  padding-top: 0;
 }
 
 html {
@@ -32,6 +32,7 @@ html {
 .navbar {
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.95) !important;
+  min-height: 56px;
 }
 
 .navbar-brand {
@@ -48,6 +49,15 @@ html {
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active {
   color: var(--primary-color) !important;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
 }
 
 /* Privacy Hero Section */
@@ -466,8 +476,29 @@ html {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .privacy-hero {
+    margin-top: 56px; /* Зменшена висота навбару для мобільних */
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .privacy-hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .privacy-hero .lead {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
   .privacy-content {
     padding: 2rem;
+    margin: 1rem;
   }
 
   .privacy-point {
@@ -528,23 +559,20 @@ html {
     margin-right: 0;
     margin-bottom: 1rem;
   }
-
-  .privacy-hero {
-    padding: 3rem 0;
-    text-align: center;
-  }
-
-  .privacy-hero h1 {
-    font-size: 2.2rem;
-  }
-
-  .privacy-hero .lead {
-    font-size: 1rem;
-  }
 }
 
 @media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem;
+  }
+
   .privacy-hero {
+    margin-top: 56px;
     padding: 2rem 0;
   }
 
@@ -554,7 +582,7 @@ html {
   }
 
   .privacy-hero .lead {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     margin-bottom: 1.5rem;
   }
 
@@ -562,17 +590,20 @@ html {
     display: block;
     margin: 0.5rem auto;
     width: fit-content;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     padding: 0.5rem 1rem;
   }
 
   .privacy-content {
     padding: 1.5rem;
-    margin: 1rem;
+    margin: 0.5rem;
+    border-radius: 15px;
   }
 
   .privacy-point {
     padding: 1.5rem;
+    border-radius: 15px;
+    margin-bottom: 1rem;
   }
 
   .point-icon {
@@ -583,6 +614,11 @@ html {
     font-size: 1.1rem;
   }
 
+  .section-header {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
   .section-header h3 {
     font-size: 1.2rem;
   }
@@ -590,6 +626,7 @@ html {
   .security-feature {
     padding: 1.2rem;
     margin-bottom: 1rem;
+    border-radius: 12px;
   }
 
   .security-feature i {
@@ -611,10 +648,12 @@ html {
   .permission-item {
     padding: 1.2rem;
     margin-bottom: 1rem;
+    border-radius: 12px;
   }
 
   .no-sharing-notice {
     padding: 1.5rem;
+    border-radius: 12px;
   }
 
   .trust-features {
@@ -626,6 +665,102 @@ html {
   .trust-item {
     width: 100%;
     max-width: 200px;
+  }
+
+  .trust-item i {
+    font-size: 1.8rem;
+  }
+
+  .contact-info {
+    padding: 1.2rem;
+    border-radius: 12px;
+  }
+
+  .contact-item {
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+
+  /* Покращення читабельності тексту */
+  .policy-section p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .data-content p,
+  .storage-item p,
+  .permission-content p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra small devices (менше 400px) */
+@media (max-width: 400px) {
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .privacy-hero {
+    margin-top: 56px;
+    padding: 1.5rem 0;
+  }
+
+  .privacy-hero h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .privacy-hero .lead {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .privacy-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .privacy-badges .badge {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+    margin: 0.3rem auto;
+  }
+
+  .privacy-content {
+    padding: 1rem;
+    margin: 0.25rem;
+  }
+
+  .privacy-point {
+    padding: 1.2rem;
+  }
+
+  .point-icon {
+    font-size: 2.2rem;
+  }
+
+  .privacy-point h4 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-header {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .policy-section {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
 
