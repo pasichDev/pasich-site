@@ -1,0 +1,46 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://pasichdev.xyz/sitemap.xml
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Disallow crawling of potential sensitive files
+Disallow: /*.json$
+Disallow: /.*
+Disallow: /*?*
+
+# Allow specific assets
+Allow: /assets/
+Allow: /apps/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.svg
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.ico
+Allow: /*.webp
+Allow: /*.webmanifest
+
+# Crawl delay for all bots (in seconds)
+Crawl-delay: 1
