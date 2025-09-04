@@ -15,11 +15,11 @@
           document.getElementById("contributions").textContent = `${total}`;
           document.getElementById(
             "contributions-label"
-          ).textContent = `Внесків у ${year} році`;
+          ).textContent = `Contributions per ${year} year`;
         })
         .catch((err) => {
           document.getElementById("contributions").textContent =
-            "Помилка завантаження 😢";
+            "Download error";
           document.getElementById("contributions-card").style.display = "none";
           console.error(err);
         });
