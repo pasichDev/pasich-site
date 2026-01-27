@@ -6,8 +6,8 @@ Sitemap: https://pasichdev.xyz/sitemap.xml
 Disallow: /*.json$
 
 # Allow assets
+Allow: /_assets/
 Allow: /assets/
-Allow: /apps/
 Allow: /*.css
 Allow: /*.js
 Allow: /*.svg

@@ -1,0 +1,39 @@
+---
+export interface Props {
+  icon: string;
+  title: string;
+  description: string;
+  tags: string[];
+  href: string;
+}
+
+const { icon, title, description, tags, href } = Astro.props;
+---
+
+<div class="project-card card" style="position: relative; overflow: hidden;">
+  <div class="arrow-icon" style="position: absolute; top: 1.5rem; right: 1.5rem; opacity: 0; transition: opacity 0.3s;">
+    <iconify-icon icon="solar:arrow-right-up-linear" style="color: white;"></iconify-icon>
+  </div>
+  
+  <div class="icon-container mb-6">
+    <iconify-icon icon={icon} width="20"></iconify-icon>
+  </div>
+  
+  <h3 class="text-lg font-medium text-accent mb-2">{title}</h3>
+  
+  <p class="text-sm text-dim mb-6 leading-relaxed">{description}</p>
+  
+  <div class="flex flex-wrap gap-2">
+    {tags.map((tag) => (
+      <span class="tag">{tag}</span>
+    ))}
+  </div>
+  
+  <a href={href} target="_blank" rel="noopener noreferrer" style="position: absolute; inset: 0; z-index: 10;"></a>
+</div>
+
+<style>
+  .project-card:hover .arrow-icon {
+    opacity: 1;
+  }
+</style>

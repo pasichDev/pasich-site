@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FeatureCard from '../../../components/ui/FeatureCard.astro';
+
+const features = [
+  {
+    icon: 'solar:pen-new-square-linear',
+    title: 'Easy to Use',
+    description: 'Intuitive interface allows you to quickly create and edit notes without unnecessary steps.'
+  },
+  {
+    icon: 'solar:tag-linear',
+    title: 'Tags',
+    description: 'Organize notes by categories for quick access to needed information.'
+  },
+  {
+    icon: 'solar:magnifer-linear',
+    title: 'Quick Search',
+    description: 'Instantly find needed notes using powerful search functionality.'
+  },
+  {
+    icon: 'solar:cloud-upload-linear',
+    title: 'Backup',
+    description: 'Your data is always safe thanks to backup and restore functionality.'
+  },
+  {
+    icon: 'solar:palette-linear',
+    title: 'Modern Design',
+    description: 'Beautiful Material Design interface that\'s pleasant to use every day.'
+  },
+  {
+    icon: 'solar:lock-linear',
+    title: 'Privacy',
+    description: 'Your notes are stored locally on your device. Complete confidentiality guaranteed.'
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "My Notes",
+  "alternateName": "My Notes",
+  "description": "Simple and convenient app for storing notes, ideas and important details with categories, search and backup.",
+  "applicationCategory": "NoteTakingApplication",
+  "operatingSystem": "Android",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.6",
+    "ratingCount": "250"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "pasichDev"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "pasichDev"
+  },
+  "datePublished": "2025-08-01",
+  "inLanguage": "en",
+  "url": "https://pasichdev.xyz/apps/mynotes/",
+  "downloadUrl": "https://play.google.com/store/apps/details?id=com.pasich.mynotes",
+  "featureList": [
+    "Easy to use",
+    "Categories for organization",
+    "Quick search",
+    "Backup",
+    "Modern design",
+    "Complete privacy"
+  ]
+};
+---
+
+<BaseLayout 
+  title="My Notes – Free, Secure, Android | Download from Google Play"
+  description="Simple and convenient app for storing your notes and important details. Available on Google Play Store."
+  canonical="https://pasichdev.xyz/apps/mynotes/"
+  structuredData={structuredData}
+>
+  <div class="container animate-fade-in">
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="app-icon-wrapper">
+          <div class="app-icon">
+            <iconify-icon icon="solar:notebook-bold" width="48"></iconify-icon>
+          </div>
+        </div>
+        
+        <h1 class="hero-title">
+          <span class="gradient-text">My Notes</span><br>
+          Your ideas are always with you
+        </h1>
+        
+        <p class="text-lg text-dim leading-relaxed" style="max-width: 32rem;">
+          Simple and convenient app for storing notes, ideas and important details. 
+          Organize your thoughts with categories, quick search and reliable backup.
+        </p>
+        
+        <div class="flex gap-4 mt-8 flex-wrap">
+          <a href="https://play.google.com/store/apps/details?id=com.pasich.mynotes" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+            <iconify-icon icon="logos:google-play-icon" width="20"></iconify-icon>
+            Download from Google Play
+          </a>
+          <a href="#features" class="btn btn-outline btn-lg">
+            <iconify-icon icon="solar:info-circle-linear"></iconify-icon>
+            Learn more
+          </a>
+        </div>
+        
+        <div class="flex gap-2 mt-6 flex-wrap justify-center">
+          <span class="badge badge-purple">
+            <iconify-icon icon="solar:star-bold"></iconify-icon> Free
+          </span>
+          <span class="badge badge-purple">
+            <iconify-icon icon="solar:shield-check-bold"></iconify-icon> Safe
+          </span>
+          <span class="badge badge-purple">
+            <iconify-icon icon="solar:smartphone-bold"></iconify-icon> Android
+          </span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="section">
+      <div class="section-header">
+        <h2 class="font-medium tracking-tight">Why Choose My Notes?</h2>
+      </div>
+      
+      <div class="features-grid">
+        {features.map((feature) => (
+          <FeatureCard {...feature} />
+        ))}
+      </div>
+    </section>
+    
+    <!-- Download CTA -->
+    <section class="cta-section">
+      <h2 class="text-xl font-medium text-accent mb-4">Ready to start?</h2>
+      <p class="text-dim mb-6">Download My Notes now and organize your ideas!</p>
+      <a href="https://play.google.com/store/apps/details?id=com.pasich.mynotes" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+        <iconify-icon icon="logos:google-play-icon" width="20"></iconify-icon>
+        Download for free
+      </a>
+    </section>
+    
+    <!-- Links -->
+    <div class="flex gap-6 justify-center text-sm text-dim mt-12 flex-wrap">
+      <a href="/apps/mynotes/privacy-policy" class="link-hover">Privacy Policy</a>
+      <a href="https://github.com/pasichDev/MyNotes" target="_blank" rel="noopener noreferrer" class="link-hover flex items-center gap-1">
+        <iconify-icon icon="mdi:github"></iconify-icon> GitHub
+      </a>
+    </div>
+    
+  </div>
+</BaseLayout>
+
+<style>
+  .hero-section {
+    text-align: center;
+    padding: 3rem 0 4rem;
+  }
+  
+  .hero-content {
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+  
+  .app-icon-wrapper {
+    margin-bottom: 2rem;
+  }
+  
+  .app-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+    transition: transform 0.3s ease;
+  }
+  
+  .app-icon:hover {
+    transform: scale(1.05);
+  }
+  
+  .hero-title {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .badge-purple {
+    background: rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
+    color: #9F7AEA;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 480px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+  }
+  
+  .cta-section {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem;
+    margin-top: 4rem;
+  }
+  
+  @media (min-width: 768px) {
+    .cta-section {
+      padding: 3rem 2rem;
+    }
+  }
+  
+  .link-hover {
+    transition: color 0.15s;
+  }
+  
+  .link-hover:hover {
+    color: var(--color-accent);
+  }
+</style>

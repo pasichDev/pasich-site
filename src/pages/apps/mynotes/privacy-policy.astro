@@ -1,0 +1,442 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Privacy Policy - My Notes"
+  description="Privacy Policy for My Notes app. Learn how we protect your data and ensure privacy."
+  canonical="https://pasichdev.xyz/apps/mynotes/privacy-policy"
+>
+  <div class="container container-sm animate-fade-in">
+    
+    <!-- Header -->
+    <header class="privacy-hero">
+      <div class="icon-shield">
+        <iconify-icon icon="solar:shield-check-bold" width="48"></iconify-icon>
+      </div>
+      <h1 class="text-accent" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Privacy Policy</h1>
+      <p class="text-lg text-dim">
+        Your privacy is our priority. Learn how we protect your data and ensure complete confidentiality in My Notes app.
+      </p>
+      <div class="flex gap-2 mt-6 flex-wrap justify-center">
+        <span class="badge badge-purple">
+          <iconify-icon icon="solar:check-circle-bold"></iconify-icon> Local storage
+        </span>
+        <span class="badge badge-purple">
+          <iconify-icon icon="solar:lock-bold"></iconify-icon> Data encryption
+        </span>
+        <span class="badge badge-purple">
+          <iconify-icon icon="solar:eye-closed-bold"></iconify-icon> No tracking
+        </span>
+      </div>
+    </header>
+    
+    <!-- Key Points -->
+    <section class="key-points">
+      <div class="point-card">
+        <div class="point-icon">
+          <iconify-icon icon="solar:smartphone-linear" width="28"></iconify-icon>
+        </div>
+        <h4 class="font-medium text-accent mb-2">Local Storage</h4>
+        <p class="text-sm text-dim">All your notes are stored exclusively on your device. We have no access to your content.</p>
+      </div>
+      
+      <div class="point-card">
+        <div class="point-icon">
+          <iconify-icon icon="solar:forbidden-linear" width="28"></iconify-icon>
+        </div>
+        <h4 class="font-medium text-accent mb-2">No Data Collection</h4>
+        <p class="text-sm text-dim">We do not collect, store or transfer your personal data to third parties.</p>
+      </div>
+      
+      <div class="point-card">
+        <div class="point-icon">
+          <iconify-icon icon="solar:user-check-linear" width="28"></iconify-icon>
+        </div>
+        <h4 class="font-medium text-accent mb-2">Complete Anonymity</h4>
+        <p class="text-sm text-dim">The app works offline and does not require creating an account or registration.</p>
+      </div>
+    </section>
+    
+    <!-- Policy Content -->
+    <div class="policy-content">
+      
+      <section class="policy-section">
+        <div class="section-icon">
+          <iconify-icon icon="solar:info-circle-linear" width="24"></iconify-icon>
+        </div>
+        <h3 class="font-medium text-accent mb-4">General Information</h3>
+        <p class="text-dim leading-relaxed">
+          This Privacy Policy describes how the <strong class="text-accent">"My Notes"</strong> app (developed by pasichDev) processes user information. We strive to ensure the highest level of privacy and security for your data.
+        </p>
+        <p class="text-sm text-dim mt-4"><strong>Last updated:</strong> August 30, 2025</p>
+      </section>
+      
+      <section class="policy-section">
+        <div class="section-icon">
+          <iconify-icon icon="solar:database-linear" width="24"></iconify-icon>
+        </div>
+        <h3 class="font-medium text-accent mb-4">What Data We Collect</h3>
+        
+        <div class="data-item">
+          <iconify-icon icon="solar:check-circle-bold" class="text-purple"></iconify-icon>
+          <div>
+            <h5 class="font-medium text-accent">Personal Data</h5>
+            <p class="text-sm text-dim"><strong>We DO NOT collect</strong> your personal data such as name, email, phone number or address.</p>
+          </div>
+        </div>
+        
+        <div class="data-item">
+          <iconify-icon icon="solar:check-circle-bold" class="text-purple"></iconify-icon>
+          <div>
+            <h5 class="font-medium text-accent">Note Content</h5>
+            <p class="text-sm text-dim"><strong>We DO NOT have access</strong> to the content of your notes. All data is stored locally on your device.</p>
+          </div>
+        </div>
+        
+        <div class="data-item">
+          <iconify-icon icon="solar:check-circle-bold" class="text-purple"></iconify-icon>
+          <div>
+            <h5 class="font-medium text-accent">Usage Data</h5>
+            <p class="text-sm text-dim"><strong>We DO NOT track</strong> how you use the app or which features you use.</p>
+          </div>
+        </div>
+      </section>
+      
+      <section class="policy-section">
+        <div class="section-icon">
+          <iconify-icon icon="solar:server-linear" width="24"></iconify-icon>
+        </div>
+        <h3 class="font-medium text-accent mb-4">Data Storage</h3>
+        
+        <div class="storage-grid">
+          <div class="storage-item">
+            <iconify-icon icon="solar:smartphone-linear" class="text-purple" width="24"></iconify-icon>
+            <div>
+              <h5 class="font-medium text-accent">Local Database</h5>
+              <p class="text-sm text-dim">All your notes are stored in local SQLite database on your Android device.</p>
+            </div>
+          </div>
+          
+          <div class="storage-item">
+            <iconify-icon icon="solar:download-linear" class="text-purple" width="24"></iconify-icon>
+            <div>
+              <h5 class="font-medium text-accent">Backup</h5>
+              <p class="text-sm text-dim">Backup functionality creates a file on your device that you can save yourself.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section class="policy-section">
+        <div class="section-icon">
+          <iconify-icon icon="solar:key-linear" width="24"></iconify-icon>
+        </div>
+        <h3 class="font-medium text-accent mb-4">App Permissions</h3>
+        
+        <div class="permission-item">
+          <div class="permission-icon">
+            <iconify-icon icon="solar:folder-open-linear" width="24"></iconify-icon>
+          </div>
+          <div>
+            <h5 class="font-medium text-accent">Storage Access</h5>
+            <p class="text-sm text-dim">Used for creating and restoring backups of your notes.</p>
+            <span class="text-xs text-dim" style="opacity: 0.7;">This permission is used exclusively for backup functionality</span>
+          </div>
+        </div>
+      </section>
+      
+      <section class="policy-section no-sharing">
+        <iconify-icon icon="solar:close-circle-bold" class="no-share-icon" width="32"></iconify-icon>
+        <div>
+          <h4 class="font-medium text-accent mb-2">We DO NOT share your data</h4>
+          <p class="text-sm text-dim">
+            My Notes does not transfer, sell or provide access to your data to third parties, including advertising networks, analytics services or other companies.
+          </p>
+        </div>
+      </section>
+      
+      <section class="policy-section">
+        <div class="section-icon">
+          <iconify-icon icon="solar:shield-check-linear" width="24"></iconify-icon>
+        </div>
+        <h3 class="font-medium text-accent mb-4">Data Security</h3>
+        
+        <div class="security-grid">
+          <div class="security-item">
+            <iconify-icon icon="solar:lock-linear" width="20"></iconify-icon>
+            <h5>Encryption</h5>
+            <p>Data is stored using built-in Android security mechanisms.</p>
+          </div>
+          <div class="security-item">
+            <iconify-icon icon="solar:user-check-linear" width="20"></iconify-icon>
+            <h5>App Isolation</h5>
+            <p>App data is not accessible to other programs on your device.</p>
+          </div>
+          <div class="security-item">
+            <iconify-icon icon="solar:wi-fi-router-linear" width="20"></iconify-icon>
+            <h5>Offline Operation</h5>
+            <p>The app works without internet connection.</p>
+          </div>
+          <div class="security-item">
+            <iconify-icon icon="solar:trash-bin-2-linear" width="20"></iconify-icon>
+            <h5>Data Deletion</h5>
+            <p>When deleting the app, all data is automatically removed from the device.</p>
+          </div>
+        </div>
+      </section>
+      
+      <section class="policy-section">
+        <div class="section-icon">
+          <iconify-icon icon="solar:user-hand-up-linear" width="24"></iconify-icon>
+        </div>
+        <h3 class="font-medium text-accent mb-4">Child Protection</h3>
+        <p class="text-dim leading-relaxed">
+          My Notes app is safe for children to use. We do not collect personal data from users of any age, including children under 13.
+        </p>
+      </section>
+      
+      <section class="policy-section">
+        <div class="section-icon">
+          <iconify-icon icon="solar:refresh-linear" width="24"></iconify-icon>
+        </div>
+        <h3 class="font-medium text-accent mb-4">Policy Updates</h3>
+        <p class="text-dim leading-relaxed">
+          We may update this Privacy Policy from time to time. When making changes, we will update the "last updated" date at the top of this document. We recommend periodically reviewing this page.
+        </p>
+      </section>
+      
+      <section class="policy-section">
+        <div class="section-icon">
+          <iconify-icon icon="solar:letter-linear" width="24"></iconify-icon>
+        </div>
+        <h3 class="font-medium text-accent mb-4">Contact Us</h3>
+        <p class="text-dim leading-relaxed mb-4">
+          If you have questions about this Privacy Policy or app functionality, you can contact us:
+        </p>
+        <div class="contact-links">
+          <div class="contact-item">
+            <iconify-icon icon="solar:letter-linear" width="18"></iconify-icon>
+            <span>Email: pasichdev@outlook.com</span>
+          </div>
+          <div class="contact-item">
+            <iconify-icon icon="mdi:github" width="18"></iconify-icon>
+            <span>GitHub: github.com/pasichDev/MyNotes</span>
+          </div>
+        </div>
+      </section>
+      
+    </div>
+    
+    <!-- Back Link -->
+    <div class="text-center mt-12 mb-8">
+      <a href="/apps/mynotes" class="btn btn-outline">
+        <iconify-icon icon="solar:arrow-left-linear"></iconify-icon>
+        Back to app
+      </a>
+    </div>
+    
+  </div>
+</BaseLayout>
+
+<style>
+  .privacy-hero {
+    text-align: center;
+    padding: 3rem 0 4rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 3rem;
+  }
+  
+  .icon-shield {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9F7AEA;
+  }
+  
+  .key-points {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  @media (min-width: 768px) {
+    .key-points {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .point-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .point-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+  }
+  
+  .policy-content {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+  
+  .policy-section {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .policy-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .policy-section:first-child {
+    padding-top: 0;
+  }
+  
+  .section-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-txt-dim);
+    margin-bottom: 1rem;
+  }
+  
+  .data-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .data-item iconify-icon {
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+  
+  .text-purple { color: #9F7AEA; }
+  
+  .badge-purple {
+    background: rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
+    color: #9F7AEA;
+  }
+  
+  .storage-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  .storage-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .permission-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+  }
+  
+  .permission-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-txt-dim);
+    flex-shrink: 0;
+  }
+  
+  .no-sharing {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem !important;
+    margin: 2rem 0;
+  }
+  
+  .no-share-icon {
+    color: #9F7AEA;
+    flex-shrink: 0;
+  }
+  
+  .security-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .security-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .security-item {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .security-item iconify-icon {
+    color: var(--color-txt-dim);
+    margin-bottom: 0.5rem;
+  }
+  
+  .security-item h5 {
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
+  }
+  
+  .security-item p {
+    font-size: 0.75rem;
+    color: var(--color-txt-dim);
+  }
+  
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-txt-dim);
+    font-size: 0.875rem;
+  }
+</style>

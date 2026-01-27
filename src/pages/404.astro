@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="404 - Not Found"
+  description="The page you're looking for doesn't exist."
+  noIndex={true}
+>
+  <div class="container" style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
+    <div class="text-center animate-fade-in">
+      <h1 class="error-code">404</h1>
+      <p class="text-sm font-mono text-dim tracking-widest uppercase mb-12">Page not found</p>
+      <a href="/" class="btn btn-outline" style="border-radius: 2px; font-size: 0.75rem;">
+        [ BACK TO INDEX ]
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-code {
+    font-size: clamp(5rem, 15vw, 8rem);
+    font-weight: 300;
+    color: #FFF;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.05em;
+  }
+</style>

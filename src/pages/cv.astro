@@ -1,0 +1,283 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const experience = [
+  {
+    title: 'Flutter / Dart Developer',
+    period: '2023 — 2024',
+    company: 'NosoCoin Ecosystem · Freelance & Open Source',
+    achievements: [
+      'Developed <strong>SovaWallet</strong>, a cross-platform crypto wallet with adaptive UI for mobile/desktop.',
+      'Migrated core blockchain logic (Pascal-based) to modern Dart, including custom cryptographic algorithms and protocol operations.',
+      'Implemented Dart FFI bindings for C++ libraries to ensure performance and security.',
+      'Designed robust networking for distributed nodes (balancing, failover, background syncing).'
+    ],
+    tags: ['Flutter', 'Dart FFI', 'C++']
+  },
+  {
+    title: 'Android Developer',
+    period: '2021 — Present',
+    company: 'Self-Employed · My Notes & Applied Projects',
+    achievements: [
+      'Built <strong>My Notes</strong> (10k+ downloads), an offline notebook with custom block-based editor engine (no 3rd party libs).',
+      'Implemented Clean Architecture with MVVM, Hilt, and Room (complex migrations, caching).',
+      'Integrated Google Maps API for custom tracking, geocoding, and route generation features.',
+      'Optimized rendering performance for large lists and complex UI using RecyclerView and custom Views.'
+    ],
+    tags: ['Kotlin', 'Jetpack Compose', 'Room']
+  },
+  {
+    title: 'Web Developer',
+    period: '2015 — 2020',
+    company: 'Freelance',
+    achievements: [
+      'Full-stack development for REST APIs, admin panels, and SaaS tools using PHP, JS, and SQL.'
+    ],
+    tags: []
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Andrii Pasichnyk",
+  "alternateName": "pasichDev",
+  "jobTitle": "Mobile Developer (Flutter / Android)",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Rivne",
+    "addressCountry": "Ukraine"
+  },
+  "email": "apasichnik9@gmail.com",
+  "telephone": "+380961814800",
+  "url": "https://pasichdev.xyz/cv",
+  "sameAs": ["https://github.com/pasichDev"]
+};
+---
+
+<BaseLayout 
+  title="CV — Andrii Pasichnyk"
+  description="Resume of Andrii Pasichnyk, Mobile Developer specializing in Flutter and Android development."
+  canonical="https://pasichdev.xyz/cv"
+  structuredData={structuredData}
+>
+  <div class="container container-sm animate-fade-in">
+    
+    <!-- CV Header -->
+    <header class="cv-header">
+      <div>
+        <h1 class="text-accent" style="font-size: 1.875rem; margin-bottom: 0.5rem;">Andrii Pasichnyk</h1>
+        <p class="text-lg text-dim" style="font-weight: 300;">Mobile Developer (Flutter / Android)</p>
+        <div class="flex items-center gap-4 mt-4 text-sm text-dim flex-wrap">
+          <span class="flex items-center gap-1">
+            <iconify-icon icon="solar:map-point-linear"></iconify-icon> Rivne, Ukraine
+          </span>
+          <span class="flex items-center gap-1" style="color: var(--color-green);">
+            <iconify-icon icon="solar:clock-circle-linear"></iconify-icon> UTC+2
+          </span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <a href="mailto:apasichnik9@gmail.com">apasichnik9@gmail.com</a>
+        <a href="tel:+380961814800">+380 96 181 48 00</a>
+        <a href="https://github.com/pasichDev">github.com/pasichDev</a>
+      </div>
+    </header>
+    
+    <!-- Summary -->
+    <section class="section" style="margin-bottom: 3rem;">
+      <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-6">Profile</h2>
+      <p class="text-accent leading-relaxed" style="font-weight: 300; opacity: 0.9;">
+        Experienced developer focused on creating high-quality mobile apps with modern design and robust architecture. 
+        Deep expertise in <strong class="font-medium">Flutter, Dart, and Native Android (Kotlin/Java)</strong>. 
+        Skilled in solving complex technical challenges including custom cryptography, low-level networking (TCP/UDP/RPC), 
+        and offline-first data synchronization. Passionate about clean code, SOLID principles, and user-centric UI.
+      </p>
+    </section>
+    
+    <!-- Experience -->
+    <section class="section" style="margin-bottom: 3rem;">
+      <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-8">Experience</h2>
+      
+      <div class="timeline">
+        {experience.map((job) => (
+          <div class="timeline-item">
+            <div class="timeline-header">
+              <h3 class="timeline-title">{job.title}</h3>
+              <span class="timeline-date">{job.period}</span>
+            </div>
+            <div class="timeline-subtitle">{job.company}</div>
+            <div class="timeline-content">
+              <ul>
+                {job.achievements.map((item) => (
+                  <li set:html={item} />
+                ))}
+              </ul>
+            </div>
+            {job.tags.length > 0 && (
+              <div class="flex flex-wrap gap-2 mt-4">
+                {job.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+    
+    <!-- Skills Grid -->
+    <section class="section" style="margin-bottom: 3rem;">
+      <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-6">Technical Skills</h2>
+      
+      <div class="skills-grid">
+        <div>
+          <h4 class="text-accent text-sm font-medium mb-4">Core Stack</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-tag">Flutter SDK</span>
+            <span class="skill-tag">Dart</span>
+            <span class="skill-tag">Android (Kotlin/Java)</span>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-accent text-sm font-medium mb-4">Architecture & patterns</h4>
+          <p class="text-sm text-dim leading-relaxed">
+            Clean Architecture, SOLID, MVVM, MVI, State Management (Bloc/Riverpod), Dependency Injection (Hilt).
+          </p>
+        </div>
+        
+        <div>
+          <h4 class="text-accent text-sm font-medium mb-4">Networking & Data</h4>
+          <p class="text-sm text-dim leading-relaxed">
+            REST, WebSocket, gRPC, TCP/UDP, SQLite (Room/Drift), Firebase, Protocol Buffers, PostgreSQL (basic CRUD, joins, indexes).
+          </p>
+        </div>
+        
+        <div>
+          <h4 class="text-accent text-sm font-medium mb-4">Android Native</h4>
+          <p class="text-sm text-dim leading-relaxed">
+            WorkManager, Services, CameraX, BLE, NFC, Custom Views, Gradle, Proguard/R8.
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Languages -->
+    <section class="section" style="border-top: 1px solid var(--color-border); padding-top: 2rem; margin-bottom: 3rem;">
+      <div class="flex gap-8 text-sm flex-wrap">
+        <div>
+          <span class="block text-dim text-xs uppercase mb-1">Ukrainian</span>
+          <span class="text-accent">Native</span>
+        </div>
+        <div>
+          <span class="block text-dim text-xs uppercase mb-1">Russian</span>
+          <span class="text-accent">Fluent</span>
+        </div>
+        <div>
+          <span class="block text-dim text-xs uppercase mb-1">English</span>
+          <span class="text-accent">Intermediate (Technical)</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Print Button -->
+    <div class="text-center no-print" style="padding-bottom: 5rem;">
+      <button onclick="window.print()" class="print-btn">
+        [ PRINT / SAVE AS PDF ]
+      </button>
+    </div>
+    
+  </div>
+</BaseLayout>
+
+<style>
+  .cv-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  @media (min-width: 768px) {
+    .cv-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+  
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-txt-dim);
+  }
+  
+  @media (min-width: 768px) {
+    .contact-info {
+      text-align: right;
+    }
+  }
+  
+  .contact-info a:hover {
+    color: var(--color-accent);
+  }
+  
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem 2rem;
+    }
+  }
+  
+  .skill-tag {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    background: var(--color-surface);
+  }
+  
+  .print-btn {
+    background: none;
+    border: none;
+    color: var(--color-txt-dim);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-bottom: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  
+  .print-btn:hover {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+  }
+  
+  @media print {
+    .cv-header {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    
+    .contact-info {
+      text-align: right;
+    }
+    
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
