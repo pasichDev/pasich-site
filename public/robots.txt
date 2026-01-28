@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://pasichdev.xyz/sitemap.xml
+Sitemap: https://pasichdev.xyz/sitemap-index.xml
 
 # Disallow potentially sensitive files
 Disallow: /*.json$
