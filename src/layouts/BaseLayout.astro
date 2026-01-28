@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 export interface Props {
   title: string;
   description: string;
@@ -80,6 +81,8 @@ const fullTitle = title.includes('pasichDev') ? title : `${title} | ${siteName}`
   <style is:global>
     @import '../styles/global.css';
   </style>
+
+  <ViewTransitions />
 </head>
 <body class="antialiased">
   <!-- Background Grid -->
