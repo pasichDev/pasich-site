@@ -6,6 +6,8 @@ export interface Props {
   ogType?: string;
   ogImage?: string;
   noIndex?: boolean;
+  hideNav?: boolean;
+  hideFooter?: boolean;
   structuredData?: object;
 }
 
@@ -16,6 +18,8 @@ const {
   ogType = 'website',
   ogImage = '/assets/web-app-manifest-512x512.png',
   noIndex = false,
+  hideNav = false,
+  hideFooter = false,
   structuredData
 } = Astro.props;
 
@@ -82,50 +86,54 @@ const fullTitle = title.includes('pasichDev') ? title : `${title} | ${siteName}`
   <div class="bg-grid"></div>
   
   <!-- Navigation -->
-  <nav class="glass no-print" style="position: fixed; top: 0; width: 100%; z-index: 50; border-bottom: 1px solid var(--color-border);">
-    <div class="container flex items-center justify-between" style="height: var(--nav-height);">
-      <a href="/" class="flex items-center gap-2" style="text-decoration: none;">
-        <div style="width: 24px; height: 24px; background: white; color: black; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; border-radius: 2px; transition: transform 0.3s;">P</div>
-        <span class="font-medium text-sm tracking-tight">pasichDev</span>
-      </a>
-      
-      <div class="flex items-center gap-6 text-xs font-medium tracking-wide">
-        <a href="/" class="text-dim" style="transition: color 0.15s;">INDEX</a>
-        <a href="/cv" class="text-dim" style="transition: color 0.15s;">CV</a>
-        <a href="https://github.com/pasichDev" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-dim" style="transition: color 0.15s;">
-          GITHUB <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+  {!hideNav && (
+    <nav class="glass no-print" style="position: fixed; top: 0; width: 100%; z-index: 50; border-bottom: 1px solid var(--color-border);">
+      <div class="container flex items-center justify-between" style="height: var(--nav-height);">
+        <a href="/" class="flex items-center gap-2" style="text-decoration: none;">
+          <div style="width: 24px; height: 24px; background: white; color: black; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; border-radius: 2px; transition: transform 0.3s;">P</div>
+          <span class="font-medium text-sm tracking-tight">pasichDev</span>
         </a>
+        
+        <div class="flex items-center gap-6 text-xs font-medium tracking-wide">
+          <a href="/" class="text-dim" style="transition: color 0.15s;">INDEX</a>
+          <a href="/cv" class="text-dim" style="transition: color 0.15s;">CV</a>
+          <a href="https://github.com/pasichDev" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-dim" style="transition: color 0.15s;">
+            GITHUB <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+          </a>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  )}
   
   <!-- Main Content -->
-  <main style="padding-top: calc(var(--nav-height) + 2rem); padding-bottom: 5rem; min-height: 100vh;">
+  <main style={`padding-top: ${hideNav ? '2rem' : 'calc(var(--nav-height) + 2rem)'}; padding-bottom: 5rem; min-height: 100vh;`}>
     <slot />
   </main>
   
   <!-- Footer -->
-  <footer id="contact" class="no-print" style="border-top: 1px solid var(--color-border); padding: 3rem 0;">
-    <div class="container">
-      <div class="flex flex-col gap-6" style="flex-direction: column;">
-        <div class="flex flex-col gap-4" style="flex-direction: column;">
-          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-            <div>
-              <h2 class="text-xl font-medium text-accent mb-2">Let's build something.</h2>
-              <p class="text-sm text-dim">Available for freelance and full-time opportunities.</p>
-            </div>
-            <div class="flex gap-4">
-              <a href="mailto:apasichnik9@gmail.com" class="btn btn-primary">Email Me</a>
-              <a href="https://t.me/pasichdev" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Telegram</a>
+  {!hideFooter && (
+    <footer id="contact" class="no-print" style="border-top: 1px solid var(--color-border); padding: 3rem 0;">
+      <div class="container">
+        <div class="flex flex-col gap-6" style="flex-direction: column;">
+          <div class="flex flex-col gap-4" style="flex-direction: column;">
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div>
+                <h2 class="text-xl font-medium text-accent mb-2">Let's build something.</h2>
+                <p class="text-sm text-dim">Available for freelance and full-time opportunities.</p>
+              </div>
+              <div class="flex gap-4">
+                <a href="mailto:apasichnik9@gmail.com" class="btn btn-primary">Email Me</a>
+                <a href="https://t.me/pasichdev" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Telegram</a>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="text-xs text-dim font-mono" style="margin-top: 2rem;">
-          © 2026 pasichDev. Ukraine.
+          <div class="text-xs text-dim font-mono" style="margin-top: 2rem;">
+            © 2026 pasichDev. Ukraine.
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  )}
   
   <style>
     nav a.text-dim:hover {

@@ -1,0 +1,63 @@
+{
+    "profile": {
+        "name": "Andrii Pasichnyk",
+        "avatar": "/assets/developer-avatar.svg",
+        "bio": "Android & Flutter Engineer | Building mobile experiences with precision.",
+        "email": "apasichnik9@gmail.com",
+        "location": "Ukraine"
+    },
+    "links": [
+        {
+            "title": "Portfolio Website",
+            "url": "https://pasichdev.xyz",
+            "icon": "solar:globus-linear",
+            "featured": true
+        },
+        {
+            "title": "Skinlytics — CS2 Analytics",
+            "url": "https://skinlytics.pro/",
+            "icon": "solar:chart-square-linear",
+            "featured": false
+        },
+        {
+            "title": "My Notes — Android App",
+            "url": "/apps/mynotes",
+            "icon": "solar:notebook-linear",
+            "featured": false
+        },
+        {
+            "title": "Contact on Telegram",
+            "url": "https://t.me/pasichdev",
+            "icon": "solar:plain-linear",
+            "featured": true
+        },
+        {
+            "title": "Send an Email",
+            "url": "mailto:apasichnik9@gmail.com",
+            "icon": "solar:letter-linear",
+            "featured": false
+        },
+        {
+            "title": "Discord",
+            "url": "https://discord.com/users/931603849528098898",
+            "icon": "solar:dialog-linear",
+            "featured": false
+        },
+        {
+            "title": "GitHub Profile",
+            "url": "https://github.com/pasichDev",
+            "icon": "mdi:github",
+            "featured": false
+        },
+        {
+            "title": "View Resume (CV)",
+            "url": "/cv",
+            "icon": "solar:user-id-linear",
+            "featured": true
+        }
+    ],
+    "seo": {
+        "title": "Links | pasichDev",
+        "description": "Connect with Andrii Pasichnyk (pasichDev). Social media, projects, and contact information in one place."
+    }
+}

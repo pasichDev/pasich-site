@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import data from '../data/links.json';
+
+const { profile, links, seo } = data;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": profile.name,
+  "url": "https://pasichdev.xyz/links",
+  "sameAs": links.filter(l => l.url.startsWith('http')).map(l => l.url)
+};
+---
+
+<BaseLayout 
+  title={seo.title}
+  description={seo.description}
+  structuredData={structuredData}
+  hideNav={true}
+  hideFooter={true}
+>
+  <div class="links-wrapper animate-fade-in">
+    <!-- Profile Section -->
+    <header class="profile-header">
+      <div class="profile-avatar mb-6">
+        <img src={profile.avatar} alt={profile.name} class="avatar-image" />
+      </div>
+      <h1 class="text-xl font-medium text-accent mb-2">{profile.name}</h1>
+      <p class="text-sm text-dim leading-relaxed bio-text">
+        {profile.bio}
+      </p>
+      <div class="flex items-center gap-2 mt-4 text-xs font-mono text-dim">
+        <iconify-icon icon="solar:map-point-linear"></iconify-icon>
+        {profile.location}
+      </div>
+    </header>
+
+    <nav class="links-container">
+      {links.map((link) => (
+        <a 
+          href={link.url} 
+          target={link.url.startsWith('http') ? "_blank" : "_self"}
+          rel={link.url.startsWith('http') ? "noopener noreferrer" : ""}
+          class={`link-card card ${link.featured ? 'featured' : ''}`}
+        >
+          <div class="link-card-inner">
+            <div class="flex items-center gap-4">
+              <div class="link-icon">
+                <iconify-icon icon={link.icon} width="20"></iconify-icon>
+              </div>
+              <span class="font-medium text-sm">{link.title}</span>
+            </div>
+            <iconify-icon icon="solar:arrow-right-linear" class="arrow-icon" width="16"></iconify-icon>
+          </div>
+        </a>
+      ))}
+    </nav>
+
+    <!-- Footer link -->
+    <footer class="page-footer">
+      <a href="/" class="back-home text-xs font-mono">
+        pasichDev.xyz
+      </a>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .links-wrapper {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+  }
+
+  .profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .profile-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--color-border), var(--color-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--color-surface);
+  }
+
+  .bio-text {
+    max-width: 320px;
+  }
+
+  .links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin-bottom: 4rem;
+  }
+
+  .link-card {
+    display: block;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+  }
+
+  .link-card.featured {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .link-card:hover {
+    transform: scale(1.01);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-accent);
+  }
+
+  .link-card-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    opacity: 0.8;
+  }
+
+  .arrow-icon {
+    color: var(--color-txt-dim);
+    transition: transform 0.25s ease;
+  }
+
+  .link-card:hover .arrow-icon {
+    transform: translateX(3px);
+    color: var(--color-accent);
+  }
+
+  .page-footer {
+    margin-top: auto;
+    text-align: center;
+  }
+
+  .back-home {
+    display: inline-block;
+    color: var(--color-txt-dim);
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+  }
+
+  .back-home:hover {
+    opacity: 1;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 480px) {
+    .links-wrapper {
+      padding: 1.5rem 1rem 3rem;
+    }
+    
+    .profile-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .link-card {
+      padding: 0.875rem 1rem;
+    }
+  }
+</style>
