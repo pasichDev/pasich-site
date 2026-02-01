@@ -54,6 +54,12 @@
             "url": "/cv",
             "icon": "solar:user-id-linear",
             "featured": true
+        },
+        {
+            "title": "LinkedIn Profile",
+            "url": "https://www.linkedin.com/in/pasichdev/",
+            "icon": "mdi:linkedin",
+            "featured": false
         }
     ],
     "seo": {
