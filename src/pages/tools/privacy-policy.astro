@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Privacy Policy Generator for Mobile Apps",
+  "url": "https://pasichdev.xyz/tools/privacy-policy",
+  "description": "Generate a Privacy Policy for your Android or iOS mobile app. Free, instant, Google Play and App Store ready.",
+  "applicationCategory": "DeveloperApplication",
+  "offers": { "@type": "Offer", "price": "0" }
+};
+---
+
+<BaseLayout
+  title="Privacy Policy Generator for Mobile Apps — Free | pasichDev"
+  description="Generate a ready-to-use Privacy Policy for your Android or iOS app in seconds. Free, no sign-up, Google Play and App Store ready."
+  canonical="https://pasichdev.xyz/tools/privacy-policy"
+  structuredData={structuredData}
+>
+  <div class="container animate-fade-in" style="max-width: 860px;">
+    <header style="margin-top: 3rem; margin-bottom: 2rem;">
+      <a href="/tools" class="back-link">← Tools</a>
+      <h1 style="font-size: clamp(1.25rem, 3vw, 1.75rem); letter-spacing: -0.02em; margin-bottom: 0.5rem;">Privacy Policy Generator</h1>
+      <p class="text-dim text-sm">For Android and iOS mobile apps. Fill the form — get a ready policy.</p>
+    </header>
+
+    <form id="pp-form" class="pp-form">
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">App Name *</label>
+          <input type="text" id="app-name" class="field-input" placeholder="My Notes" required />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Platform *</label>
+          <select id="platform" class="field-input">
+            <option value="android">Android</option>
+            <option value="ios">iOS</option>
+            <option value="both">Android & iOS</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Developer / Company Name *</label>
+          <input type="text" id="dev-name" class="field-input" placeholder="Andrii Pasichnyk" required />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Contact Email *</label>
+          <input type="email" id="contact-email" class="field-input" placeholder="hello@example.com" required />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">App Website (optional)</label>
+        <input type="url" id="app-url" class="field-input" placeholder="https://pasichdev.xyz/apps/mynotes" />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Does the app collect any personal data?</label>
+        <select id="collects-data" class="field-input">
+          <option value="no">No — fully offline, no data collected</option>
+          <option value="yes">Yes — collects some data</option>
+        </select>
+      </div>
+
+      <div id="data-types-wrap" class="field-group" style="display:none;">
+        <label class="field-label">What data is collected?</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" value="name" /> Full name</label>
+          <label><input type="checkbox" value="email" /> Email address</label>
+          <label><input type="checkbox" value="usage" /> Usage data / analytics</label>
+          <label><input type="checkbox" value="device" /> Device information (model, OS version)</label>
+          <label><input type="checkbox" value="location" /> Location (GPS)</label>
+          <label><input type="checkbox" value="camera" /> Camera / photos</label>
+          <label><input type="checkbox" value="crash" /> Crash reports & diagnostics</label>
+          <label><input type="checkbox" value="adid" /> Advertising ID</label>
+          <label><input type="checkbox" value="ip" /> IP address</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Third-party services used (select all that apply)</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="third" value="firebase_analytics" /> Firebase Analytics</label>
+          <label><input type="checkbox" name="third" value="firebase_crashlytics" /> Firebase Crashlytics</label>
+          <label><input type="checkbox" name="third" value="firebase_auth" /> Firebase Authentication</label>
+          <label><input type="checkbox" name="third" value="admob" /> Google AdMob</label>
+          <label><input type="checkbox" name="third" value="google_analytics" /> Google Analytics</label>
+          <label><input type="checkbox" name="third" value="revenuecat" /> RevenueCat (in-app purchases)</label>
+          <label><input type="checkbox" name="third" value="amplitude" /> Amplitude</label>
+          <label><input type="checkbox" name="third" value="sentry" /> Sentry (error tracking)</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Data retention</label>
+        <select id="retention" class="field-input">
+          <option value="none">Not applicable — no data collected</option>
+          <option value="account">Data retained as long as account exists</option>
+          <option value="delete">User can request deletion at any time</option>
+          <option value="1year">Retained for up to 1 year</option>
+          <option value="3years">Retained for up to 3 years</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:0.5rem; width:fit-content;">Generate Policy</button>
+    </form>
+
+    <div id="pp-result" style="display:none; margin-bottom:4rem;">
+      <div class="result-toolbar">
+        <span class="text-xs font-mono text-dim uppercase tracking-wide">Generated Policy</span>
+        <div class="flex gap-2">
+          <button id="btn-copy-pp" class="btn btn-outline copy-btn" style="font-size:0.75rem; padding:0.375rem 0.75rem;">Copy</button>
+          <button id="btn-download-pp" class="btn btn-outline" style="font-size:0.75rem; padding:0.375rem 0.75rem;">Download .txt</button>
+          <button id="btn-reset-pp" class="btn btn-outline" style="font-size:0.75rem; padding:0.375rem 0.75rem;">← Edit</button>
+        </div>
+      </div>
+      <pre id="pp-text" class="pp-text"></pre>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  document.getElementById('collects-data')!.addEventListener('change', () => {
+    const val = (document.getElementById('collects-data') as HTMLSelectElement).value;
+    (document.getElementById('data-types-wrap') as HTMLElement).style.display = val === 'yes' ? 'block' : 'none';
+  });
+
+  document.getElementById('pp-form')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const appName   = (document.getElementById('app-name') as HTMLInputElement).value.trim();
+    const devName   = (document.getElementById('dev-name') as HTMLInputElement).value.trim();
+    const email     = (document.getElementById('contact-email') as HTMLInputElement).value.trim();
+    const appUrl    = (document.getElementById('app-url') as HTMLInputElement).value.trim();
+    const platform  = (document.getElementById('platform') as HTMLSelectElement).value;
+    const collects  = (document.getElementById('collects-data') as HTMLSelectElement).value === 'yes';
+    const retention = (document.getElementById('retention') as HTMLSelectElement).value;
+
+    const checkedTypes = Array.from(
+      document.querySelectorAll<HTMLInputElement>('#data-types-wrap input:checked')
+    ).map(el => el.value);
+
+    const thirdParties = Array.from(
+      document.querySelectorAll<HTMLInputElement>('input[name="third"]:checked')
+    ).map(el => el.value);
+
+    const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const platformLabel: Record<string, string> = {
+      android: 'Android',
+      ios: 'iOS',
+      both: 'Android and iOS',
+    };
+
+    const dataTypeLabels: Record<string, string> = {
+      name: 'Full name',
+      email: 'Email address',
+      usage: 'Usage data and analytics',
+      device: 'Device information (model, OS version)',
+      location: 'Precise location (GPS)',
+      camera: 'Camera access and photos',
+      crash: 'Crash reports and diagnostics',
+      adid: 'Advertising identifier (Ad ID)',
+      ip: 'IP address',
+    };
+
+    const thirdPartyInfo: Record<string, { name: string; url: string }> = {
+      firebase_analytics: { name: 'Google Firebase Analytics', url: 'https://firebase.google.com/policies/analytics' },
+      firebase_crashlytics: { name: 'Google Firebase Crashlytics', url: 'https://firebase.google.com/support/privacy' },
+      firebase_auth: { name: 'Google Firebase Authentication', url: 'https://firebase.google.com/support/privacy' },
+      admob: { name: 'Google AdMob', url: 'https://policies.google.com/privacy' },
+      google_analytics: { name: 'Google Analytics', url: 'https://policies.google.com/privacy' },
+      revenuecat: { name: 'RevenueCat', url: 'https://www.revenuecat.com/privacy' },
+      amplitude: { name: 'Amplitude', url: 'https://amplitude.com/privacy' },
+      sentry: { name: 'Sentry', url: 'https://sentry.io/privacy/' },
+    };
+
+    const retentionText: Record<string, string> = {
+      none: 'We do not collect or store any personal data.',
+      account: 'We retain your data for as long as your account is active. You may request deletion at any time.',
+      delete: 'You may request deletion of your data at any time by contacting us at the email below.',
+      '1year': 'We retain collected data for up to 1 year, after which it is deleted.',
+      '3years': 'We retain collected data for up to 3 years, after which it is deleted.',
+    };
+
+    const storeNote = platform === 'android'
+      ? 'This app is distributed via Google Play Store.'
+      : platform === 'ios'
+      ? 'This app is distributed via Apple App Store.'
+      : 'This app is distributed via Google Play Store and Apple App Store.';
+
+    const sections: string[] = [
+      `PRIVACY POLICY FOR ${appName.toUpperCase()}`,
+      `Last updated: ${date}`,
+      '',
+      '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+      '',
+      '1. INTRODUCTION',
+      `This Privacy Policy describes how ${devName} ("we", "us", or "our") collects, uses, and protects information in the ${appName} mobile application ("App") for ${platformLabel[platform]}.`,
+      appUrl ? `App website: ${appUrl}` : '',
+      storeNote,
+      'By using the App, you agree to the terms described in this Privacy Policy.',
+      '',
+      '2. INFORMATION WE COLLECT',
+      collects && checkedTypes.length > 0
+        ? `We collect the following types of information:\n${checkedTypes.map(t => `  • ${dataTypeLabels[t] || t}`).join('\n')}\n\nWe collect this information only to the extent necessary to provide the App's functionality.`
+        : `${appName} is designed with privacy in mind. We do NOT collect, transmit, or store any personal information on external servers. All data generated by the App is stored locally on your device and never leaves it.`,
+      '',
+      '3. HOW WE USE YOUR INFORMATION',
+      collects
+        ? `We use the collected information to:\n  • Provide and maintain the App's functionality\n  • Improve user experience\n  • Detect and fix technical issues\n  • Comply with legal obligations\n\nWe do NOT sell, rent, or share your personal data with third parties for marketing purposes.`
+        : 'Since we do not collect personal data, this section is not applicable. Your data stays on your device at all times.',
+      '',
+      '4. DATA STORAGE AND SECURITY',
+      collects
+        ? `We implement industry-standard security measures to protect your data:\n  • Data is transmitted over encrypted connections (HTTPS/TLS)\n  • Access to personal data is strictly limited\n  • We regularly review our security practices\n\nHowever, no method of transmission over the internet is 100% secure. We cannot guarantee absolute security.`
+        : `All ${appName} data is stored exclusively on your device using local storage. We have no access to your data. You can delete all app data at any time by uninstalling the App or clearing app data in your device settings.`,
+      '',
+      '5. DATA RETENTION',
+      retentionText[retention] || retentionText['none'],
+      '',
+    ];
+
+    if (thirdParties.length > 0) {
+      const thirdList = thirdParties
+        .map(tp => {
+          const info = thirdPartyInfo[tp];
+          return info ? `  • ${info.name}\n    Privacy Policy: ${info.url}` : `  • ${tp}`;
+        })
+        .join('\n');
+      sections.push(
+        '6. THIRD-PARTY SERVICES',
+        `This App uses the following third-party services that may collect information as described in their own privacy policies:\n\n${thirdList}\n\nWe recommend reviewing the privacy policies of these services to understand how they handle your data.`,
+        '',
+      );
+    } else {
+      sections.push(
+        '6. THIRD-PARTY SERVICES',
+        `${appName} does not integrate any third-party analytics, advertising, crash reporting, or data collection services. No data is shared with third parties.`,
+        '',
+      );
+    }
+
+    sections.push(
+      `7. CHILDREN'S PRIVACY`,
+      `${appName} does not knowingly collect personal information from children under the age of 13 (or under 16 in the European Economic Area). If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately at ${email}. We will take steps to delete such information.`,
+      '',
+      '8. YOUR RIGHTS',
+      `Depending on your location, you may have the following rights regarding your personal data:\n  • Right to access — request a copy of your data\n  • Right to rectification — request correction of inaccurate data\n  • Right to erasure — request deletion of your data\n  • Right to object — object to how we process your data\n  • Right to data portability — receive your data in a portable format\n\nTo exercise any of these rights, please contact us at ${email}. We will respond within 30 days.`,
+      '',
+      '9. CHANGES TO THIS PRIVACY POLICY',
+      `We may update this Privacy Policy from time to time. When we do, we will revise the "Last updated" date at the top of this policy. We encourage you to review this policy periodically.\n\nContinued use of the App after any changes constitutes your acceptance of the updated Privacy Policy.`,
+      '',
+      '10. CONTACT US',
+      `If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us:`,
+      `  Email:   ${email}`,
+      appUrl ? `  Website: ${appUrl}` : '',
+      '',
+      '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+      `© ${new Date().getFullYear()} ${devName}. All rights reserved.`,
+    );
+
+    const policy = sections.filter(l => l !== '').join('\n').replace(/\n{3,}/g, '\n\n');
+
+    document.getElementById('pp-text')!.textContent = policy;
+    (document.getElementById('pp-form') as HTMLElement).style.display = 'none';
+    (document.getElementById('pp-result') as HTMLElement).style.display = 'block';
+  });
+
+  document.getElementById('btn-copy-pp')!.addEventListener('click', async () => {
+    const text = document.getElementById('pp-text')!.textContent || '';
+    await navigator.clipboard.writeText(text);
+    const btn = document.getElementById('btn-copy-pp')!;
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('btn-copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('btn-copied');
+    }, 2000);
+  });
+
+  document.getElementById('btn-download-pp')!.addEventListener('click', () => {
+    const text = document.getElementById('pp-text')!.textContent || '';
+    const appName = (document.getElementById('app-name') as HTMLInputElement)?.value || 'app';
+    const blob = new Blob([text], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `privacy-policy-${appName.toLowerCase().replace(/\s+/g, '-')}.txt`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  document.getElementById('btn-reset-pp')!.addEventListener('click', () => {
+    (document.getElementById('pp-form') as HTMLElement).style.display = 'block';
+    (document.getElementById('pp-result') as HTMLElement).style.display = 'none';
+  });
+</script>
+
+<style>
+  .pp-form { display: flex; flex-direction: column; gap: 1.25rem; max-width: 640px; margin-bottom: 2rem; }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+  .field-group { display: flex; flex-direction: column; gap: 0.375rem; }
+  .field-label { font-size: 0.65rem; font-family: var(--font-mono); color: var(--color-txt-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+  .field-input { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 2px; color: var(--color-txt-main); font-family: var(--font-sans); font-size: 0.875rem; padding: 0.625rem 0.875rem; outline: none; transition: border-color 0.15s; width: 100%; }
+  .field-input:focus { border-color: rgba(255,255,255,0.2); }
+  select.field-input { cursor: pointer; }
+
+  .checkbox-group { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 2px; background: var(--color-surface); }
+  .checkbox-group label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--color-txt-dim); cursor: pointer; }
+  .checkbox-group input { accent-color: var(--color-accent); flex-shrink: 0; }
+
+  .result-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pp-text { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.7; color: var(--color-txt-dim); white-space: pre-wrap; word-break: break-word; border: 1px solid var(--color-border); border-radius: 2px; padding: 1.25rem; max-height: 560px; overflow-y: auto; }
+
+  .copy-btn { transition: border-color 0.2s, color 0.2s !important; }
+  .btn-copied { border-color: #22c55e !important; color: #22c55e !important; }
+</style>

@@ -2,9 +2,6 @@ User-agent: *
 Allow: /
 Sitemap: https://pasichdev.xyz/sitemap-index.xml
 
-# Disallow potentially sensitive files
-Disallow: /*.json$
-
 # Allow assets
 Allow: /_assets/
 Allow: /assets/

@@ -1,0 +1,163 @@
+---
+---
+
+<div class="gh-heatmap" id="gh-heatmap">
+  <div class="gh-header">
+    <span class="gh-label">GitHub Activity</span>
+    <span class="gh-last" id="gh-last"></span>
+  </div>
+  <div class="gh-mobile-info">
+    <span class="gh-count" id="gh-count"></span>
+  </div>
+  <div class="gh-scroll" id="gh-scroll">
+    <div id="gh-grid"></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', function () {
+    var grid    = document.getElementById('gh-grid');
+    var scroll  = document.getElementById('gh-scroll');
+    var lastEl  = document.getElementById('gh-last');
+    var countEl = document.getElementById('gh-count');
+    if (!grid || !scroll) return;
+
+    var today  = new Date().toISOString().slice(0, 10);
+    var LEVELS = [0.08, 0.35, 0.58, 0.78, 1.0];
+    var COLS   = 52;
+    var CELL   = 11;
+    var GAP    = 3;
+    var DAYS   = COLS * 7;
+
+    grid.style.cssText =
+      'display:grid;' +
+      'grid-template-rows:repeat(7,' + CELL + 'px);' +
+      'grid-template-columns:repeat(' + COLS + ',' + CELL + 'px);' +
+      'grid-auto-flow:column;' +
+      'gap:' + GAP + 'px;';
+
+    // Skeleton
+    while (grid.firstChild) grid.removeChild(grid.firstChild);
+    for (var i = 0; i < DAYS; i++) {
+      var s = document.createElement('div');
+      s.style.cssText = 'border-radius:2px;background:rgba(255,255,255,0.08);';
+      grid.appendChild(s);
+    }
+
+    requestAnimationFrame(function () { scroll.scrollLeft = scroll.scrollWidth; });
+
+    // ── helpers ───────────────────────────────────────────────────────
+    function doFetch(url) {
+      return fetch(url)
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    }
+
+    function normalise(obj) {
+      var c = (obj || {}).contributions;
+      if (!c) return [];
+      if (Array.isArray(c)) return c;
+      return Object.keys(c).map(function (d) {
+        return { date: d, count: (c[d] && c[d].count) || 0, level: (c[d] && c[d].level) || 0 };
+      });
+    }
+
+    function render(rows) {
+      var days = rows
+        .filter(function (d) { return d.date && d.date <= today; })
+        .sort(function (a, b) { return a.date < b.date ? -1 : 1; })
+        .slice(-DAYS);
+      if (!days.length) return false;
+
+      var total  = 0;
+      var cells  = grid.children;
+      var offset = DAYS - days.length;
+      for (var k = 0; k < days.length; k++) {
+        total += days[k].count || 0;
+        var cell = cells[offset + k];
+        if (!cell) continue;
+        var alpha = LEVELS[Math.min(days[k].level || 0, 4)];
+        cell.style.background = 'rgba(255,255,255,' + alpha + ')';
+        cell.title = days[k].date + ': ' + days[k].count;
+      }
+
+      if (countEl) countEl.textContent = total + ' contributions';
+
+      requestAnimationFrame(function () { scroll.scrollLeft = scroll.scrollWidth; });
+      return true;
+    }
+
+    // ── fetch ─────────────────────────────────────────────────────────
+    doFetch('https://github-contributions-api.jogruber.de/v4/pasichDev?y=last')
+      .then(function (res) {
+        var rows = normalise(res);
+        if (rows.length && render(rows)) return;
+
+        var yr = new Date().getFullYear();
+        return Promise.all([
+          doFetch('https://github-contributions-api.jogruber.de/v4/pasichDev?y=' + (yr - 1)),
+          doFetch('https://github-contributions-api.jogruber.de/v4/pasichDev?y=' + yr),
+        ]).then(function (r) { render(normalise(r[0]).concat(normalise(r[1]))); });
+      });
+
+    doFetch('https://api.github.com/users/pasichDev/repos?sort=pushed&per_page=1')
+      .then(function (repos) {
+        if (!repos || !repos[0] || !lastEl) return;
+        var diff  = Math.floor((Date.now() - new Date(repos[0].pushed_at)) / 86400000);
+        var label = diff === 0 ? 'today' : diff === 1 ? 'yesterday' : diff + 'd ago';
+        lastEl.textContent = 'Last push: ' + label + ' \xb7 ' + repos[0].name;
+      });
+  });
+</script>
+
+<style>
+  .gh-heatmap {
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+  }
+  .gh-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.875rem max(1rem, calc((100% - 725px) / 2)) 0.625rem;
+  }
+  .gh-label {
+    font-size: 0.6rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-txt-dim);
+  }
+  .gh-last {
+    font-size: 0.6rem;
+    font-family: var(--font-mono);
+    color: #555;
+  }
+  .gh-scroll {
+    overflow-x: auto;
+    padding: 0 max(1rem, calc((100% - 725px) / 2)) 0.875rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .gh-scroll::-webkit-scrollbar { display: none; }
+
+  .gh-mobile-info { display: none; }
+
+  @media (max-width: 599px) {
+    .gh-header { padding: 0.875rem 1rem 0.625rem; }
+    .gh-scroll  { display: none; }
+    .gh-mobile-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem 0.875rem;
+    }
+    .gh-count {
+      font-size: 0.6rem;
+      font-family: var(--font-mono);
+      color: #555;
+    }
+  }
+</style>

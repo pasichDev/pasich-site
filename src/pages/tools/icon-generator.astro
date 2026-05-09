@@ -1,0 +1,1029 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Flutter Icon Generator — All Platforms",
+  "url": "https://pasichdev.xyz/tools/icon-generator",
+  "description": "Upload one PNG, edit background & layout, download icons for Android, iOS, macOS, Windows, Linux and Web. Flutter-ready ZIP. Free, client-side.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "featureList": "Android mipmap icons, iOS AppIcon, macOS AppIcon, Windows ICO, Linux XDG icons, Web favicon, Background editor, Padding control, Logo overlay, ZIP download",
+  "offers": { "@type": "Offer", "price": "0" }
+};
+---
+
+<BaseLayout
+  title="Flutter Icon Generator — Android, iOS, macOS, Windows, Linux, Web | pasichDev"
+  description="Free Flutter icon generator: upload one PNG, get icons for Android, iOS, macOS, Windows, Linux and Web in a ZIP. Edit background, padding, logo. Runs in browser, nothing uploaded."
+  canonical="https://pasichdev.xyz/tools/icon-generator"
+  structuredData={structuredData}
+>
+  <div class="container animate-fade-in" style="max-width:800px">
+
+    <header style="margin-top:3rem;margin-bottom:2rem">
+      <a href="/tools" class="back-link">← Tools</a>
+      <h1 style="font-size:clamp(1.25rem,3vw,1.75rem);letter-spacing:-0.02em;margin-bottom:.5rem">Flutter Icon Generator</h1>
+      <p class="text-dim text-sm">Upload one PNG — edit background & layout, download icons for all platforms as ZIP.</p>
+    </header>
+
+    <!-- Drop zone -->
+    <div id="drop-zone" class="drop-zone">
+      <iconify-icon icon="solar:upload-linear" width="32" style="color:var(--color-txt-dim);margin-bottom:1rem"></iconify-icon>
+      <p class="text-dim text-sm">Drop PNG here or <label for="file-input" class="file-label">browse</label></p>
+      <p class="text-xs text-dim" style="margin-top:.5rem;opacity:.5">1024×1024 px recommended</p>
+      <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" style="display:none" />
+    </div>
+
+    <!-- Main section -->
+    <div id="preview-section" style="display:none;margin-bottom:4rem">
+
+      <!-- Source info -->
+      <div class="source-header">
+        <div class="source-thumb-wrap">
+          <img id="preview-img" src="" alt="Preview" class="source-thumb" />
+        </div>
+        <div class="source-meta">
+          <p id="preview-name" class="text-sm font-medium" style="color:var(--color-accent)"></p>
+          <p id="preview-dims" class="text-xs text-dim" style="margin-top:.2rem"></p>
+          <button id="btn-reset" class="btn btn-outline" style="font-size:.75rem;padding:.35rem .75rem;margin-top:.75rem">Change image</button>
+        </div>
+      </div>
+
+      <!-- Editor panel -->
+      <div class="section-label">Icon Editor</div>
+      <div class="editor-panel">
+
+        <div class="editor-left">
+          <canvas id="editor-canvas" width="256" height="256" class="editor-canvas"></canvas>
+          <p class="editor-hint">Drag to reposition · scroll to scale</p>
+        </div>
+
+        <div class="editor-right">
+
+          <div class="ctrl-group">
+            <div class="ctrl-label">Background</div>
+            <div class="bg-options">
+              <button class="bg-opt active" data-bg="transparent">
+                <i class="bg-checker-icon"></i>None
+              </button>
+              <button class="bg-opt" data-bg="#FFFFFF">
+                <i class="bg-swatch" style="background:#fff"></i>White
+              </button>
+              <button class="bg-opt" data-bg="#000000">
+                <i class="bg-swatch" style="background:#111;border-color:#444"></i>Black
+              </button>
+              <button class="bg-opt" id="bg-custom-btn">
+                <i class="bg-swatch" id="bg-custom-swatch" style="background:#4F46E5"></i>Custom
+              </button>
+            </div>
+            <input type="color" id="bg-color-input" value="#4F46E5" />
+          </div>
+
+          <div class="ctrl-group">
+            <div class="ctrl-label-row">
+              <span class="ctrl-label">Padding</span>
+              <span class="ctrl-val" id="padding-val">0%</span>
+            </div>
+            <input type="range" class="ctrl-slider" id="ctrl-padding" min="0" max="40" value="0" step="1" />
+          </div>
+
+          <div class="ctrl-group">
+            <div class="ctrl-label-row">
+              <span class="ctrl-label">Scale</span>
+              <span class="ctrl-val" id="scale-val">100%</span>
+            </div>
+            <input type="range" class="ctrl-slider" id="ctrl-scale" min="40" max="100" value="100" step="1" />
+          </div>
+
+          <div class="ctrl-group">
+            <div class="ctrl-label-row">
+              <span class="ctrl-label">Offset X</span>
+              <span class="ctrl-val" id="offsetx-val">0%</span>
+            </div>
+            <input type="range" class="ctrl-slider" id="ctrl-offsetx" min="-30" max="30" value="0" step="0.5" />
+          </div>
+
+          <div class="ctrl-group">
+            <div class="ctrl-label-row">
+              <span class="ctrl-label">Offset Y</span>
+              <span class="ctrl-val" id="offsety-val">0%</span>
+            </div>
+            <input type="range" class="ctrl-slider" id="ctrl-offsety" min="-30" max="30" value="0" step="0.5" />
+          </div>
+
+          <button id="btn-reset-params" class="btn btn-outline" style="font-size:.7rem;padding:.3rem .75rem;margin-top:.5rem;width:100%;justify-content:center">
+            Reset edits
+          </button>
+        </div>
+      </div>
+
+      <!-- Platform toggles -->
+      <div class="section-label" style="margin-top:2rem">Platforms</div>
+      <div class="platform-toggles" id="platform-toggles">
+        <button class="ptoggle active" data-platform="android">
+          <iconify-icon icon="solar:smartphone-linear" width="14"></iconify-icon> Android
+        </button>
+        <button class="ptoggle active" data-platform="ios">
+          <iconify-icon icon="solar:apple-linear" width="14"></iconify-icon> iOS
+        </button>
+        <button class="ptoggle active" data-platform="macos">
+          <iconify-icon icon="solar:monitor-linear" width="14"></iconify-icon> macOS
+        </button>
+        <button class="ptoggle active" data-platform="windows">
+          <iconify-icon icon="solar:window-frame-linear" width="14"></iconify-icon> Windows
+        </button>
+        <button class="ptoggle active" data-platform="linux">
+          <iconify-icon icon="solar:server-linear" width="14"></iconify-icon> Linux
+        </button>
+        <button class="ptoggle active" data-platform="web">
+          <iconify-icon icon="solar:global-linear" width="14"></iconify-icon> Web
+        </button>
+      </div>
+
+      <!-- Platform preview cards -->
+      <div class="platform-previews" id="platform-previews">
+
+        <div class="platform-card" data-platform="android">
+          <div class="pcard-header">
+            <span class="pcard-name">Android</span>
+            <span class="pcard-count">6 files</span>
+          </div>
+          <div class="pcard-previews">
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="20" data-size="48" width="48" height="48"></canvas>
+              <span>48px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="20" data-size="72" width="72" height="72"></canvas>
+              <span>72px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="20" data-size="96" width="72" height="72" data-display="72"></canvas>
+              <span>96px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="20" data-size="192" width="80" height="80" data-display="80"></canvas>
+              <span>192px</span>
+            </div>
+          </div>
+          <div class="pcard-files">mipmap-mdpi · hdpi · xhdpi · xxhdpi · xxxhdpi · play-store-512</div>
+        </div>
+
+        <div class="platform-card" data-platform="ios">
+          <div class="pcard-header">
+            <span class="pcard-name">iOS</span>
+            <span class="pcard-count">15 files</span>
+          </div>
+          <div class="pcard-previews">
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="22" data-size="60" width="60" height="60"></canvas>
+              <span>60px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="22" data-size="120" width="72" height="72" data-display="72"></canvas>
+              <span>120px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="22" data-size="180" width="80" height="80" data-display="80"></canvas>
+              <span>180px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="22" data-size="1024" width="80" height="80" data-display="80"></canvas>
+              <span>1024px</span>
+            </div>
+          </div>
+          <div class="pcard-files">AppIcon.appiconset + Contents.json</div>
+        </div>
+
+        <div class="platform-card" data-platform="macos">
+          <div class="pcard-header">
+            <span class="pcard-name">macOS</span>
+            <span class="pcard-count">7 files</span>
+          </div>
+          <div class="pcard-previews">
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="22" data-size="32" width="32" height="32"></canvas>
+              <span>32px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="22" data-size="128" width="64" height="64" data-display="64"></canvas>
+              <span>128px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="22" data-size="256" width="80" height="80" data-display="80"></canvas>
+              <span>256px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="22" data-size="512" width="80" height="80" data-display="80"></canvas>
+              <span>512px</span>
+            </div>
+          </div>
+          <div class="pcard-files">AppIcon.appiconset + Contents.json</div>
+        </div>
+
+        <div class="platform-card" data-platform="windows">
+          <div class="pcard-header">
+            <span class="pcard-name">Windows</span>
+            <span class="pcard-count">1 ICO file</span>
+          </div>
+          <div class="pcard-previews">
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="0" data-size="16" width="16" height="16"></canvas>
+              <span>16px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="0" data-size="32" width="32" height="32"></canvas>
+              <span>32px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="0" data-size="48" width="48" height="48"></canvas>
+              <span>48px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="0" data-size="256" width="80" height="80" data-display="80"></canvas>
+              <span>256px</span>
+            </div>
+          </div>
+          <div class="pcard-files">runner/resources/app_icon.ico (16·32·48·256 px)</div>
+        </div>
+
+        <div class="platform-card" data-platform="linux">
+          <div class="pcard-header">
+            <span class="pcard-name">Linux</span>
+            <span class="pcard-count">6 files</span>
+          </div>
+          <div class="pcard-previews">
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="0" data-size="48" width="48" height="48"></canvas>
+              <span>48px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="0" data-size="64" width="64" height="64"></canvas>
+              <span>64px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="0" data-size="128" width="64" height="64" data-display="64"></canvas>
+              <span>128px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="0" data-size="256" width="80" height="80" data-display="80"></canvas>
+              <span>256px</span>
+            </div>
+          </div>
+          <div class="pcard-files">hicolor/16·32·48·64·128·256 px (XDG)</div>
+        </div>
+
+        <div class="platform-card" data-platform="web">
+          <div class="pcard-header">
+            <span class="pcard-name">Web</span>
+            <span class="pcard-count">5 files</span>
+          </div>
+          <div class="pcard-previews">
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="50" data-size="32" width="32" height="32"></canvas>
+              <span>favicon</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="20" data-size="192" width="60" height="60" data-display="60"></canvas>
+              <span>192px</span>
+            </div>
+            <div class="pcard-preview-item">
+              <canvas class="icon-preview" data-radius="20" data-size="512" width="80" height="80" data-display="80"></canvas>
+              <span>512px</span>
+            </div>
+          </div>
+          <div class="pcard-files">favicon.png · Icon-192 · Icon-512 · maskable</div>
+        </div>
+
+      </div>
+
+      <!-- Download -->
+      <div class="download-bar">
+        <button id="btn-generate" class="btn btn-primary">
+          <iconify-icon icon="solar:download-linear"></iconify-icon>
+          Download ZIP
+        </button>
+        <p id="gen-status" class="text-xs text-dim"></p>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  declare global {
+    interface CanvasRenderingContext2D {
+      roundRect(x: number, y: number, w: number, h: number, r: number): void;
+    }
+    interface Window {
+      JSZip: new () => {
+        file(name: string, data: Blob | string): void;
+        generateAsync(opts: { type: 'blob' }): Promise<Blob>;
+      };
+    }
+  }
+
+  type PlatformId = 'android' | 'ios' | 'macos' | 'windows' | 'linux' | 'web';
+  interface FileEntry { path: string; size: number; }
+
+  // ── Static data (module level) ─────────────────────────────────────────────
+  const PLATFORM_FILES: Record<PlatformId, FileEntry[]> = {
+    android: [
+      { path: 'android/mipmap-mdpi/ic_launcher.png',    size: 48  },
+      { path: 'android/mipmap-hdpi/ic_launcher.png',    size: 72  },
+      { path: 'android/mipmap-xhdpi/ic_launcher.png',   size: 96  },
+      { path: 'android/mipmap-xxhdpi/ic_launcher.png',  size: 144 },
+      { path: 'android/mipmap-xxxhdpi/ic_launcher.png', size: 192 },
+      { path: 'android/play-store-512.png',             size: 512 },
+    ],
+    ios: [
+      { path: 'ios/AppIcon.appiconset/Icon-App-20x20@1x.png',     size: 20   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-20x20@2x.png',     size: 40   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-20x20@3x.png',     size: 60   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-29x29@1x.png',     size: 29   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-29x29@2x.png',     size: 58   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-29x29@3x.png',     size: 87   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-40x40@1x.png',     size: 40   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-40x40@2x.png',     size: 80   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-40x40@3x.png',     size: 120  },
+      { path: 'ios/AppIcon.appiconset/Icon-App-60x60@2x.png',     size: 120  },
+      { path: 'ios/AppIcon.appiconset/Icon-App-60x60@3x.png',     size: 180  },
+      { path: 'ios/AppIcon.appiconset/Icon-App-76x76@1x.png',     size: 76   },
+      { path: 'ios/AppIcon.appiconset/Icon-App-76x76@2x.png',     size: 152  },
+      { path: 'ios/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png', size: 167  },
+      { path: 'ios/AppIcon.appiconset/Icon-App-1024x1024@1x.png', size: 1024 },
+    ],
+    macos: [
+      { path: 'macos/AppIcon.appiconset/app_icon_16.png',   size: 16   },
+      { path: 'macos/AppIcon.appiconset/app_icon_32.png',   size: 32   },
+      { path: 'macos/AppIcon.appiconset/app_icon_64.png',   size: 64   },
+      { path: 'macos/AppIcon.appiconset/app_icon_128.png',  size: 128  },
+      { path: 'macos/AppIcon.appiconset/app_icon_256.png',  size: 256  },
+      { path: 'macos/AppIcon.appiconset/app_icon_512.png',  size: 512  },
+      { path: 'macos/AppIcon.appiconset/app_icon_1024.png', size: 1024 },
+    ],
+    windows: [], // ICO built separately
+    linux: [
+      { path: 'linux/data/icons/hicolor/16x16/apps/app_icon.png',   size: 16  },
+      { path: 'linux/data/icons/hicolor/32x32/apps/app_icon.png',   size: 32  },
+      { path: 'linux/data/icons/hicolor/48x48/apps/app_icon.png',   size: 48  },
+      { path: 'linux/data/icons/hicolor/64x64/apps/app_icon.png',   size: 64  },
+      { path: 'linux/data/icons/hicolor/128x128/apps/app_icon.png', size: 128 },
+      { path: 'linux/data/icons/hicolor/256x256/apps/app_icon.png', size: 256 },
+    ],
+    web: [
+      { path: 'web/favicon.png',           size: 32  },
+      { path: 'web/Icon-192.png',          size: 192 },
+      { path: 'web/Icon-512.png',          size: 512 },
+      { path: 'web/Icon-maskable-192.png', size: 192 },
+      { path: 'web/Icon-maskable-512.png', size: 512 },
+    ],
+  };
+
+  const IOS_CONTENTS = JSON.stringify({
+    images: [
+      { size:'20x20',     idiom:'iphone', filename:'Icon-App-20x20@2x.png',     scale:'2x' },
+      { size:'20x20',     idiom:'iphone', filename:'Icon-App-20x20@3x.png',     scale:'3x' },
+      { size:'29x29',     idiom:'iphone', filename:'Icon-App-29x29@1x.png',     scale:'1x' },
+      { size:'29x29',     idiom:'iphone', filename:'Icon-App-29x29@2x.png',     scale:'2x' },
+      { size:'29x29',     idiom:'iphone', filename:'Icon-App-29x29@3x.png',     scale:'3x' },
+      { size:'40x40',     idiom:'iphone', filename:'Icon-App-40x40@2x.png',     scale:'2x' },
+      { size:'40x40',     idiom:'iphone', filename:'Icon-App-40x40@3x.png',     scale:'3x' },
+      { size:'60x60',     idiom:'iphone', filename:'Icon-App-60x60@2x.png',     scale:'2x' },
+      { size:'60x60',     idiom:'iphone', filename:'Icon-App-60x60@3x.png',     scale:'3x' },
+      { size:'20x20',     idiom:'ipad',   filename:'Icon-App-20x20@1x.png',     scale:'1x' },
+      { size:'20x20',     idiom:'ipad',   filename:'Icon-App-20x20@2x.png',     scale:'2x' },
+      { size:'29x29',     idiom:'ipad',   filename:'Icon-App-29x29@1x.png',     scale:'1x' },
+      { size:'29x29',     idiom:'ipad',   filename:'Icon-App-29x29@2x.png',     scale:'2x' },
+      { size:'40x40',     idiom:'ipad',   filename:'Icon-App-40x40@1x.png',     scale:'1x' },
+      { size:'40x40',     idiom:'ipad',   filename:'Icon-App-40x40@2x.png',     scale:'2x' },
+      { size:'76x76',     idiom:'ipad',   filename:'Icon-App-76x76@1x.png',     scale:'1x' },
+      { size:'76x76',     idiom:'ipad',   filename:'Icon-App-76x76@2x.png',     scale:'2x' },
+      { size:'83.5x83.5', idiom:'ipad',   filename:'Icon-App-83.5x83.5@2x.png', scale:'2x' },
+      { size:'1024x1024', idiom:'ios-marketing', filename:'Icon-App-1024x1024@1x.png', scale:'1x' },
+    ],
+    info: { version: 1, author: 'pasichdev.xyz/tools/icon-generator' },
+  }, null, 2);
+
+  const MACOS_CONTENTS = JSON.stringify({
+    images: [
+      { size:'16x16',   idiom:'mac', filename:'app_icon_16.png',   scale:'1x' },
+      { size:'16x16',   idiom:'mac', filename:'app_icon_32.png',   scale:'2x' },
+      { size:'32x32',   idiom:'mac', filename:'app_icon_32.png',   scale:'1x' },
+      { size:'32x32',   idiom:'mac', filename:'app_icon_64.png',   scale:'2x' },
+      { size:'64x64',   idiom:'mac', filename:'app_icon_64.png',   scale:'1x' },
+      { size:'128x128', idiom:'mac', filename:'app_icon_128.png',  scale:'1x' },
+      { size:'128x128', idiom:'mac', filename:'app_icon_256.png',  scale:'2x' },
+      { size:'256x256', idiom:'mac', filename:'app_icon_256.png',  scale:'1x' },
+      { size:'256x256', idiom:'mac', filename:'app_icon_512.png',  scale:'2x' },
+      { size:'512x512', idiom:'mac', filename:'app_icon_512.png',  scale:'1x' },
+      { size:'512x512', idiom:'mac', filename:'app_icon_1024.png', scale:'2x' },
+    ],
+    info: { version: 1, author: 'pasichdev.xyz/tools/icon-generator' },
+  }, null, 2);
+
+  // ── Mutable state (module level, reset in init) ───────────────────────────
+  let sourceImg: HTMLImageElement | null = null;
+  let editorCanvas: HTMLCanvasElement;
+  let editorCtx: CanvasRenderingContext2D;
+  const activePlatforms = new Set<PlatformId>();
+  const editorParams = { bgColor: 'transparent', padding: 0, scale: 100, offsetX: 0, offsetY: 0 };
+
+  // ── Rendering (uses module-level state) ───────────────────────────────────
+  function renderWithParams(ctx: CanvasRenderingContext2D, w: number) {
+    ctx.clearRect(0, 0, w, w);
+    if (editorParams.bgColor !== 'transparent') {
+      ctx.fillStyle = editorParams.bgColor;
+      ctx.fillRect(0, 0, w, w);
+    }
+    if (!sourceImg) return;
+    const eff = w * (editorParams.scale / 100) * (1 - (editorParams.padding * 2) / 100);
+    const cx  = w / 2 + (editorParams.offsetX / 100) * w;
+    const cy  = w / 2 + (editorParams.offsetY / 100) * w;
+    ctx.drawImage(sourceImg, cx - eff / 2, cy - eff / 2, eff, eff);
+  }
+
+  function resizeToBlob(size: number): Promise<Blob> {
+    return new Promise(resolve => {
+      const c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      renderWithParams(c.getContext('2d')!, size);
+      c.toBlob(b => resolve(b!), 'image/png');
+    });
+  }
+
+  async function buildIcoBlob(): Promise<Blob> {
+    const sizes = [16, 32, 48, 256];
+    const blobs = await Promise.all(sizes.map(s => resizeToBlob(s)));
+    const bufs  = await Promise.all(blobs.map(b => b.arrayBuffer()));
+    const count = sizes.length;
+    const hdrSize = 6 + 16 * count;
+    const total = hdrSize + bufs.reduce((a, b) => a + b.byteLength, 0);
+    const ab = new ArrayBuffer(total);
+    const dv = new DataView(ab);
+    const u8 = new Uint8Array(ab);
+    dv.setUint16(0, 0, true); dv.setUint16(2, 1, true); dv.setUint16(4, count, true);
+    let imgOff = hdrSize;
+    for (let i = 0; i < count; i++) {
+      const b = 6 + i * 16; const s = sizes[i] >= 256 ? 0 : sizes[i];
+      dv.setUint8(b, s); dv.setUint8(b+1, s); dv.setUint8(b+2, 0); dv.setUint8(b+3, 0);
+      dv.setUint16(b+4, 0, true); dv.setUint16(b+6, 32, true);
+      dv.setUint32(b+8, bufs[i].byteLength, true); dv.setUint32(b+12, imgOff, true);
+      imgOff += bufs[i].byteLength;
+    }
+    let pos = hdrSize;
+    for (const buf of bufs) { u8.set(new Uint8Array(buf), pos); pos += buf.byteLength; }
+    return new Blob([ab], { type: 'image/vnd.microsoft.icon' });
+  }
+
+  function updateEditorCanvas() { if (editorCtx) renderWithParams(editorCtx, 256); }
+
+  function drawPreviewCanvas(canvas: HTMLCanvasElement) {
+    if (!sourceImg) return;
+    const radiusPct = parseFloat(canvas.dataset.radius || '0');
+    const display   = parseInt(canvas.dataset.display || String(canvas.width));
+    canvas.style.width  = display + 'px';
+    canvas.style.height = display + 'px';
+    const w = canvas.width;
+    const ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, w, w);
+    ctx.save();
+    if (radiusPct > 0) {
+      const r = (radiusPct / 100) * w;
+      ctx.beginPath();
+      ctx.roundRect(0, 0, w, w, r);
+      ctx.clip();
+    }
+    renderWithParams(ctx, w);
+    ctx.restore();
+  }
+
+  function updateAllPreviews() {
+    updateEditorCanvas();
+    document.querySelectorAll<HTMLCanvasElement>('.icon-preview').forEach(c => drawPreviewCanvas(c));
+  }
+
+  // ── Init (called on every page load / ViewTransition) ─────────────────────
+  let abortCtrl: AbortController | null = null;
+
+  function init() {
+    const canvas = document.getElementById('editor-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return; // not on this page
+
+    // Clean up previous listeners (ViewTransitions re-runs init on nav back)
+    abortCtrl?.abort();
+    abortCtrl = new AbortController();
+    const sig = abortCtrl.signal;
+
+    // Bind canvas refs
+    editorCanvas = canvas;
+    editorCtx = canvas.getContext('2d')!;
+
+    // Reset state
+    sourceImg = null;
+    Object.assign(editorParams, { bgColor: 'transparent', padding: 0, scale: 100, offsetX: 0, offsetY: 0 });
+    activePlatforms.clear();
+    (['android','ios','macos','windows','linux','web'] as PlatformId[]).forEach(p => activePlatforms.add(p));
+
+    // ── Drag to reposition ──────────────────────────────────────────────────
+    let dragging = false;
+    let dragStartClient = { x: 0, y: 0 };
+    let dragStartOffset = { x: 0, y: 0 };
+
+    function startDrag(cx: number, cy: number) {
+      dragging = true;
+      dragStartClient = { x: cx, y: cy };
+      dragStartOffset = { x: editorParams.offsetX, y: editorParams.offsetY };
+      editorCanvas.style.cursor = 'grabbing';
+    }
+    function moveDrag(cx: number, cy: number) {
+      if (!dragging) return;
+      const rect = editorCanvas.getBoundingClientRect();
+      const dx = ((cx - dragStartClient.x) / rect.width)  * 100;
+      const dy = ((cy - dragStartClient.y) / rect.height) * 100;
+      editorParams.offsetX = Math.max(-30, Math.min(30, dragStartOffset.x + dx));
+      editorParams.offsetY = Math.max(-30, Math.min(30, dragStartOffset.y + dy));
+      (document.getElementById('ctrl-offsetx') as HTMLInputElement).value = String(editorParams.offsetX);
+      (document.getElementById('ctrl-offsety') as HTMLInputElement).value = String(editorParams.offsetY);
+      document.getElementById('offsetx-val')!.textContent = Math.round(editorParams.offsetX) + '%';
+      document.getElementById('offsety-val')!.textContent = Math.round(editorParams.offsetY) + '%';
+      updateAllPreviews();
+    }
+    function stopDrag() { dragging = false; editorCanvas.style.cursor = 'grab'; }
+
+    editorCanvas.addEventListener('mousedown', e => { e.preventDefault(); startDrag(e.clientX, e.clientY); }, { signal: sig });
+    window.addEventListener('mousemove', e => moveDrag(e.clientX, e.clientY), { signal: sig });
+    window.addEventListener('mouseup', stopDrag, { signal: sig });
+    editorCanvas.addEventListener('touchstart', e => { e.preventDefault(); startDrag(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false, signal: sig } as any);
+    window.addEventListener('touchmove', e => { if (dragging) { e.preventDefault(); moveDrag(e.touches[0].clientX, e.touches[0].clientY); } }, { passive: false, signal: sig } as any);
+    window.addEventListener('touchend', stopDrag, { signal: sig });
+
+    editorCanvas.addEventListener('wheel', e => {
+      e.preventDefault();
+      editorParams.scale = Math.max(40, Math.min(100, editorParams.scale - e.deltaY * 0.05));
+      (document.getElementById('ctrl-scale') as HTMLInputElement).value = String(editorParams.scale);
+      document.getElementById('scale-val')!.textContent = Math.round(editorParams.scale) + '%';
+      updateAllPreviews();
+    }, { passive: false, signal: sig } as any);
+
+    // ── Sliders ─────────────────────────────────────────────────────────────
+    function bindSlider(id: string, key: keyof typeof editorParams, valId: string, fmt: (v: number) => string) {
+      const el = document.getElementById(id) as HTMLInputElement;
+      if (!el) return;
+      el.addEventListener('input', () => {
+        (editorParams as any)[key] = parseFloat(el.value);
+        document.getElementById(valId)!.textContent = fmt(parseFloat(el.value));
+        updateAllPreviews();
+      }, { signal: sig });
+    }
+    bindSlider('ctrl-padding', 'padding', 'padding-val', v => Math.round(v) + '%');
+    bindSlider('ctrl-scale',   'scale',   'scale-val',   v => Math.round(v) + '%');
+    bindSlider('ctrl-offsetx', 'offsetX', 'offsetx-val', v => Math.round(v) + '%');
+    bindSlider('ctrl-offsety', 'offsetY', 'offsety-val', v => Math.round(v) + '%');
+
+    // ── Background ──────────────────────────────────────────────────────────
+    const allBgOpts  = document.querySelectorAll<HTMLElement>('.bg-opt');
+    const colorInput = document.getElementById('bg-color-input') as HTMLInputElement;
+    const customSwatch = document.getElementById('bg-custom-swatch')!;
+    const customBtn    = document.getElementById('bg-custom-btn')!;
+
+    allBgOpts.forEach(btn => {
+      if (btn.id === 'bg-custom-btn') return;
+      btn.addEventListener('click', () => {
+        allBgOpts.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        editorParams.bgColor = (btn as HTMLButtonElement).dataset.bg!;
+        updateAllPreviews();
+      }, { signal: sig });
+    });
+
+    customBtn.addEventListener('click', () => { colorInput.click(); }, { signal: sig });
+    colorInput.addEventListener('input', () => {
+      customSwatch.style.background = colorInput.value;
+      allBgOpts.forEach(b => b.classList.remove('active'));
+      customBtn.classList.add('active');
+      editorParams.bgColor = colorInput.value;
+      updateAllPreviews();
+    }, { signal: sig });
+
+    // ── Reset editor ────────────────────────────────────────────────────────
+    document.getElementById('btn-reset-params')!.addEventListener('click', () => {
+      Object.assign(editorParams, { bgColor: 'transparent', padding: 0, scale: 100, offsetX: 0, offsetY: 0 });
+      (document.getElementById('ctrl-padding') as HTMLInputElement).value = '0';
+      (document.getElementById('ctrl-scale')   as HTMLInputElement).value = '100';
+      (document.getElementById('ctrl-offsetx') as HTMLInputElement).value = '0';
+      (document.getElementById('ctrl-offsety') as HTMLInputElement).value = '0';
+      document.getElementById('padding-val')!.textContent = '0%';
+      document.getElementById('scale-val')!.textContent   = '100%';
+      document.getElementById('offsetx-val')!.textContent = '0%';
+      document.getElementById('offsety-val')!.textContent = '0%';
+      allBgOpts.forEach(b => b.classList.remove('active'));
+      document.querySelector<HTMLElement>('.bg-opt[data-bg="transparent"]')!.classList.add('active');
+      updateAllPreviews();
+    }, { signal: sig });
+
+    // ── File handling ────────────────────────────────────────────────────────
+    function handleFile(file: File) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          sourceImg = img;
+          (document.getElementById('preview-img') as HTMLImageElement).src = e.target!.result as string;
+          document.getElementById('preview-name')!.textContent = file.name;
+          document.getElementById('preview-dims')!.textContent = `${img.width} × ${img.height} px`;
+          (document.getElementById('drop-zone') as HTMLElement).style.display = 'none';
+          (document.getElementById('preview-section') as HTMLElement).style.display = 'block';
+          requestAnimationFrame(updateAllPreviews);
+        };
+        img.src = e.target!.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    const dropZone  = document.getElementById('drop-zone')!;
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
+    dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag-over'); }, { signal: sig });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'), { signal: sig });
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault(); dropZone.classList.remove('drag-over');
+      const f = e.dataTransfer?.files[0]; if (f) handleFile(f);
+    }, { signal: sig });
+    dropZone.addEventListener('click', () => fileInput.click(), { signal: sig });
+    fileInput.addEventListener('change', () => { if (fileInput.files?.[0]) handleFile(fileInput.files[0]); }, { signal: sig });
+
+    document.getElementById('btn-reset')!.addEventListener('click', () => {
+      sourceImg = null;
+      (document.getElementById('drop-zone') as HTMLElement).style.display = 'flex';
+      (document.getElementById('preview-section') as HTMLElement).style.display = 'none';
+      fileInput.value = '';
+    }, { signal: sig });
+
+    // ── Platform toggles ─────────────────────────────────────────────────────
+    document.querySelectorAll<HTMLButtonElement>('.ptoggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = btn.dataset.platform as PlatformId;
+        if (activePlatforms.has(p)) {
+          if (activePlatforms.size === 1) return;
+          activePlatforms.delete(p);
+          btn.classList.remove('active');
+        } else {
+          activePlatforms.add(p);
+          btn.classList.add('active');
+        }
+        document.querySelectorAll<HTMLElement>('.platform-card').forEach(card => {
+          const cp = card.dataset.platform as PlatformId;
+          card.style.opacity       = activePlatforms.has(cp) ? '1' : '0.3';
+          card.style.pointerEvents = activePlatforms.has(cp) ? '' : 'none';
+        });
+      }, { signal: sig });
+    });
+
+    // ── Generate ZIP ─────────────────────────────────────────────────────────
+    document.getElementById('btn-generate')!.addEventListener('click', async () => {
+      if (!sourceImg) return;
+      const status = document.getElementById('gen-status')!;
+      const btn    = document.getElementById('btn-generate')!;
+      btn.setAttribute('disabled', '');
+      status.textContent = 'Generating…';
+
+      await new Promise<void>(resolve => {
+        if (window.JSZip) { resolve(); return; }
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+        s.onload = () => resolve();
+        document.head.appendChild(s);
+      });
+
+      const zip = new window.JSZip();
+      for (const pid of activePlatforms) {
+        if (pid === 'windows') {
+          status.textContent = 'Building ICO…';
+          zip.file('windows/runner/resources/app_icon.ico', await buildIcoBlob());
+        } else {
+          for (const { path, size } of PLATFORM_FILES[pid]) {
+            zip.file(path, await resizeToBlob(size));
+          }
+          if (pid === 'ios')   zip.file('ios/AppIcon.appiconset/Contents.json',   IOS_CONTENTS);
+          if (pid === 'macos') zip.file('macos/AppIcon.appiconset/Contents.json', MACOS_CONTENTS);
+        }
+      }
+
+      status.textContent = 'Compressing…';
+      const content = await zip.generateAsync({ type: 'blob' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(content);
+      a.download = 'flutter-icons.zip';
+      a.click();
+      URL.revokeObjectURL(a.href);
+
+      btn.removeAttribute('disabled');
+      status.textContent = '✓ Downloaded!';
+      setTimeout(() => { status.textContent = ''; }, 3000);
+    }, { signal: sig });
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>
+
+<style>
+  /* ── Section label ─────────────────────────────────────────────────────── */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-txt-dim);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* ── Drop zone ─────────────────────────────────────────────────────────── */
+  .drop-zone {
+    border: 1px dashed var(--color-border);
+    border-radius: 2px;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .drop-zone:hover, .drop-zone.drag-over { border-color: rgba(255,255,255,.3); }
+  .file-label { color: var(--color-accent); cursor: pointer; text-decoration: underline; }
+
+  /* ── Source info ───────────────────────────────────────────────────────── */
+  .source-header {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+  .source-thumb-wrap {
+    width: 64px; height: 64px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--color-surface);
+  }
+  .source-thumb { width: 100%; height: 100%; object-fit: contain; }
+
+  /* ── Editor panel ──────────────────────────────────────────────────────── */
+  .editor-panel {
+    display: grid;
+    grid-template-columns: 256px 1fr;
+    gap: 1.5rem;
+    margin-bottom: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    background: rgba(10,10,10,.5);
+  }
+  @media (max-width: 580px) {
+    .editor-panel { grid-template-columns: 1fr; }
+  }
+
+  .editor-canvas {
+    display: block;
+    width: 256px;
+    height: 256px;
+    cursor: grab;
+    background: repeating-conic-gradient(#2a2a2a 0% 25%, #181818 0% 50%) 0 0 / 12px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    touch-action: none;
+  }
+  .editor-canvas:active { cursor: grabbing; }
+
+  .editor-hint {
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    color: var(--color-txt-dim);
+    text-align: center;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: .7;
+  }
+
+  /* ── Controls ──────────────────────────────────────────────────────────── */
+  .editor-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .ctrl-group { margin-bottom: .875rem; }
+
+  .ctrl-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .375rem;
+  }
+
+  .ctrl-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-txt-dim);
+    display: block;
+    margin-bottom: .375rem;
+  }
+
+  .ctrl-label-row .ctrl-label { margin-bottom: 0; }
+
+  .ctrl-val {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-accent);
+    min-width: 2.5rem;
+    text-align: right;
+  }
+
+  .ctrl-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: var(--color-border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+  .ctrl-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 13px; height: 13px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .ctrl-slider::-moz-range-thumb {
+    width: 13px; height: 13px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+
+  /* ── Background options ────────────────────────────────────────────────── */
+  .bg-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .375rem;
+    margin-top: .375rem;
+  }
+
+  .bg-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: .25rem .5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    background: none;
+    color: var(--color-txt-dim);
+    cursor: pointer;
+    transition: border-color .15s, color .15s;
+  }
+  .bg-opt:hover { border-color: rgba(255,255,255,.2); color: var(--color-accent); }
+  .bg-opt.active { border-color: rgba(255,255,255,.35); color: var(--color-accent); background: rgba(255,255,255,.04); }
+
+  .bg-checker-icon {
+    display: inline-block;
+    width: 10px; height: 10px;
+    background: repeating-conic-gradient(#555 0% 25%, #333 0% 50%) 0 0 / 5px 5px;
+    flex-shrink: 0;
+  }
+
+  .bg-swatch {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border: 1px solid rgba(255,255,255,.2);
+    flex-shrink: 0;
+  }
+
+  #bg-color-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0; height: 0;
+  }
+
+  /* ── Platform toggles ──────────────────────────────────────────────────── */
+  .platform-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ptoggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: .3rem .75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: none;
+    color: var(--color-txt-dim);
+    cursor: pointer;
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .ptoggle.active {
+    border-color: rgba(255,255,255,.35);
+    color: var(--color-accent);
+    background: rgba(255,255,255,.04);
+  }
+
+  /* ── Platform cards ────────────────────────────────────────────────────── */
+  .platform-previews {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .875rem;
+    margin-bottom: 1.75rem;
+  }
+  @media (max-width: 540px) { .platform-previews { grid-template-columns: 1fr; } }
+
+  .platform-card {
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: 1rem;
+    background: var(--color-surface);
+    transition: opacity .2s;
+  }
+
+  .pcard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .875rem;
+  }
+  .pcard-name {
+    font-family: var(--font-mono);
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--color-txt-main);
+  }
+  .pcard-count {
+    font-family: var(--font-mono);
+    font-size: .55rem;
+    color: var(--color-txt-dim);
+  }
+
+  .pcard-previews {
+    display: flex;
+    align-items: flex-end;
+    gap: .75rem;
+    margin-bottom: .75rem;
+    flex-wrap: wrap;
+  }
+  .pcard-preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+  }
+  .pcard-preview-item span {
+    font-family: var(--font-mono);
+    font-size: .5rem;
+    color: var(--color-txt-dim);
+  }
+
+  .icon-preview {
+    display: block;
+    background: repeating-conic-gradient(#252525 0% 25%, #181818 0% 50%) 0 0 / 8px 8px;
+  }
+
+  .pcard-files {
+    font-family: var(--font-mono);
+    font-size: .55rem;
+    color: var(--color-txt-dim);
+    border-top: 1px solid var(--color-border);
+    padding-top: .625rem;
+    line-height: 1.6;
+  }
+
+  /* ── Download bar ──────────────────────────────────────────────────────── */
+  .download-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+</style>

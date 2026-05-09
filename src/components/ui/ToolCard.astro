@@ -1,0 +1,77 @@
+---
+export interface Props {
+  icon: string;
+  title: string;
+  description: string;
+  href: string;
+  badge?: string;
+}
+const { icon, title, description, href, badge } = Astro.props;
+---
+
+<a href={href} class="tool-card card">
+  <div class="tool-top">
+    <div class="tool-icon">
+      <iconify-icon icon={icon} width="22"></iconify-icon>
+    </div>
+    {badge && <span class="tool-badge">{badge}</span>}
+  </div>
+  <h3 class="tool-title">{title}</h3>
+  <p class="tool-desc">{description}</p>
+  <span class="tool-url">{href}</span>
+</a>
+
+<style>
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+
+  .tool-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .tool-icon {
+    width: 2rem; height: 2rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .tool-badge {
+    font-size: 0.55rem; font-family: var(--font-mono);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--color-txt-dim);
+    border: 1px solid var(--color-border);
+    padding: 0.1rem 0.4rem; border-radius: 2px;
+  }
+
+  .tool-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-desc {
+    font-size: 0.75rem;
+    color: var(--color-txt-dim);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex: 1;
+  }
+
+  .tool-url {
+    font-size: 0.6rem; font-family: var(--font-mono);
+    color: #333; transition: color 0.15s;
+    margin-top: auto;
+  }
+
+  .tool-card:hover .tool-url { color: var(--color-txt-dim); }
+</style>

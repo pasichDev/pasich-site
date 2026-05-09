@@ -1,0 +1,657 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "QR Code Generator — Custom Design",
+  "url": "https://pasichdev.xyz/tools/qr-generator",
+  "description": "Generate custom QR codes with colors, dot styles, logo. URL, Email, Phone, Wi-Fi, vCard. Download PNG or SVG. Free, client-side.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "featureList": "URL QR code, Email QR code, Phone QR code, Wi-Fi QR code, vCard QR code, Custom colors, Dot styles, Logo overlay, Error correction levels, PNG download, SVG download, Copy to clipboard",
+  "offers": { "@type": "Offer", "price": "0" }
+};
+---
+
+<BaseLayout
+  title="QR Code Generator — Custom Design Free | pasichDev"
+  description="Create custom QR codes with colors, dot styles, logo. Supports URL, Email, Phone, Wi-Fi, vCard. Download PNG or SVG. Free, no sign-up."
+  canonical="https://pasichdev.xyz/tools/qr-generator"
+  structuredData={structuredData}
+>
+  <div class="container animate-fade-in" style="max-width:860px">
+    <header style="margin-top:3rem;margin-bottom:2rem">
+      <a href="/tools" class="back-link">← Tools</a>
+      <h1 style="font-size:clamp(1.25rem,3vw,1.75rem);letter-spacing:-0.02em;margin-bottom:.5rem">QR Code Generator</h1>
+      <p class="text-dim text-sm">Custom colors, dot styles, logo. Generates live as you type.</p>
+    </header>
+
+    <div class="qr-layout">
+
+      <!-- Controls -->
+      <div class="qr-controls">
+
+        <!-- Type tabs -->
+        <div class="field-group">
+          <div class="field-label">Content Type</div>
+          <div class="type-tabs">
+            <button class="type-tab active" data-type="url">URL</button>
+            <button class="type-tab" data-type="text">Text</button>
+            <button class="type-tab" data-type="email">Email</button>
+            <button class="type-tab" data-type="phone">Phone</button>
+            <button class="type-tab" data-type="wifi">Wi-Fi</button>
+            <button class="type-tab" data-type="vcard">vCard</button>
+          </div>
+        </div>
+
+        <!-- URL -->
+        <div class="content-panel" data-panel="url">
+          <div class="field-group">
+            <label class="field-label">URL</label>
+            <input type="url" id="in-url" class="field-input" placeholder="https://example.com" value="https://pasichdev.xyz" />
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="content-panel" data-panel="text" style="display:none">
+          <div class="field-group">
+            <label class="field-label">Text</label>
+            <textarea id="in-text" class="field-input field-textarea" rows="3" placeholder="Your text…"></textarea>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="content-panel" data-panel="email" style="display:none">
+          <div class="field-group">
+            <label class="field-label">Email address</label>
+            <input type="email" id="in-email" class="field-input" placeholder="user@example.com" />
+          </div>
+          <div class="field-group" style="margin-top:.75rem">
+            <label class="field-label">Subject (optional)</label>
+            <input type="text" id="in-email-sub" class="field-input" placeholder="Hello" />
+          </div>
+          <div class="field-group" style="margin-top:.75rem">
+            <label class="field-label">Body (optional)</label>
+            <textarea id="in-email-body" class="field-input field-textarea" rows="2" placeholder="Message…"></textarea>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="content-panel" data-panel="phone" style="display:none">
+          <div class="field-group">
+            <label class="field-label">Phone number</label>
+            <input type="tel" id="in-phone" class="field-input" placeholder="+380661234567" />
+          </div>
+        </div>
+
+        <!-- Wi-Fi -->
+        <div class="content-panel" data-panel="wifi" style="display:none">
+          <div class="field-group">
+            <label class="field-label">Network name (SSID)</label>
+            <input type="text" id="in-wifi-ssid" class="field-input" placeholder="MyNetwork" />
+          </div>
+          <div class="field-group" style="margin-top:.75rem">
+            <label class="field-label">Password</label>
+            <input type="text" id="in-wifi-pass" class="field-input" placeholder="password" />
+          </div>
+          <div class="field-group" style="margin-top:.75rem">
+            <label class="field-label">Security</label>
+            <select id="in-wifi-sec" class="field-input field-select">
+              <option value="WPA">WPA / WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">None (open)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- vCard -->
+        <div class="content-panel" data-panel="vcard" style="display:none">
+          <div class="field-group">
+            <label class="field-label">Full name</label>
+            <input type="text" id="in-vcard-name" class="field-input" placeholder="John Doe" />
+          </div>
+          <div class="two-col" style="margin-top:.75rem">
+            <div class="field-group">
+              <label class="field-label">Phone</label>
+              <input type="tel" id="in-vcard-phone" class="field-input" placeholder="+380…" />
+            </div>
+            <div class="field-group">
+              <label class="field-label">Email</label>
+              <input type="email" id="in-vcard-email" class="field-input" placeholder="email@…" />
+            </div>
+          </div>
+          <div class="field-group" style="margin-top:.75rem">
+            <label class="field-label">Website</label>
+            <input type="url" id="in-vcard-url" class="field-input" placeholder="https://…" />
+          </div>
+        </div>
+
+        <div class="ctrl-divider"></div>
+
+        <!-- Colors -->
+        <div class="two-col">
+          <div class="field-group">
+            <label class="field-label">Foreground</label>
+            <div class="color-wrap">
+              <input type="color" id="qr-fg" value="#ffffff" class="color-input" />
+              <span id="qr-fg-label" class="color-label">#ffffff</span>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Background</label>
+            <div class="color-wrap">
+              <input type="color" id="qr-bg" value="#050505" class="color-input" />
+              <span id="qr-bg-label" class="color-label">#050505</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dot style -->
+        <div class="field-group">
+          <div class="field-label">Dot Style</div>
+          <div class="dot-style-row">
+            <label class="dot-card active" data-style="square">
+              <input type="radio" name="dot-style" value="square" checked hidden />
+              <svg viewBox="0 0 20 20" width="20" height="20"><rect x="1" y="1" width="8" height="8" fill="currentColor"/><rect x="11" y="1" width="8" height="8" fill="currentColor"/><rect x="1" y="11" width="8" height="8" fill="currentColor"/><rect x="11" y="11" width="8" height="8" fill="currentColor"/></svg>
+              Square
+            </label>
+            <label class="dot-card" data-style="rounded">
+              <input type="radio" name="dot-style" value="rounded" hidden />
+              <svg viewBox="0 0 20 20" width="20" height="20"><rect x="1" y="1" width="8" height="8" rx="2.5" fill="currentColor"/><rect x="11" y="1" width="8" height="8" rx="2.5" fill="currentColor"/><rect x="1" y="11" width="8" height="8" rx="2.5" fill="currentColor"/><rect x="11" y="11" width="8" height="8" rx="2.5" fill="currentColor"/></svg>
+              Rounded
+            </label>
+            <label class="dot-card" data-style="dots">
+              <input type="radio" name="dot-style" value="dots" hidden />
+              <svg viewBox="0 0 20 20" width="20" height="20"><circle cx="5" cy="5" r="4" fill="currentColor"/><circle cx="15" cy="5" r="4" fill="currentColor"/><circle cx="5" cy="15" r="4" fill="currentColor"/><circle cx="15" cy="15" r="4" fill="currentColor"/></svg>
+              Dots
+            </label>
+          </div>
+        </div>
+
+        <!-- EC level -->
+        <div class="field-group">
+          <div class="field-label">Error Correction</div>
+          <div class="ec-row">
+            <button class="ec-btn" data-level="L" title="Low · 7%">L</button>
+            <button class="ec-btn active" data-level="M" title="Medium · 15%">M</button>
+            <button class="ec-btn" data-level="Q" title="Quartile · 25%">Q</button>
+            <button class="ec-btn" data-level="H" title="High · 30%">H</button>
+            <span class="ec-hint" id="ec-hint">15% recovery</span>
+          </div>
+        </div>
+
+        <!-- Size + Margin -->
+        <div class="two-col">
+          <div class="field-group">
+            <label class="field-label">Size: <span id="qr-size-label">256px</span></label>
+            <input type="range" id="qr-size" min="128" max="512" step="64" value="256" class="range-input" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Margin: <span id="qr-margin-label">2</span></label>
+            <input type="range" id="qr-margin" min="0" max="6" step="1" value="2" class="range-input" />
+          </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="field-group">
+          <label class="field-label">Logo (optional)</label>
+          <label class="logo-upload" id="logo-label">
+            <iconify-icon icon="solar:upload-linear" width="14"></iconify-icon>
+            <span id="logo-filename">Choose image…</span>
+            <input type="file" id="logo-input" accept="image/*" hidden />
+          </label>
+          <div id="logo-size-wrap" style="display:none;margin-top:.5rem">
+            <label class="field-label">Logo size: <span id="logo-size-label">22%</span></label>
+            <input type="range" id="logo-size" min="10" max="35" step="1" value="22" class="range-input" />
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="action-row">
+          <button id="btn-png" class="btn btn-primary" disabled>↓ PNG</button>
+          <button id="btn-svg" class="btn btn-outline" disabled>↓ SVG</button>
+          <button id="btn-copy" class="btn btn-outline" disabled>Copy</button>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="qr-preview-col">
+        <div class="qr-preview-wrap" id="qr-wrap">
+          <div id="qr-placeholder" class="qr-placeholder">
+            <iconify-icon icon="solar:qr-code-linear" width="48" style="opacity:.12"></iconify-icon>
+            <p class="text-xs text-dim" style="margin-top:.75rem">Preview here</p>
+          </div>
+          <canvas id="qr-canvas" style="display:none;max-width:100%;border-radius:4px"></canvas>
+        </div>
+        <p class="preview-note">Generates automatically</p>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  declare global {
+    interface Window {
+      QRCode: {
+        new (el: HTMLElement, opts: object): void;
+        CorrectLevel: Record<string, number>;
+      };
+    }
+  }
+
+  const EC_LABELS: Record<string, string> = { L: '7% recovery', M: '15% recovery', Q: '25% recovery', H: '30% recovery' };
+
+  // Pure functions — no side effects, safe at module level
+  function drawDot(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, style: string, color: string) {
+    ctx.fillStyle = color;
+    if (style === 'dots') {
+      ctx.beginPath();
+      ctx.arc(x + size / 2, y + size / 2, size * 0.42, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (style === 'rounded') {
+      const r = size * 0.28;
+      ctx.beginPath();
+      ctx.moveTo(x + r, y); ctx.lineTo(x + size - r, y);
+      ctx.quadraticCurveTo(x + size, y, x + size, y + r);
+      ctx.lineTo(x + size, y + size - r);
+      ctx.quadraticCurveTo(x + size, y + size, x + size - r, y + size);
+      ctx.lineTo(x + r, y + size);
+      ctx.quadraticCurveTo(x, y + size, x, y + size - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath(); ctx.fill();
+    } else {
+      ctx.fillRect(x, y, size, size);
+    }
+  }
+
+  function buildSVG(fg: string, bg: string, dotStyle: string, outputSize: number, margin: number, qrMatrix: boolean[][]): string {
+    if (!qrMatrix.length) return '';
+    const n = qrMatrix.length;
+    const cell = outputSize / (n + margin * 2);
+    const parts: string[] = [
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${outputSize} ${outputSize}" width="${outputSize}" height="${outputSize}">`,
+      `<rect width="${outputSize}" height="${outputSize}" fill="${bg}"/>`,
+    ];
+    for (let row = 0; row < n; row++) {
+      for (let col = 0; col < n; col++) {
+        if (!qrMatrix[row][col]) continue;
+        const x = (col + margin) * cell;
+        const y = (row + margin) * cell;
+        if (dotStyle === 'dots') {
+          parts.push(`<circle cx="${+(x + cell/2).toFixed(2)}" cy="${+(y + cell/2).toFixed(2)}" r="${+(cell * 0.42).toFixed(2)}" fill="${fg}"/>`);
+        } else {
+          const r = dotStyle === 'rounded' ? +(cell * 0.28).toFixed(2) : 0;
+          parts.push(`<rect x="${+x.toFixed(2)}" y="${+y.toFixed(2)}" width="${+cell.toFixed(2)}" height="${+cell.toFixed(2)}"${r ? ` rx="${r}"` : ''} fill="${fg}"/>`);
+        }
+      }
+    }
+    parts.push('</svg>');
+    return parts.join('');
+  }
+
+  function loadQRLib(): Promise<void> {
+    if (window.QRCode) return Promise.resolve();
+    return new Promise(resolve => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      s.onload = () => resolve();
+      document.head.appendChild(s);
+    });
+  }
+
+  let abortCtrl: AbortController | null = null;
+
+  function init() {
+    if (!document.getElementById('qr-canvas')) return;
+
+    abortCtrl?.abort();
+    abortCtrl = new AbortController();
+    const sig = abortCtrl.signal;
+
+    // All mutable state scoped to this init — cleared on every navigation
+    let logoImg: HTMLImageElement | null = null;
+    let currentType = 'url';
+    let ecLevel = 'M';
+    let qrMatrix: boolean[][] = [];
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function scheduleGenerate() {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(generateQR, 380);
+    }
+
+    function getContent(): string {
+      if (currentType === 'url')   return (document.getElementById('in-url') as HTMLInputElement).value.trim();
+      if (currentType === 'text')  return (document.getElementById('in-text') as HTMLTextAreaElement).value.trim();
+      if (currentType === 'phone') return `tel:${(document.getElementById('in-phone') as HTMLInputElement).value.trim()}`;
+
+      if (currentType === 'email') {
+        const addr = (document.getElementById('in-email') as HTMLInputElement).value.trim();
+        if (!addr) return '';
+        const sub  = encodeURIComponent((document.getElementById('in-email-sub') as HTMLInputElement).value.trim());
+        const body = encodeURIComponent((document.getElementById('in-email-body') as HTMLTextAreaElement).value.trim());
+        const params = [...(sub ? [`subject=${sub}`] : []), ...(body ? [`body=${body}`] : [])];
+        return `mailto:${addr}${params.length ? '?' + params.join('&') : ''}`;
+      }
+
+      if (currentType === 'wifi') {
+        const ssid = (document.getElementById('in-wifi-ssid') as HTMLInputElement).value;
+        const pass = (document.getElementById('in-wifi-pass') as HTMLInputElement).value;
+        const sec  = (document.getElementById('in-wifi-sec') as HTMLSelectElement).value;
+        return `WIFI:T:${sec};S:${ssid};P:${pass};H:false;;`;
+      }
+
+      if (currentType === 'vcard') {
+        const name  = (document.getElementById('in-vcard-name') as HTMLInputElement).value.trim();
+        const phone = (document.getElementById('in-vcard-phone') as HTMLInputElement).value.trim();
+        const email = (document.getElementById('in-vcard-email') as HTMLInputElement).value.trim();
+        const url   = (document.getElementById('in-vcard-url') as HTMLInputElement).value.trim();
+        if (!name) return '';
+        const parts = name.split(' ');
+        const last  = parts.length > 1 ? parts.pop()! : '';
+        return ['BEGIN:VCARD','VERSION:3.0',`N:${last};${parts.join(' ')}`,`FN:${name}`,
+          phone && `TEL:${phone}`, email && `EMAIL:${email}`, url && `URL:${url}`,
+          'END:VCARD'].filter(Boolean).join('\n');
+      }
+      return '';
+    }
+
+    async function generateQR() {
+      const content = getContent();
+      if (!content) return;
+
+      await loadQRLib();
+
+      const fg       = (document.getElementById('qr-fg') as HTMLInputElement).value;
+      const bg       = (document.getElementById('qr-bg') as HTMLInputElement).value;
+      const size     = parseInt((document.getElementById('qr-size') as HTMLInputElement).value);
+      const margin   = parseInt((document.getElementById('qr-margin') as HTMLInputElement).value);
+      const dotStyle = document.querySelector<HTMLInputElement>('input[name="dot-style"]:checked')!.value;
+      const ecMap    = { L: window.QRCode.CorrectLevel.L, M: window.QRCode.CorrectLevel.M, Q: window.QRCode.CorrectLevel.Q, H: window.QRCode.CorrectLevel.H };
+
+      const tmp = document.createElement('div');
+      tmp.style.cssText = 'position:fixed;visibility:hidden;pointer-events:none';
+      document.body.appendChild(tmp);
+
+      try {
+        new window.QRCode(tmp, { text: content, width: size, height: size, colorDark: fg, colorLight: bg, correctLevel: ecMap[ecLevel] });
+      } catch {
+        document.body.removeChild(tmp); return;
+      }
+
+      // qrcodejs renders synchronously — canvas is ready immediately
+      const src = tmp.querySelector('canvas') as HTMLCanvasElement | null;
+      if (!src) { document.body.removeChild(tmp); return; }
+
+      const imgData = src.getContext('2d')!.getImageData(0, 0, src.width, src.height);
+      const fgR = parseInt(fg.slice(1, 3), 16);
+      const fgG = parseInt(fg.slice(3, 5), 16);
+      const fgB = parseInt(fg.slice(5, 7), 16);
+
+      qrMatrix = Array.from({ length: src.height }, (_, row) =>
+        Array.from({ length: src.width }, (_, col) => {
+          const i = (row * src.width + col) * 4;
+          return Math.abs(imgData.data[i] - fgR) < 40 &&
+                 Math.abs(imgData.data[i + 1] - fgG) < 40 &&
+                 Math.abs(imgData.data[i + 2] - fgB) < 40;
+        })
+      );
+
+      const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d')!;
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, size, size);
+
+      const n    = src.width;
+      const cell = size / (n + margin * 2);
+      for (let row = 0; row < n; row++)
+        for (let col = 0; col < n; col++)
+          if (qrMatrix[row][col])
+            drawDot(ctx, (col + margin) * cell, (row + margin) * cell, cell, dotStyle, fg);
+
+      if (logoImg) {
+        const logoPct = parseInt((document.getElementById('logo-size') as HTMLInputElement).value) / 100;
+        const ls = size * logoPct;
+        const lx = (size - ls) / 2, ly = (size - ls) / 2;
+        const pad = ls * 0.1;
+        ctx.fillStyle = bg;
+        ctx.fillRect(lx - pad, ly - pad, ls + pad * 2, ls + pad * 2);
+        ctx.drawImage(logoImg, lx, ly, ls, ls);
+      }
+
+      document.body.removeChild(tmp);
+      document.getElementById('qr-placeholder')!.style.display = 'none';
+      canvas.style.display = 'block';
+
+      const btnPng  = document.getElementById('btn-png')  as HTMLButtonElement;
+      const btnSvg  = document.getElementById('btn-svg')  as HTMLButtonElement;
+      const btnCopy = document.getElementById('btn-copy') as HTMLButtonElement;
+      btnPng.disabled = false; btnSvg.disabled = false; btnCopy.disabled = false;
+    }
+
+    // Type tabs
+    document.querySelectorAll<HTMLButtonElement>('.type-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentType = btn.dataset.type!;
+        document.querySelectorAll('.type-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll<HTMLElement>('.content-panel').forEach(p => {
+          p.style.display = p.dataset.panel === currentType ? '' : 'none';
+        });
+        scheduleGenerate();
+      }, { signal: sig });
+    });
+
+    // Dot style cards
+    document.querySelectorAll<HTMLElement>('.dot-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.dot-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        scheduleGenerate();
+      }, { signal: sig });
+    });
+
+    // EC buttons
+    document.querySelectorAll<HTMLButtonElement>('.ec-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        ecLevel = btn.dataset.level!;
+        document.querySelectorAll('.ec-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('ec-hint')!.textContent = EC_LABELS[ecLevel];
+        scheduleGenerate();
+      }, { signal: sig });
+    });
+
+    // Color inputs
+    document.getElementById('qr-fg')!.addEventListener('input', e => {
+      document.getElementById('qr-fg-label')!.textContent = (e.target as HTMLInputElement).value;
+      scheduleGenerate();
+    }, { signal: sig });
+    document.getElementById('qr-bg')!.addEventListener('input', e => {
+      document.getElementById('qr-bg-label')!.textContent = (e.target as HTMLInputElement).value;
+      scheduleGenerate();
+    }, { signal: sig });
+
+    // Size + margin
+    document.getElementById('qr-size')!.addEventListener('input', e => {
+      document.getElementById('qr-size-label')!.textContent = (e.target as HTMLInputElement).value + 'px';
+      scheduleGenerate();
+    }, { signal: sig });
+    document.getElementById('qr-margin')!.addEventListener('input', e => {
+      document.getElementById('qr-margin-label')!.textContent = (e.target as HTMLInputElement).value;
+      scheduleGenerate();
+    }, { signal: sig });
+
+    // Logo
+    document.getElementById('logo-input')!.addEventListener('change', e => {
+      const f = (e.target as HTMLInputElement).files?.[0];
+      if (!f) return;
+      document.getElementById('logo-filename')!.textContent = f.name;
+      document.getElementById('logo-size-wrap')!.style.display = '';
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => { logoImg = img; scheduleGenerate(); };
+        img.src = ev.target!.result as string;
+      };
+      reader.readAsDataURL(f);
+    }, { signal: sig });
+    document.getElementById('logo-size')!.addEventListener('input', e => {
+      document.getElementById('logo-size-label')!.textContent = (e.target as HTMLInputElement).value + '%';
+      scheduleGenerate();
+    }, { signal: sig });
+
+    // Text inputs
+    ['in-url','in-text','in-email','in-email-sub','in-email-body','in-phone',
+     'in-wifi-ssid','in-wifi-pass','in-wifi-sec',
+     'in-vcard-name','in-vcard-phone','in-vcard-email','in-vcard-url',
+    ].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', scheduleGenerate, { signal: sig });
+    });
+
+    // Download PNG
+    document.getElementById('btn-png')!.addEventListener('click', () => {
+      const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'qrcode.png';
+      a.click();
+    }, { signal: sig });
+
+    // Download SVG
+    document.getElementById('btn-svg')!.addEventListener('click', () => {
+      const fg       = (document.getElementById('qr-fg') as HTMLInputElement).value;
+      const bg       = (document.getElementById('qr-bg') as HTMLInputElement).value;
+      const size     = parseInt((document.getElementById('qr-size') as HTMLInputElement).value);
+      const margin   = parseInt((document.getElementById('qr-margin') as HTMLInputElement).value);
+      const dotStyle = document.querySelector<HTMLInputElement>('input[name="dot-style"]:checked')!.value;
+      const svg = buildSVG(fg, bg, dotStyle, size, margin, qrMatrix);
+      if (!svg) return;
+      const blob = new Blob([svg], { type: 'image/svg+xml' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'qrcode.svg';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }, { signal: sig });
+
+    // Copy to clipboard
+    document.getElementById('btn-copy')!.addEventListener('click', async () => {
+      const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
+      try {
+        canvas.toBlob(async blob => {
+          if (!blob) return;
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          const btn = document.getElementById('btn-copy')!;
+          const prev = btn.textContent;
+          btn.textContent = '✓ Copied';
+          setTimeout(() => { btn.textContent = prev; }, 2000);
+        });
+      } catch {
+        await navigator.clipboard.writeText(canvas.toDataURL());
+      }
+    }, { signal: sig });
+
+    scheduleGenerate();
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>
+
+<style>
+  .qr-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 2rem;
+    margin-bottom: 4rem;
+    align-items: start;
+  }
+  @media (max-width: 680px) { .qr-layout { grid-template-columns: 1fr; } }
+
+  .qr-controls { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  /* Field basics */
+  .field-group { display: flex; flex-direction: column; gap: .375rem; }
+  .field-label { font-size: .6rem; font-family: var(--font-mono); color: var(--color-txt-dim); text-transform: uppercase; letter-spacing: .07em; }
+  .field-input {
+    background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 2px;
+    color: var(--color-txt-main); font-family: var(--font-sans); font-size: .875rem;
+    padding: .625rem .875rem; outline: none; transition: border-color .15s; width: 100%;
+  }
+  .field-input:focus { border-color: rgba(255,255,255,.2); }
+  .field-textarea { resize: vertical; min-height: 72px; }
+  .field-select { cursor: pointer; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .ctrl-divider { border: none; border-top: 1px solid var(--color-border); margin: .125rem 0; }
+
+  /* Type tabs */
+  .type-tabs {
+    display: flex; flex-wrap: wrap; gap: .375rem; margin-top: .375rem;
+  }
+  .type-tab {
+    font-family: var(--font-mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .06em;
+    padding: .25rem .625rem; border: 1px solid var(--color-border); border-radius: 2px;
+    background: none; color: var(--color-txt-dim); cursor: pointer; transition: all .15s;
+  }
+  .type-tab:hover { color: var(--color-accent); border-color: rgba(255,255,255,.2); }
+  .type-tab.active { border-color: rgba(255,255,255,.35); color: var(--color-accent); background: rgba(255,255,255,.04); }
+
+  /* Colors */
+  .color-wrap { display: flex; align-items: center; gap: .625rem; }
+  .color-input { width: 40px; height: 36px; border: 1px solid var(--color-border); border-radius: 2px; background: none; cursor: pointer; padding: 2px; flex-shrink: 0; }
+  .color-label { font-family: var(--font-mono); font-size: .7rem; color: var(--color-txt-dim); }
+
+  /* Dot style */
+  .dot-style-row { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .25rem; }
+  .dot-card {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .4rem .75rem; border: 1px solid var(--color-border); border-radius: 2px;
+    color: var(--color-txt-dim); cursor: pointer; font-size: .75rem; transition: all .15s;
+  }
+  .dot-card:hover { border-color: rgba(255,255,255,.2); color: var(--color-accent); }
+  .dot-card.active { border-color: rgba(255,255,255,.35); color: var(--color-accent); background: rgba(255,255,255,.04); }
+
+  /* EC buttons */
+  .ec-row { display: flex; align-items: center; gap: .375rem; flex-wrap: wrap; margin-top: .25rem; }
+  .ec-btn {
+    width: 32px; height: 32px; font-family: var(--font-mono); font-size: .7rem; font-weight: 600;
+    border: 1px solid var(--color-border); border-radius: 2px; background: none;
+    color: var(--color-txt-dim); cursor: pointer; transition: all .15s;
+  }
+  .ec-btn:hover { border-color: rgba(255,255,255,.2); color: var(--color-accent); }
+  .ec-btn.active { border-color: rgba(255,255,255,.35); color: var(--color-accent); background: rgba(255,255,255,.04); }
+  .ec-hint { font-family: var(--font-mono); font-size: .55rem; color: var(--color-txt-dim); margin-left: .25rem; }
+
+  /* Range inputs */
+  .range-input { width: 100%; accent-color: var(--color-accent); margin-top: .25rem; }
+
+  /* Logo upload */
+  .logo-upload {
+    display: flex; align-items: center; gap: .5rem;
+    padding: .625rem .875rem; border: 1px dashed var(--color-border); border-radius: 2px;
+    cursor: pointer; font-size: .8rem; color: var(--color-txt-dim); transition: border-color .15s;
+  }
+  .logo-upload:hover { border-color: rgba(255,255,255,.25); color: var(--color-accent); }
+
+  /* Actions */
+  .action-row { display: flex; gap: .5rem; flex-wrap: wrap; padding-top: .25rem; }
+
+  /* Preview */
+  .qr-preview-col { position: sticky; top: 80px; }
+  .qr-preview-wrap {
+    border: 1px solid var(--color-border); border-radius: 2px; aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--color-surface); overflow: hidden;
+  }
+  .qr-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .preview-note {
+    font-family: var(--font-mono); font-size: .52rem; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--color-txt-dim); text-align: center;
+    margin-top: .75rem; opacity: .6;
+  }
+</style>

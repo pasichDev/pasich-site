@@ -1,189 +1,701 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import StatCard from '../components/ui/StatCard.astro';
-import ProjectCard from '../components/ui/ProjectCard.astro';
+import GitHubHeatmap from '../components/ui/GitHubHeatmap.astro';
 
-const stats = [
-  { icon: 'solar:code-circle-linear', value: '5+', label: 'Years Exp' },
-  { icon: 'solar:folder-with-files-linear', value: '10+', label: 'Projects' },
-  { icon: 'solar:smartphone-linear', value: 'Android', label: 'Native' },
-  { icon: 'solar:layers-minimalistic-linear', value: 'Flutter', label: 'Cross-Plat' }
+const skillGroups = [
+  {
+    label: 'Mobile',
+    skills: [
+      { name: 'Kotlin',          level: 'expert',   tooltip: 'Primary language for Android — Coroutines, Flow, Jetpack, Hilt, Room, WorkManager' },
+      { name: 'Java',            level: 'expert',   tooltip: 'Android development and JVM — legacy codebases, interop with Kotlin, JNI' },
+      { name: 'Android SDK',     level: 'expert',   tooltip: 'Deep Android internals — custom Views, CameraX, Sensors, Notifications, Permissions' },
+      { name: 'Jetpack Compose', level: 'advanced', tooltip: 'Declarative UI with animations, custom layouts, theming and state management' },
+      { name: 'BLE / NFC',       level: 'advanced', tooltip: 'Bluetooth Low Energy scanning and GATT, NFC tag read/write in production apps' },
+      { name: 'Offline-first',   level: 'expert',   tooltip: 'Room with migrations, SQLCipher encryption, local-only architecture in My Notes and Felisca' },
+    ],
+  },
+  {
+    label: 'Cross-platform',
+    skills: [
+      { name: 'Flutter',   level: 'expert',   tooltip: 'Production apps for Android, iOS and Desktop — Bloc, Riverpod, custom painters, platform channels' },
+      { name: 'Dart',      level: 'expert',   tooltip: 'Async/await, isolates, FFI — used in SovaWallet for C++ crypto bindings and Felisca' },
+      { name: 'C++ / NDK', level: 'expert',   tooltip: 'Android NDK and JNI — integrated native crypto libs into Flutter via Dart FFI in SovaWallet' },
+    ],
+  },
+  {
+    label: 'Backend',
+    skills: [
+      { name: 'Go',        level: 'advanced', tooltip: 'Concurrent servers with goroutines — built Linqora backend: REST, mDNS discovery, WebSocket file transfer' },
+      { name: 'Node.js',   level: 'advanced', tooltip: 'REST APIs and bots — Express, Fastify, Telegram and Discord bot backends' },
+      { name: 'WebSocket', level: 'advanced', tooltip: 'Real-time bidirectional communication — media control and file sync in Linqora' },
+      { name: 'REST API',  level: 'advanced', tooltip: 'API design, versioning, auth flows, integration with mobile and web clients' },
+    ],
+  },
+  {
+    label: 'Web',
+    skills: [
+      { name: 'React',      level: 'advanced',      tooltip: 'Component architecture, hooks, context, routing — production web interfaces' },
+      { name: 'Next.js',    level: 'advanced',      tooltip: 'SSR and SSG — App Router, API routes, image optimisation, deployment on Vercel' },
+      { name: 'TypeScript', level: 'advanced',      tooltip: 'Strict typing across frontend and backend — used in all JS/TS projects' },
+      { name: 'HTML & CSS', level: 'advanced',      tooltip: 'Semantic markup, CSS Grid/Flexbox, animations, custom design systems without frameworks' },
+    ],
+  },
+];
+
+const services = [
+  { icon: 'solar:smartphone-linear',      title: 'Android Apps',       desc: 'Native Kotlin — from MVP to production with clean architecture' },
+  { icon: 'solar:layers-minimalistic-linear', title: 'Cross-platform Apps', desc: 'Flutter for Android, iOS and Desktop from one codebase' },
+  { icon: 'solar:global-linear',          title: 'Web Apps',           desc: 'React / Next.js — fast, accessible, SEO-ready interfaces' },
+  { icon: 'solar:plain-linear',           title: 'Telegram Bots',      desc: 'Aiogram / Grammy — automation, payments, mini-apps' },
+  { icon: 'solar:chat-round-dots-linear', title: 'Discord Bots',       desc: 'Discord.js / py-cord — moderation, notifications, integrations' },
+  { icon: 'solar:server-linear',          title: 'Backend APIs',       desc: 'Go / Node.js — REST, WebSocket, auth, database layer' },
 ];
 
 const projects = [
   {
     icon: 'solar:heart-linear',
+    emoji: '♥',
     title: 'Felisca',
-    description: 'Your personal mental companion. Deep mood tracking with privacy-first architecture. Offline-only, encrypted locally, complete control.',
+    description: 'Personal mental companion. Deep mood tracking with privacy-first architecture. Offline-only, encrypted locally, complete control.',
     tags: ['Flutter', 'Dart', 'Privacy-First'],
-    href: '/apps/felisca'
+    href: '/apps/felisca',
+    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasichdev.felisca',
   },
   {
     icon: 'solar:notebook-linear',
+    emoji: '📓',
     title: 'My Notes',
     description: 'Offline-first Android notebook. Custom rich-text editor, local encryption, Room database, and zero tracking.',
     tags: ['Kotlin', 'Room', 'MVVM'],
-    href: '/apps/mynotes'
+    href: '/apps/mynotes',
+    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasich.mynotes',
+    downloads: '30k+',
   },
   {
     icon: 'solar:wallet-linear',
+    emoji: '◎',
     title: 'SovaWallet',
-    description: 'NosoCoin ecosystem wallet. Complex cryptographic implementation, unstable node balancing, and custom binary protocols.',
-    tags: ['Flutter', 'Dart FFI', 'Crypto'],
-    href: 'https://github.com/Noso-Project/NosoSova'
+    description: 'NosoCoin ecosystem wallet. Complex cryptographic implementation, node balancing, and custom binary protocols.',
+    tags: ['Flutter', 'Dart FFI', 'C++'],
+    href: 'https://github.com/Noso-Project/NosoSova',
   },
   {
     icon: 'solar:devices-linear',
+    emoji: '⬡',
     title: 'Linqora',
     description: 'Seamless PC-Mobile integration. Control media, monitor resources, and transfer files via WebSocket/mDNS.',
     tags: ['Go', 'Flutter', 'WebSocket'],
-    href: 'https://github.com/pasichDev/linqora'
-  }
+    href: 'https://github.com/pasichDev/linqora',
+  },
 ];
 
-const techStack = {
-  mobile: [
-    'Android SDK',
-    'Kotlin (primary)',
-    'Jetpack Compose',
-    'Java (legacy)',
-    'Flutter / Dart '
-  ],
-  backend: [
-    'Go (basic REST APIs)',
-    'Node.js (Express)',
-    'Firebase'
-  ],
-  web: [
-    'TypeScript',
-    'React / Next.js',
-    'Tailwind CSS'
-  ],
-  tools: [
-    'Git (GitHub)',
-    'Docker (basic)',
-    'CI/CD (GitHub Actions – basic)'
-  ]
-}
-
-
 const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Andrii Pasichnyk",
-  "alternateName": "pasichDev",
-  "url": "https://pasichdev.xyz",
-  "jobTitle": "Mobile Developer",
-  "knowsAbout": ["Android", "Flutter", "Kotlin", "Dart", "Go"],
-  "sameAs": [
-    "https://github.com/pasichDev",
-    "https://t.me/pasichdev"
-  ]
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Andrii Pasichnyk',
+  alternateName: 'pasichDev',
+  url: 'https://pasichdev.xyz',
+  jobTitle: 'Software Engineer',
+  knowsAbout: ['Android', 'Flutter', 'Kotlin', 'Java', 'Dart', 'C++', 'Go', 'BLE', 'Offline-first'],
+  sameAs: ['https://github.com/pasichDev', 'https://t.me/pasichdev'],
 };
 ---
 
-<BaseLayout 
-  title="pasichDev — Android & Flutter Engineer"
-  description="Mobile Developer focused on clean architecture and performance. Building Android and Flutter apps with precision."
+<BaseLayout
+  title="pasichDev — Software Engineer"
+  description="Software Engineer focused on mobile, cross-platform, and backend. Kotlin, Flutter, Java, C++ NDK, Go."
   structuredData={structuredData}
 >
   <div class="container animate-fade-in">
-    
-    <!-- Hero -->
-    <header class="section" style="margin-top: 3rem; margin-bottom: 6rem;">
-      <div class="badge badge-pulse mb-6">
-        Open to work
+
+    <!-- ── HERO ──────────────────────────────────── -->
+    <header class="hero">
+      <p class="eyebrow">
+        <span class="eyebrow-line"></span>
+        pasichDev / index
+      </p>
+
+      <h1 class="hero-name">Andrii Pasichnyk</h1>
+
+      <p class="hero-role">
+        Software Engineer<span class="cursor" aria-hidden="true"></span>
+      </p>
+
+      <div class="hero-meta">
+        <span class="location">Rivne, 🇺🇦 · UTC+2</span>
+        <span class="badge-avail">
+          <span class="badge-dot" aria-hidden="true"></span>
+          Available
+        </span>
       </div>
-      
-      <h1 class="tracking-tight mb-6" style="background: linear-gradient(to bottom, #fff, rgba(255,255,255,0.5)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1;">
-        Building mobile experiences<br>
-        with precision & code.
-      </h1>
-      
-      <p class="text-lg text-dim leading-relaxed" style="max-width: 36rem;">
-       I’m Andrii Pasichnyk. I build Android & Flutter apps with clean architecture, native performance, and a strong focus on real user experience.</p>
-      
-      <div class="flex gap-4 mt-8 flex-wrap">
-        <a href="/cv" class="btn btn-primary">
-          View Resume
-          <iconify-icon icon="solar:user-id-linear"></iconify-icon>
-        </a>
-        <a href="#contact" class="btn btn-outline">Contact Me</a>
+
+      <div class="hero-cta">
+        <a href="/cv" class="btn btn-primary">View CV ↗</a>
+        <a href="/tools" class="btn btn-outline">Tools</a>
+        <a href="#contact" class="btn btn-outline">Contact</a>
       </div>
+
+      <GitHubHeatmap />
     </header>
-    
-    <!-- Stats Grid -->
-    <section class="section grid-4" style="margin-bottom: 6rem;">
-      {stats.map((stat) => (
-        <StatCard {...stat} />
-      ))}
-    </section>
-    
-    
-    <!-- Projects -->
-    <section class="section" id="projects">
-      <div class="section-header">
-        <h2 class="font-medium tracking-tight">Selected Work</h2>
-        <span class="section-counter">01 — 04</span>
+
+    <!-- ── STATS ─────────────────────────────────── -->
+    <div class="stats-strip reveal">
+      <div class="stat-item">
+        <span class="stat-val">5+</span>
+        <span class="stat-lbl">Years Exp</span>
       </div>
-      
-      <div class="grid-2">
-        {projects.map((project) => (
-          <ProjectCard {...project} />
+      <div class="stat-item">
+        <span class="stat-val">10+</span>
+        <span class="stat-lbl">Projects</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">30k+</span>
+        <span class="stat-lbl">Downloads</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">Open</span>
+        <span class="stat-lbl">Source</span>
+      </div>
+    </div>
+
+    <!-- ── PROJECTS ──────────────────────────────── -->
+    <section class="section reveal" id="projects">
+      <div class="section-head">
+        <h2 class="section-title">Selected Work</h2>
+        <span class="section-num">01 — 04</span>
+      </div>
+
+      <div class="proj-grid">
+        {projects.map((p) => (
+          <div class="proj-card">
+            <div class="proj-body">
+              <div class="proj-top">
+                <div class="proj-icon">
+                  <iconify-icon icon={p.icon} width="18"></iconify-icon>
+                </div>
+                {p.downloads && (
+                  <span class="proj-dl">
+                    <iconify-icon icon="solar:download-linear" width="10"></iconify-icon>
+                    {p.downloads}
+                  </span>
+                )}
+              </div>
+              <h3 class="proj-name">{p.title}</h3>
+              <p class="proj-desc">{p.description}</p>
+              <div class="proj-tags">
+                {p.tags.map((t) => <span class="tag">{t}</span>)}
+              </div>
+            </div>
+            <div class="proj-actions">
+              <a
+                href={p.href}
+                target={p.href.startsWith('http') ? '_blank' : '_self'}
+                rel={p.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                class="btn-sm"
+              >
+                {p.href.startsWith('https://github.com') ? 'GitHub ↗' : 'Details →'}
+              </a>
+              {p.playStoreHref && (
+                <a
+                  href={p.playStoreHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-sm"
+                >
+                  <iconify-icon icon="solar:smartphone-linear" width="12"></iconify-icon>
+                  Play Store
+                </a>
+              )}
+            </div>
+          </div>
         ))}
       </div>
     </section>
-    
-    <!-- Tech Stack -->
-    <section class="section">
-      <div class="section-header" style="border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; margin-bottom: 2rem;">
-        <h2 class="font-medium tracking-tight">Technology</h2>
+
+    <!-- ── SKILLS ────────────────────────────────── -->
+    <section class="section reveal">
+      <div class="section-head">
+        <h2 class="section-title">Skills</h2>
       </div>
-      
-      <div class="tech-grid">
-        <div>
-          <h4 class="text-xs font-mono text-dim uppercase tracking-wide mb-4">Mobile</h4>
-          <ul class="list-check">
-            {techStack.mobile.map((item) => <li>{item}</li>)}
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="text-xs font-mono text-dim uppercase tracking-wide mb-4">Backend / CLI</h4>
-          <ul class="list-check">
-            {techStack.backend.map((item) => <li>{item}</li>)}
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="text-xs font-mono text-dim uppercase tracking-wide mb-4">Web</h4>
-          <ul class="list-check">
-            {techStack.web.map((item) => <li>{item}</li>)}
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="text-xs font-mono text-dim uppercase tracking-wide mb-4">Tools</h4>
-          <ul class="list-check">
-            {techStack.tools.map((item) => <li>{item}</li>)}
-          </ul>
-        </div>
+
+      <div class="skill-categories">
+        {skillGroups.map((group) => (
+          <div class="skill-cat">
+            <div class="cat-label">{group.label}</div>
+            <div class="cat-tags">
+              {group.skills.map((s) => (
+                <span
+                  class={`skill-tag level-${s.level}`}
+                  title={s.tooltip}
+                >
+                  <span class="skill-dot" aria-hidden="true"></span>
+                  {s.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
-    
+
+    <!-- ── WHAT I BUILD ───────────────────────────── -->
+    <section class="section reveal" id="services">
+      <div class="section-head">
+        <h2 class="section-title">What I Build</h2>
+      </div>
+
+      <div class="svc-grid">
+        {services.map((s) => (
+          <div class="svc-card">
+            <iconify-icon icon={s.icon} width="20" class="svc-icon"></iconify-icon>
+            <div class="svc-title">{s.title}</div>
+            <p class="svc-desc">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
   </div>
 </BaseLayout>
 
+<script>
+  function initReveal() {
+    document.querySelectorAll('.reveal').forEach((el) => el.classList.remove('in'));
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -32px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.in)').forEach((el) => el.classList.add('in'));
+    }, 1500);
+  }
+
+  document.addEventListener('astro:page-load', initReveal);
+</script>
+
 <style>
-  .tech-grid {
+  /* ── HERO ──────────────────────────────────────── */
+  .hero {
+    padding-top: clamp(2.5rem, 6vw, 4rem);
+    padding-bottom: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 0;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-txt-dim);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .eyebrow-line {
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: var(--color-txt-dim);
+    flex-shrink: 0;
+  }
+
+  .hero-name {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(160deg, #fff 40%, rgba(255,255,255,0.4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-role {
+    font-family: var(--font-mono);
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    color: var(--color-txt-dim);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--color-accent);
+    margin-left: 3px;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .location {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-txt-dim);
+  }
+
+  .badge-avail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.28);
+    padding: 0.2rem 0.625rem;
+    border-radius: 999px;
+  }
+
+  .badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pdot 2s ease-in-out infinite;
+  }
+  @keyframes pdot {
+    0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+    50%      { box-shadow: 0 0 0 4px rgba(34,197,94,0); }
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  /* ── STATS ─────────────────────────────────────── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+    overflow: hidden;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(1rem, 3vw, 1.375rem) 0.5rem;
+    text-align: center;
+    position: relative;
+  }
+  .stat-item + .stat-item {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .stat-val {
+    font-family: var(--font-mono);
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 600;
+    color: var(--color-accent);
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-txt-dim);
+  }
+
+  @media (max-width: 400px) {
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(3) { border-left: none; }
+    .stat-item:nth-child(3),
+    .stat-item:nth-child(4) { border-top: 1px solid var(--color-border); }
+  }
+
+  /* ── SECTION ───────────────────────────────────── */
+  .section { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+  }
+  .section-title {
+    font-size: clamp(0.875rem, 2.5vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-txt-dim);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── PROJECTS ──────────────────────────────────── */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(0.75rem, 2vw, 1rem);
+  }
+
+  @media (min-width: 600px) {
+    .proj-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .proj-card {
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: clamp(1rem, 3vw, 1.375rem);
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: border-color 0.2s, transform 0.3s, opacity 0.4s;
+  }
+  .reveal.in .proj-card {
+    opacity: 1;
+    transform: none;
+  }
+  .reveal.in .proj-card:nth-child(1) { transition-delay: 0.05s; }
+  .reveal.in .proj-card:nth-child(2) { transition-delay: 0.12s; }
+  .reveal.in .proj-card:nth-child(3) { transition-delay: 0.19s; }
+  .reveal.in .proj-card:nth-child(4) { transition-delay: 0.26s; }
+
+  .proj-card:hover {
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-2px);
+  }
+
+  /* body grows to fill card, pushes actions to bottom */
+  .proj-body { flex: 1; display: flex; flex-direction: column; }
+
+  .proj-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: clamp(0.75rem, 2vw, 1rem);
+  }
+
+  .proj-icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-txt-dim);
+  }
+
+  .proj-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.28);
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+  }
+
+  .proj-name {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .proj-desc {
+    font-size: clamp(0.75rem, 1.5vw, 0.8rem);
+    color: var(--color-txt-dim);
+    line-height: 1.6;
+    margin-bottom: 0.875rem;
+    flex: 1;
+  }
+
+  .proj-tags {
+    display: flex;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-txt-dim);
+    border: 1px solid var(--color-border);
+    padding: 0.15rem 0.5rem;
+    border-radius: 1px;
+    letter-spacing: 0.02em;
+  }
+
+  /* pinned to bottom of card */
+  .proj-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding-top: clamp(0.875rem, 2vw, 1.125rem);
+    margin-top: auto;
+  }
+
+  .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+    border: 1px solid var(--color-border);
+    color: var(--color-txt-dim);
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+    min-height: 32px;
+  }
+  .btn-sm:hover { border-color: rgba(255,255,255,0.22); color: var(--color-accent); }
+
+  /* ── SKILLS ────────────────────────────────────── */
+  .skill-categories {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: clamp(1.5rem, 3vw, 2rem) clamp(2rem, 5vw, 3rem);
   }
-  
-  @media (min-width: 768px) {
-    .tech-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  @media (max-width: 520px) {
+    .skill-categories { grid-template-columns: 1fr; }
+  }
+
+  .skill-cat { display: flex; flex-direction: column; gap: 0.625rem; }
+
+  .cat-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-txt-dim);
+  }
+
+  .cat-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+
+  .skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.625rem;
+    border-radius: 2px;
+    border: 1px solid;
+    letter-spacing: 0.02em;
+    cursor: default;
+    transition: border-color 0.15s, color 0.15s, opacity 0.3s, transform 0.3s;
+  }
+  .skill-tag:hover { border-color: rgba(255,255,255,0.4); color: var(--color-accent); }
+
+  .level-expert       { border-color: rgba(255,255,255,0.35); color: #fff; background: rgba(255,255,255,0.03); }
+  .level-advanced     { border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.65); }
+  .level-intermediate { border-color: rgba(255,255,255,0.1);  color: rgba(255,255,255,0.38); }
+
+  .skill-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .level-expert       .skill-dot { background: #fff; }
+  .level-advanced     .skill-dot { background: rgba(255,255,255,0.5); }
+  .level-intermediate .skill-dot { background: rgba(255,255,255,0.22); }
+
+  /* ── SERVICES ─────────────────────────────────── */
+  .svc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.625rem, 1.5vw, 0.875rem);
+  }
+  @media (max-width: 640px) {
+    .svc-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 380px) {
+    .svc-grid { grid-template-columns: 1fr; }
+  }
+
+  .svc-card {
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: clamp(0.875rem, 2.5vw, 1.125rem);
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .svc-card:hover {
+    border-color: rgba(255,255,255,0.16);
+    transform: translateY(-1px);
+  }
+
+  .svc-icon {
+    color: var(--color-txt-dim);
+    flex-shrink: 0;
+  }
+
+  .svc-title {
+    font-size: clamp(0.78rem, 1.8vw, 0.875rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-top: 0.125rem;
+  }
+
+  .svc-desc {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--color-txt-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── REVEAL ────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1),
+                transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* hero animates immediately */
+  .hero .eyebrow  { animation: heroIn 0.5s 0.05s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .hero-name { animation: heroIn 0.5s 0.12s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .hero-role { animation: heroIn 0.5s 0.19s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .hero-meta { animation: heroIn 0.5s 0.25s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .hero-cta  { animation: heroIn 0.5s 0.31s cubic-bezier(0.4,0,0.2,1) both; }
+
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
   }
 </style>
