@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -197,7 +198,7 @@ const structuredData = {
         <div class="field-group">
           <label class="field-label">Logo (optional)</label>
           <label class="logo-upload" id="logo-label">
-            <iconify-icon icon="solar:upload-linear" width="14"></iconify-icon>
+            <Icon name="solar:upload-linear" width="14" height="14" />
             <span id="logo-filename">Choose image…</span>
             <input type="file" id="logo-input" accept="image/*" hidden />
           </label>
@@ -219,7 +220,7 @@ const structuredData = {
       <div class="qr-preview-col">
         <div class="qr-preview-wrap" id="qr-wrap">
           <div id="qr-placeholder" class="qr-placeholder">
-            <iconify-icon icon="solar:qr-code-linear" width="48" style="opacity:.12"></iconify-icon>
+            <Icon name="solar:qr-code-linear" width="48" height="48" style="opacity:.12" />
             <p class="text-xs text-dim" style="margin-top:.75rem">Preview here</p>
           </div>
           <canvas id="qr-canvas" style="display:none;max-width:100%;border-radius:4px"></canvas>

@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 export interface Props {
   icon: string;
   title: string;
@@ -10,7 +11,7 @@ const { icon, title, description } = Astro.props;
 
 <div class="feature-card">
   <div class="feature-icon">
-    <iconify-icon icon={icon} width="24"></iconify-icon>
+    <Icon name={icon} width="24" height="24" />
   </div>
   <h4 class="font-medium text-accent mb-2">{title}</h4>
   <p class="text-sm text-dim">{description}</p>

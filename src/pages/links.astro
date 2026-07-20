@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import data from '../data/links.json';
+import { Icon } from 'astro-icon/components';
 
 const { profile, links, seo } = data;
 
@@ -31,7 +32,7 @@ const structuredData = {
         {profile.bio}
       </p>
       <div class="flex items-center gap-2 mt-4 text-xs font-mono text-dim">
-        <iconify-icon icon="solar:map-point-linear"></iconify-icon>
+        <Icon name="solar:map-point-linear" />
         {profile.location}
       </div>
     </header>
@@ -47,11 +48,11 @@ const structuredData = {
           <div class="link-card-inner">
             <div class="flex items-center gap-4">
               <div class="link-icon">
-                <iconify-icon icon={link.icon} width="20"></iconify-icon>
+                <Icon name={link.icon} width="20" height="20" />
               </div>
               <span class="font-medium text-sm">{link.title}</span>
             </div>
-            <iconify-icon icon="solar:arrow-right-linear" class="arrow-icon" width="16"></iconify-icon>
+            <Icon name="solar:arrow-right-linear" class="arrow-icon" width="16" height="16" />
           </div>
         </a>
       ))}

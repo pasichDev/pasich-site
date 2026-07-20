@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import FeatureCard from '../../../components/ui/FeatureCard.astro';
+import { Icon } from 'astro-icon/components';
 
 const features = [
   {
@@ -89,7 +90,7 @@ const structuredData = {
       <div class="hero-content">
         <div class="app-icon-wrapper">
           <div class="app-icon">
-            <iconify-icon icon="solar:notebook-bold" width="48"></iconify-icon>
+            <Icon name="solar:notebook-bold" width="48" height="48" />
           </div>
         </div>
         
@@ -107,13 +108,13 @@ const structuredData = {
         
         <div class="flex gap-2 mt-8 flex-wrap justify-center">
           <span class="badge badge-accent">
-            <iconify-icon icon="solar:star-bold"></iconify-icon> Free
+            <Icon name="solar:star-bold" /> Free
           </span>
           <span class="badge badge-accent">
-            <iconify-icon icon="solar:shield-check-bold"></iconify-icon> Private
+            <Icon name="solar:shield-check-bold" /> Private
           </span>
           <span class="badge badge-accent">
-            <iconify-icon icon="solar:smartphone-bold"></iconify-icon> Android
+            <Icon name="solar:smartphone-bold" /> Android
           </span>
         </div>
       </div>
@@ -138,7 +139,7 @@ const structuredData = {
       <h2 class="text-xl font-medium text-accent mb-4">Start taking notes today</h2>
       <p class="text-dim mb-8">Download My Notes now and organize your ideas with complete privacy.</p>
       <a href="https://play.google.com/store/apps/details?id=com.pasich.mynotes" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
-        <iconify-icon icon="logos:google-play-icon" width="20"></iconify-icon>
+        <Icon name="mdi:google-play" width="20" height="20" />
         Get it on Google Play
       </a>
     </section>
@@ -148,7 +149,7 @@ const structuredData = {
       <a href="/apps/mynotes/privacy-policy" class="link-hover">Privacy Policy</a>
       <span class="divider">/</span>
       <a href="https://github.com/pasichDev/MyNotes" target="_blank" rel="noopener noreferrer" class="link-hover flex items-center gap-1">
-        <iconify-icon icon="mdi:github"></iconify-icon> GitHub
+        <Icon name="mdi:github" /> GitHub
       </a>
     </footer>
     
@@ -186,7 +187,7 @@ const structuredData = {
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
-  .app-icon iconify-icon {
+  .app-icon svg {
     background: var(--color-bg);
     color: var(--color-accent);
     width: 100%;
