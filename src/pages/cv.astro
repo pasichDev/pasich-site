@@ -1,7 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
 
 const experience = [
+  {
+    title: 'Software Engineer',
+    period: '2026 — Present',
+    company: 'InTallyCon · Full-time',
+    achievements: [],
+    tags: []
+  },
   {
     title: 'Flutter / Dart Developer',
     period: '2023 — 2024',
@@ -42,7 +50,7 @@ const structuredData = {
   "@type": "Person",
   "name": "Andrii Pasichnyk",
   "alternateName": "pasichDev",
-  "jobTitle": "Mobile Developer (Flutter / Android)",
+  "jobTitle": "Software Architect",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Rivne",
@@ -57,7 +65,7 @@ const structuredData = {
 
 <BaseLayout 
   title="CV — Andrii Pasichnyk"
-  description="Resume of Andrii Pasichnyk, Mobile Developer specializing in Flutter and Android development."
+  description="Resume of Andrii Pasichnyk — Software Architect. C++ system services on Windows, Go backends, and mobile apps in Kotlin, Swift and Flutter."
   canonical="https://pasichdev.xyz/cv"
   structuredData={structuredData}
 >
@@ -67,13 +75,13 @@ const structuredData = {
     <header class="cv-header">
       <div>
         <h1 class="text-accent" style="font-size: 1.875rem; margin-bottom: 0.5rem;">Andrii Pasichnyk</h1>
-        <p class="text-lg text-dim" style="font-weight: 300;">Mobile Developer (Flutter / Android)</p>
+        <p class="text-lg text-dim" style="font-weight: 300;">Software Architect</p>
         <div class="flex items-center gap-4 mt-4 text-sm text-dim flex-wrap">
           <span class="flex items-center gap-1">
-            <iconify-icon icon="solar:map-point-linear"></iconify-icon> Rivne, Ukraine
+            <Icon name="solar:map-point-linear" /> Rivne, Ukraine
           </span>
           <span class="flex items-center gap-1" style="color: var(--color-green);">
-            <iconify-icon icon="solar:clock-circle-linear"></iconify-icon> UTC+2
+            <Icon name="solar:clock-circle-linear" /> UTC+2
           </span>
         </div>
       </div>
@@ -88,10 +96,13 @@ const structuredData = {
     <section class="section" style="margin-bottom: 3rem;">
       <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-6">Profile</h2>
       <p class="text-accent leading-relaxed" style="font-weight: 300; opacity: 0.9;">
-        Experienced developer focused on creating high-quality mobile apps with modern design and robust architecture. 
-        Deep expertise in <strong class="font-medium">Flutter, Dart, and Native Android (Kotlin/Java)</strong>. 
-        Skilled in solving complex technical challenges including custom cryptography, low-level networking (TCP/UDP/RPC), 
-        and offline-first data synchronization. Passionate about clean code, SOLID principles, and user-centric UI.
+        Software engineer and architect working across the stack — from
+        <strong class="font-medium">C++ system services on Windows</strong> and
+        <strong class="font-medium">Go backends</strong> to
+        <strong class="font-medium">Android and cross-platform apps</strong> in Kotlin, Swift and Flutter.
+        Comfortable low-level (memory and concurrency, native Windows APIs, custom cryptography, TCP/UDP/RPC)
+        and at product level (clean architecture, offline-first sync, real-time transport).
+        Focused on clean, maintainable code and design that holds up as a project grows.
       </p>
     </section>
     
@@ -132,11 +143,18 @@ const structuredData = {
       
       <div class="skills-grid">
         <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Core Stack</h4>
+          <h4 class="text-accent text-sm font-medium mb-4">Systems & Backend</h4>
+          <p class="text-sm text-dim leading-relaxed">
+            C++ (Windows services, WireGuard-NT, Win32/IPC, BCrypt/CNG, memory safety), Go (REST, encryption at rest, reproducible builds, SQLite without cgo).
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-accent text-sm font-medium mb-4">Mobile & Cross-platform</h4>
           <div class="flex flex-wrap gap-2">
-            <span class="skill-tag">Flutter SDK</span>
-            <span class="skill-tag">Dart</span>
-            <span class="skill-tag">Android (Kotlin/Java)</span>
+            <span class="skill-tag">Kotlin / Java</span>
+            <span class="skill-tag">Swift</span>
+            <span class="skill-tag">Flutter / Dart</span>
           </div>
         </div>
         
@@ -181,13 +199,23 @@ const structuredData = {
       </div>
     </section>
     
+    <!-- Cryptographic fingerprint — regenerated on every print -->
+    <div class="cv-fingerprint">
+      <svg class="fp-glyph" id="fp-glyph" viewBox="0 0 40 40" aria-hidden="true"></svg>
+      <div class="fp-meta">
+        <span class="fp-label">Document fingerprint</span>
+        <span class="fp-hash" id="fp-hash">—</span>
+        <span class="fp-date" id="fp-date"></span>
+      </div>
+    </div>
+
     <!-- Print Button -->
     <div class="text-center no-print" style="padding-bottom: 5rem;">
-      <button onclick="window.print()" class="print-btn">
+      <button id="cv-print" class="print-btn">
         [ PRINT / SAVE AS PDF ]
       </button>
     </div>
-    
+
   </div>
 </BaseLayout>
 
@@ -265,19 +293,205 @@ const structuredData = {
     color: var(--color-accent);
     border-bottom-color: var(--color-accent);
   }
-  
+
+  /* ── Cryptographic fingerprint ─────────────────── */
+  .cv-fingerprint {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    margin-bottom: 2.5rem;
+    color: var(--color-txt-dim);
+  }
+  .fp-glyph {
+    width: 40px;
+    height: 40px;
+    fill: currentColor;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+  .fp-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-family: var(--font-mono);
+    min-width: 0;
+  }
+  .fp-label {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    opacity: 0.7;
+  }
+  .fp-hash {
+    font-size: 0.72rem;
+    color: var(--color-accent);
+    letter-spacing: 0.02em;
+    word-break: break-all;
+  }
+  .fp-date {
+    font-size: 0.58rem;
+    opacity: 0.6;
+  }
+
+  /* ── Print: force readable black-on-white ──────── */
   @media print {
+    /* kill every stray glow/shadow/filter (incl. injected overlays) */
+    :global(*), :global(*::before), :global(*::after) {
+      box-shadow: none !important;
+      filter: none !important;
+      -webkit-filter: none !important;
+      text-shadow: none !important;
+      mask-image: none !important;
+      -webkit-mask-image: none !important;
+    }
+    :global(html), :global(body) { background: #fff !important; }
+    :global(.bg-grid) { display: none !important; }
+    :global(#claude-agent-glow-border),
+    :global(#claude-phantom-cursor) { display: none !important; }
+    :global(main) { padding: 0 !important; min-height: 0 !important; }
+    :global(.container), :global(.container-sm) {
+      max-width: 100% !important;
+      width: auto !important;
+      margin: 0 !important;
+      padding: 0 4mm !important;
+    }
+
+    /* every bit of text dark on white — kills white-on-white */
+    :global(main), :global(main *) {
+      color: #1a1a1a !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      -webkit-text-fill-color: #1a1a1a !important;
+    }
+    :global(.text-dim),
+    .timeline-subtitle, .timeline-date, .contact-info,
+    .fp-label, .fp-date { color: #555 !important; -webkit-text-fill-color: #555 !important; }
+    a { text-decoration: none !important; }
+
     .cv-header {
       flex-direction: row;
       justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
-    
-    .contact-info {
-      text-align: right;
+    .contact-info { text-align: right; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 1.3rem 2rem; }
+
+    .timeline { border-left: 1px solid #ccc; }
+    .timeline-item::before { background: #fff !important; border: 1px solid #999 !important; }
+    .timeline-content :global(li)::marker { color: #999 !important; }
+    .timeline-date { white-space: nowrap; }
+    .timeline-header { gap: 1rem; }
+
+    .tag, .skill-tag {
+      color: #111 !important;
+      background: #fff !important;
+      border: 1px solid #bbb !important;
     }
-    
-    .skills-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+
+    .cv-fingerprint { border-top: 1px solid #ccc; margin-top: 1.5rem; }
+    .fp-glyph { fill: #111 !important; opacity: 1; }
+
+    section, .timeline-item { break-inside: avoid; }
+    @page { margin: 15mm 12mm; }
   }
 </style>
+
+<script>
+  // Compact synchronous SHA-256 (so it also works inside beforeprint).
+  function sha256Bytes(ascii) {
+    const rrot = (x, n) => (x >>> n) | (x << (32 - n));
+    const K = [
+      0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+      0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+      0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+      0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+      0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+      0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+      0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+      0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+    ];
+    let H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    const bytes = [];
+    for (let i = 0; i < ascii.length; i++) {
+      let c = ascii.charCodeAt(i);
+      if (c < 128) bytes.push(c);
+      else if (c < 2048) bytes.push(192 | (c >> 6), 128 | (c & 63));
+      else bytes.push(224 | (c >> 12), 128 | ((c >> 6) & 63), 128 | (c & 63));
+    }
+    const bitLen = bytes.length * 8;
+    bytes.push(0x80);
+    while (bytes.length % 64 !== 56) bytes.push(0);
+    for (let i = 7; i >= 0; i--) bytes.push(Math.floor(bitLen / Math.pow(2, i * 8)) & 0xff);
+    const w = new Uint32Array(64);
+    for (let off = 0; off < bytes.length; off += 64) {
+      for (let i = 0; i < 16; i++)
+        w[i] = (bytes[off+i*4] << 24) | (bytes[off+i*4+1] << 16) | (bytes[off+i*4+2] << 8) | bytes[off+i*4+3];
+      for (let i = 16; i < 64; i++) {
+        const s0 = rrot(w[i-15],7) ^ rrot(w[i-15],18) ^ (w[i-15] >>> 3);
+        const s1 = rrot(w[i-2],17) ^ rrot(w[i-2],19) ^ (w[i-2] >>> 10);
+        w[i] = (w[i-16] + s0 + w[i-7] + s1) | 0;
+      }
+      let [a,b,c,d,e,f,g,h] = H;
+      for (let i = 0; i < 64; i++) {
+        const S1 = rrot(e,6) ^ rrot(e,11) ^ rrot(e,25);
+        const ch = (e & f) ^ (~e & g);
+        const t1 = (h + S1 + ch + K[i] + w[i]) | 0;
+        const S0 = rrot(a,2) ^ rrot(a,13) ^ rrot(a,22);
+        const maj = (a & b) ^ (a & c) ^ (b & c);
+        const t2 = (S0 + maj) | 0;
+        h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+      }
+      H = [(H[0]+a)|0,(H[1]+b)|0,(H[2]+c)|0,(H[3]+d)|0,(H[4]+e)|0,(H[5]+f)|0,(H[6]+g)|0,(H[7]+h)|0];
+    }
+    const out = new Uint8Array(32);
+    for (let i = 0; i < 8; i++) {
+      out[i*4] = (H[i] >>> 24) & 255; out[i*4+1] = (H[i] >>> 16) & 255;
+      out[i*4+2] = (H[i] >>> 8) & 255; out[i*4+3] = H[i] & 255;
+    }
+    return out;
+  }
+
+  function initFingerprint() {
+    const glyph  = document.getElementById('fp-glyph');
+    const hashEl = document.getElementById('fp-hash');
+    const dateEl = document.getElementById('fp-date');
+    const btn    = document.getElementById('cv-print');
+    if (!glyph) return;
+
+    const toHex = (b, n) => Array.from(b.slice(0, n)).map((x) => x.toString(16).padStart(2, '0')).join('');
+
+    // 5×5 symmetric identicon (left 3 columns mirrored), seeded from the hash
+    function renderGlyph(bytes) {
+      const s = 8;
+      let cells = '';
+      for (let col = 0; col < 3; col++) {
+        for (let row = 0; row < 5; row++) {
+          if (!(bytes[col * 5 + row] & 1)) continue;
+          const xs = col === 2 ? [2] : [col, 4 - col];
+          for (const c of xs) cells += `<rect x="${c*s}" y="${row*s}" width="${s}" height="${s}"/>`;
+        }
+      }
+      glyph.innerHTML = cells;
+    }
+
+    function generate() {
+      const rnd = (crypto.getRandomValues(new Uint8Array(6))).join('');
+      const seed = `Andrii Pasichnyk|CV|${new Date().toISOString()}|${rnd}`;
+      const bytes = sha256Bytes(seed);
+      renderGlyph(bytes);
+      hashEl.textContent = 'sha256:' + toHex(bytes, 10);
+      dateEl.textContent = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+    }
+
+    generate();
+    if (btn) btn.onclick = () => { generate(); window.print(); };
+    window.addEventListener('beforeprint', generate);
+  }
+
+  document.addEventListener('astro:page-load', initFingerprint);
+</script>

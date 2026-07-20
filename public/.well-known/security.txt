@@ -1,0 +1,6 @@
+# Security policy for pasichdev.xyz — RFC 9116
+Contact: mailto:apasichnik9@gmail.com
+Contact: https://t.me/pasichdev
+Expires: 2027-07-20T00:00:00.000Z
+Preferred-Languages: en, uk
+Canonical: https://pasichdev.xyz/.well-known/security.txt

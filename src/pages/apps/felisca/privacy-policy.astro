@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <BaseLayout 
@@ -12,7 +13,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- Header -->
     <header class="privacy-hero">
       <div class="icon-shield">
-        <iconify-icon icon="solar:shield-check-bold" width="48"></iconify-icon>
+        <Icon name="solar:shield-check-bold" width="48" height="48" />
       </div>
       <h1 class="text-accent" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Privacy Policy</h1>
       <p class="text-lg text-dim">
@@ -20,13 +21,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       </p>
       <div class="flex gap-2 mt-6 flex-wrap justify-center">
         <span class="badge badge-purple">
-          <iconify-icon icon="solar:check-circle-bold"></iconify-icon> Local storage
+          <Icon name="solar:check-circle-bold" /> Local storage
         </span>
         <span class="badge badge-purple">
-          <iconify-icon icon="solar:lock-bold"></iconify-icon> Offline first
+          <Icon name="solar:lock-bold" /> Offline first
         </span>
         <span class="badge badge-purple">
-          <iconify-icon icon="solar:eye-closed-bold"></iconify-icon> No tracking
+          <Icon name="solar:eye-closed-bold" /> No tracking
         </span>
       </div>
       <p class="text-sm text-dim" style="margin-top: 2rem;">
@@ -38,7 +39,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <section class="key-points">
       <div class="point-card">
         <div class="point-icon">
-          <iconify-icon icon="solar:smartphone-linear" width="28"></iconify-icon>
+          <Icon name="solar:smartphone-linear" width="28" height="28" />
         </div>
         <h4 class="font-medium text-accent mb-2">Local Storage</h4>
         <p class="text-sm text-dim">All your mood data and notes are stored exclusively on your device in a protected SQLite database. We have no access to your content.</p>
@@ -46,7 +47,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       
       <div class="point-card">
         <div class="point-icon">
-          <iconify-icon icon="solar:forbidden-linear" width="28"></iconify-icon>
+          <Icon name="solar:forbidden-linear" width="28" height="28" />
         </div>
         <h4 class="font-medium text-accent mb-2">No Cloud Sync</h4>
         <p class="text-sm text-dim">We do not use cloud servers to store your history. We do not transmit your data to third parties.</p>
@@ -54,7 +55,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       
       <div class="point-card">
         <div class="point-icon">
-          <iconify-icon icon="solar:user-check-linear" width="28"></iconify-icon>
+          <Icon name="solar:user-check-linear" width="28" height="28" />
         </div>
         <h4 class="font-medium text-accent mb-2">Complete Anonymity</h4>
         <p class="text-sm text-dim">The app works offline and does not require creating an account, registration, or personal identification.</p>
@@ -66,52 +67,52 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       
       <section class="policy-section">
         <div class="section-icon">
-          <iconify-icon icon="solar:database-linear" width="24"></iconify-icon>
+          <Icon name="solar:database-linear" width="24" height="24" />
         </div>
         <h3 class="font-medium text-accent mb-4">1. Data Collection & Storage</h3>
         <p class="text-dim leading-relaxed">
           All data you enter into the app (focus metrics, energy levels, anxiety levels, notes, sleep data, and caffeine intake) are stored <strong class="text-accent">exclusively locally</strong> on your device in a protected SQLite database.
         </p>
         <ul class="data-list">
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> We have no access to your data</li>
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> We do not use cloud servers for storing your history</li>
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> We do not transmit your data to third parties</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> We have no access to your data</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> We do not use cloud servers for storing your history</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> We do not transmit your data to third parties</li>
         </ul>
       </section>
       
       <section class="policy-section">
         <div class="section-icon">
-          <iconify-icon icon="solar:save-linear" width="24"></iconify-icon>
+          <Icon name="solar:diskette-linear" width="24" height="24" />
         </div>
         <h3 class="font-medium text-accent mb-4">2. Data Backup & Portability</h3>
         <p class="text-dim leading-relaxed">
           Since data is stored locally, you are fully responsible for it. The app provides an export feature in CSV format, allowing you to:
         </p>
         <ul class="data-list">
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> Create manual backups</li>
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> Transfer data to another device</li>
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> Analyze your data with external tools</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> Create manual backups</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> Transfer data to another device</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> Analyze your data with external tools</li>
         </ul>
       </section>
 
       <section class="policy-section">
         <div class="section-icon">
-          <iconify-icon icon="solar:bug-linear" width="24"></iconify-icon>
+          <Icon name="solar:bug-linear" width="24" height="24" />
         </div>
         <h3 class="font-medium text-accent mb-4">3. Analytics & Error Reporting</h3>
         <p class="text-dim leading-relaxed">
           To improve app stability, we use <strong class="text-accent">Sentry</strong> for collecting anonymous crash reports. These reports:
         </p>
         <ul class="data-list">
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> Do not contain your personal data or journal entries</li>
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> Help us identify and fix technical issues only</li>
-          <li><iconify-icon icon="solar:check-circle-bold" class="text-accent"></iconify-icon> Are completely anonymous</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> Do not contain your personal data or journal entries</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> Help us identify and fix technical issues only</li>
+          <li><Icon name="solar:check-circle-bold" class="text-accent" /> Are completely anonymous</li>
         </ul>
       </section>
 
       <section class="policy-section">
         <div class="section-icon">
-          <iconify-icon icon="solar:key-linear" width="24"></iconify-icon>
+          <Icon name="solar:key-linear" width="24" height="24" />
         </div>
         <h3 class="font-medium text-accent mb-4">4. App Permissions</h3>
         <p class="text-dim leading-relaxed mb-3">
@@ -120,7 +121,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         
         <div class="permission-item">
           <h5 class="font-medium text-accent" style="display: flex; align-items: center; gap: 0.5rem;">
-            <iconify-icon icon="solar:bell-linear" width="20"></iconify-icon>
+            <Icon name="solar:bell-linear" width="20" height="20" />
             Notifications
           </h5>
           <p class="text-sm text-dim">For sending daily check-in reminders.</p>
@@ -128,7 +129,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
         <div class="permission-item">
           <h5 class="font-medium text-accent" style="display: flex; align-items: center; gap: 0.5rem;">
-            <iconify-icon icon="solar:fingerprint-linear" width="20"></iconify-icon>
+            <Icon name="mdi:fingerprint" width="20" height="20" />
             Biometrics
           </h5>
           <p class="text-sm text-dim">For protecting app access via FaceID or fingerprint authentication.</p>
@@ -136,7 +137,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
         <div class="permission-item">
           <h5 class="font-medium text-accent" style="display: flex; align-items: center; gap: 0.5rem;">
-            <iconify-icon icon="solar:folder-linear" width="20"></iconify-icon>
+            <Icon name="solar:folder-linear" width="20" height="20" />
             File System
           </h5>
           <p class="text-sm text-dim">Exclusively for saving (export) or reading (import) CSV files at your request.</p>
@@ -145,7 +146,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <section class="policy-section">
         <div class="section-icon">
-          <iconify-icon icon="solar:chat-linear" width="24"></iconify-icon>
+          <Icon name="solar:chat-round-linear" width="24" height="24" />
         </div>
         <h3 class="font-medium text-accent mb-4">5. Contact Us</h3>
         <p class="text-dim leading-relaxed">
@@ -157,7 +158,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <section class="summary-card">
         <div class="summary-content">
           <h3 class="text-accent" style="margin-bottom: 1rem;">
-            <iconify-icon icon="solar:heart-bold" width="24"></iconify-icon>
+            <Icon name="solar:heart-bold" width="24" height="24" />
             Your Wellbeing, Your Data
           </h3>
           <p class="text-dim">
@@ -174,7 +175,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- Navigation Links -->
     <div class="nav-links" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
       <a href="/apps/felisca" class="back-link">
-        <iconify-icon icon="solar:arrow-left-linear" width="16"></iconify-icon>
+        <Icon name="solar:arrow-left-linear" width="16" height="16" />
         Back to Felisca
       </a>
     </div>
@@ -278,7 +279,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     color: var(--color-txt-dim);
   }
 
-  .data-list iconify-icon {
+  .data-list svg {
     flex-shrink: 0;
   }
 

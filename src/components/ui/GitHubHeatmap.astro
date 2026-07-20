@@ -105,7 +105,7 @@
         if (!repos || !repos[0] || !lastEl) return;
         var diff  = Math.floor((Date.now() - new Date(repos[0].pushed_at)) / 86400000);
         var label = diff === 0 ? 'today' : diff === 1 ? 'yesterday' : diff + 'd ago';
-        lastEl.textContent = 'Last push: ' + label + ' \xb7 ' + repos[0].name;
+        lastEl.textContent = 'Last push: ' + label;
       });
   });
 </script>

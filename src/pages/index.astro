@@ -1,65 +1,95 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import GitHubHeatmap from '../components/ui/GitHubHeatmap.astro';
+import { Icon } from 'astro-icon/components';
 
 const skillGroups = [
   {
-    label: 'Mobile',
+    label: 'Systems',
     skills: [
-      { name: 'Kotlin',          level: 'expert',   tooltip: 'Primary language for Android — Coroutines, Flow, Jetpack, Hilt, Room, WorkManager' },
-      { name: 'Java',            level: 'expert',   tooltip: 'Android development and JVM — legacy codebases, interop with Kotlin, JNI' },
-      { name: 'Android SDK',     level: 'expert',   tooltip: 'Deep Android internals — custom Views, CameraX, Sensors, Notifications, Permissions' },
-      { name: 'Jetpack Compose', level: 'advanced', tooltip: 'Declarative UI with animations, custom layouts, theming and state management' },
-      { name: 'BLE / NFC',       level: 'advanced', tooltip: 'Bluetooth Low Energy scanning and GATT, NFC tag read/write in production apps' },
-      { name: 'Offline-first',   level: 'expert',   tooltip: 'Room with migrations, SQLCipher encryption, local-only architecture in My Notes and Felisca' },
-    ],
-  },
-  {
-    label: 'Cross-platform',
-    skills: [
-      { name: 'Flutter',   level: 'expert',   tooltip: 'Production apps for Android, iOS and Desktop — Bloc, Riverpod, custom painters, platform channels' },
-      { name: 'Dart',      level: 'expert',   tooltip: 'Async/await, isolates, FFI — used in SovaWallet for C++ crypto bindings and Felisca' },
-      { name: 'C++ / NDK', level: 'expert',   tooltip: 'Android NDK and JNI — integrated native crypto libs into Flutter via Dart FFI in SovaWallet' },
+      { name: 'C++',               level: 'expert',   tooltip: 'Systems code — memory, concurrency, low-level control' },
+      { name: 'Windows Services',  level: 'expert',   tooltip: 'Long-running background services — lifecycle and IPC' },
+      { name: 'WireGuard-NT',      level: 'advanced', tooltip: 'VPN tunnel management from native code' },
+      { name: 'Memory Safety',     level: 'advanced', tooltip: 'Chasing down use-after-free and data races' },
+      { name: 'BCrypt / CNG',      level: 'advanced', tooltip: 'Windows crypto APIs and certificate validation' },
+      { name: 'Win32 API',         level: 'advanced', tooltip: 'Native Windows APIs — services, IPC, sockets' },
     ],
   },
   {
     label: 'Backend',
     skills: [
-      { name: 'Go',        level: 'advanced', tooltip: 'Concurrent servers with goroutines — built Linqora backend: REST, mDNS discovery, WebSocket file transfer' },
-      { name: 'Node.js',   level: 'advanced', tooltip: 'REST APIs and bots — Express, Fastify, Telegram and Discord bot backends' },
-      { name: 'WebSocket', level: 'advanced', tooltip: 'Real-time bidirectional communication — media control and file sync in Linqora' },
-      { name: 'REST API',  level: 'advanced', tooltip: 'API design, versioning, auth flows, integration with mobile and web clients' },
+      { name: 'Go',                 level: 'expert',   tooltip: 'Go services — goroutines, clean layering, production APIs' },
+      { name: 'Encryption at rest', level: 'advanced', tooltip: 'Authenticated encryption of sensitive fields (AEAD)' },
+      { name: 'SQLite (no cgo)',    level: 'advanced', tooltip: 'Pure-Go SQLite — portable static binaries' },
+      { name: 'Reproducible Builds',level: 'advanced', tooltip: 'Deterministic, verifiable release builds' },
+      { name: 'WebSocket',          level: 'advanced', tooltip: 'Real-time transport — media control and file sync in Linqora' },
+      { name: 'REST API',           level: 'expert',   tooltip: 'API design, versioning, auth' },
+    ],
+  },
+  {
+    label: 'Mobile',
+    skills: [
+      { name: 'Kotlin',          level: 'expert',   tooltip: 'Main Android language — Coroutines, Flow, Jetpack, Hilt, Room' },
+      { name: 'Swift',           level: 'advanced', tooltip: 'Native iOS across the Apple platform' },
+      { name: 'Java',            level: 'expert',   tooltip: 'Android and JVM — legacy code, Kotlin interop, JNI' },
+      { name: 'Jetpack Compose', level: 'advanced', tooltip: 'Declarative UI — layouts, theming, state, animations' },
+      { name: 'BLE / NFC',       level: 'advanced', tooltip: 'BLE scanning and GATT, NFC read/write in shipped apps' },
+      { name: 'Offline-first',   level: 'expert',   tooltip: 'Room with migrations, SQLCipher, local-only data' },
+    ],
+  },
+  {
+    label: 'Cross-platform',
+    skills: [
+      { name: 'Flutter',   level: 'expert',   tooltip: 'Apps for Android, iOS and Desktop — Bloc, Riverpod, platform channels' },
+      { name: 'Dart',      level: 'expert',   tooltip: 'Async, isolates, FFI — C++ bindings in SovaWallet' },
+      { name: 'C++ / NDK', level: 'expert',   tooltip: 'Android NDK and JNI — native libs bridged into Flutter via FFI' },
+    ],
+  },
+  {
+    label: 'Realtime & Infra',
+    skills: [
+      { name: 'Firebase FCM',   level: 'advanced', tooltip: 'Push notifications' },
+      { name: 'SSE',            level: 'advanced', tooltip: 'Server-Sent Events — one-way live streams' },
+      { name: 'Event Pipelines',level: 'advanced', tooltip: 'Event-driven flows between services' },
+      { name: 'GitLab CI/CD',   level: 'advanced', tooltip: 'Pipelines and release builds' },
     ],
   },
   {
     label: 'Web',
     skills: [
-      { name: 'React',      level: 'advanced',      tooltip: 'Component architecture, hooks, context, routing — production web interfaces' },
-      { name: 'Next.js',    level: 'advanced',      tooltip: 'SSR and SSG — App Router, API routes, image optimisation, deployment on Vercel' },
-      { name: 'TypeScript', level: 'advanced',      tooltip: 'Strict typing across frontend and backend — used in all JS/TS projects' },
-      { name: 'HTML & CSS', level: 'advanced',      tooltip: 'Semantic markup, CSS Grid/Flexbox, animations, custom design systems without frameworks' },
+      { name: 'React',      level: 'advanced', tooltip: 'Components, hooks, context, routing' },
+      { name: 'Next.js',    level: 'advanced', tooltip: 'SSR and SSG — App Router, API routes' },
+      { name: 'TypeScript', level: 'advanced', tooltip: 'Typed frontend and backend' },
+      { name: 'HTML & CSS', level: 'advanced', tooltip: 'Grid/Flexbox, animations, custom styling' },
     ],
   },
 ];
 
 const services = [
-  { icon: 'solar:smartphone-linear',      title: 'Android Apps',       desc: 'Native Kotlin — from MVP to production with clean architecture' },
-  { icon: 'solar:layers-minimalistic-linear', title: 'Cross-platform Apps', desc: 'Flutter for Android, iOS and Desktop from one codebase' },
-  { icon: 'solar:global-linear',          title: 'Web Apps',           desc: 'React / Next.js — fast, accessible, SEO-ready interfaces' },
-  { icon: 'solar:plain-linear',           title: 'Telegram Bots',      desc: 'Aiogram / Grammy — automation, payments, mini-apps' },
-  { icon: 'solar:chat-round-dots-linear', title: 'Discord Bots',       desc: 'Discord.js / py-cord — moderation, notifications, integrations' },
-  { icon: 'solar:server-linear',          title: 'Backend APIs',       desc: 'Go / Node.js — REST, WebSocket, auth, database layer' },
+  { icon: 'solar:cpu-bolt-linear',        title: 'System Services',    desc: 'Background services in C++ on Windows — lifecycle, IPC, native APIs' },
+  { icon: 'solar:server-linear',          title: 'Backends',           desc: 'Go — REST APIs, encryption at rest, reproducible builds' },
+  { icon: 'solar:diagram-up-linear',      title: 'Architecture',       desc: 'Keeping services, data and boundaries clean as things grow' },
+  { icon: 'solar:smartphone-linear',      title: 'Mobile Apps',        desc: 'Kotlin, Swift and Flutter — from first build to store release' },
+  { icon: 'solar:global-linear',          title: 'Web Apps',           desc: 'React / Next.js — fast, accessible, SEO-friendly' },
+  { icon: 'solar:refresh-circle-linear',  title: 'Realtime & Infra',   desc: 'Push, live updates and CI/CD — FCM, SSE, GitLab' },
 ];
 
 const projects = [
   {
-    icon: 'solar:heart-linear',
-    emoji: '♥',
-    title: 'Felisca',
-    description: 'Personal mental companion. Deep mood tracking with privacy-first architecture. Offline-only, encrypted locally, complete control.',
-    tags: ['Flutter', 'Dart', 'Privacy-First'],
-    href: '/apps/felisca',
-    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasichdev.felisca',
+    icon: 'solar:devices-linear',
+    emoji: '⬡',
+    title: 'Linqora',
+    description: 'Seamless PC-Mobile integration. Control media, monitor resources, and transfer files via WebSocket/mDNS.',
+    tags: ['Go', 'Flutter', 'WebSocket'],
+    href: 'https://github.com/pasichDev/linqora',
+  },
+  {
+    icon: 'solar:wallet-linear',
+    emoji: '◎',
+    title: 'SovaWallet',
+    description: 'NosoCoin ecosystem wallet. Complex cryptographic implementation, node balancing, and custom binary protocols.',
+    tags: ['C++', 'Dart FFI', 'Flutter'],
+    href: 'https://github.com/Noso-Project/NosoSova',
   },
   {
     icon: 'solar:notebook-linear',
@@ -72,20 +102,13 @@ const projects = [
     downloads: '30k+',
   },
   {
-    icon: 'solar:wallet-linear',
-    emoji: '◎',
-    title: 'SovaWallet',
-    description: 'NosoCoin ecosystem wallet. Complex cryptographic implementation, node balancing, and custom binary protocols.',
-    tags: ['Flutter', 'Dart FFI', 'C++'],
-    href: 'https://github.com/Noso-Project/NosoSova',
-  },
-  {
-    icon: 'solar:devices-linear',
-    emoji: '⬡',
-    title: 'Linqora',
-    description: 'Seamless PC-Mobile integration. Control media, monitor resources, and transfer files via WebSocket/mDNS.',
-    tags: ['Go', 'Flutter', 'WebSocket'],
-    href: 'https://github.com/pasichDev/linqora',
+    icon: 'solar:heart-linear',
+    emoji: '♥',
+    title: 'Felisca',
+    description: 'Personal mental companion. Deep mood tracking with privacy-first architecture. Offline-only, encrypted locally, complete control.',
+    tags: ['Flutter', 'Dart', 'Privacy-First'],
+    href: '/apps/felisca',
+    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasichdev.felisca',
   },
 ];
 
@@ -95,15 +118,15 @@ const structuredData = {
   name: 'Andrii Pasichnyk',
   alternateName: 'pasichDev',
   url: 'https://pasichdev.xyz',
-  jobTitle: 'Software Engineer',
-  knowsAbout: ['Android', 'Flutter', 'Kotlin', 'Java', 'Dart', 'C++', 'Go', 'BLE', 'Offline-first'],
+  jobTitle: 'Software Architect',
+  knowsAbout: ['Software Architecture', 'C++', 'Windows Services', 'WireGuard', 'Systems Security', 'Go', 'AEAD', 'Android', 'Kotlin', 'Swift', 'Flutter', 'Offline-first'],
   sameAs: ['https://github.com/pasichDev', 'https://t.me/pasichdev'],
 };
 ---
 
 <BaseLayout
-  title="pasichDev — Software Engineer"
-  description="Software Engineer focused on mobile, cross-platform, and backend. Kotlin, Flutter, Java, C++ NDK, Go."
+  title="pasichDev — Software Architect"
+  description="Software engineer and architect. C++ system services on Windows, Go backends, and mobile apps in Kotlin, Swift and Flutter."
   structuredData={structuredData}
 >
   <div class="container animate-fade-in">
@@ -118,7 +141,13 @@ const structuredData = {
       <h1 class="hero-name">Andrii Pasichnyk</h1>
 
       <p class="hero-role">
-        Software Engineer<span class="cursor" aria-hidden="true"></span>
+        Software Architect<span class="cursor" aria-hidden="true"></span>
+      </p>
+
+      <p class="hero-tagline">
+        Full-stack, leaning to systems. I write <span class="hl">C++</span> services on Windows,
+        <span class="hl">Go</span> on the backend, and mobile apps in
+        <span class="hl">Kotlin, Swift &amp; Flutter</span>.
       </p>
 
       <div class="hero-meta">
@@ -153,8 +182,8 @@ const structuredData = {
         <span class="stat-lbl">Downloads</span>
       </div>
       <div class="stat-item">
-        <span class="stat-val">Open</span>
-        <span class="stat-lbl">Source</span>
+        <span class="stat-val">6</span>
+        <span class="stat-lbl">Languages</span>
       </div>
     </div>
 
@@ -171,11 +200,11 @@ const structuredData = {
             <div class="proj-body">
               <div class="proj-top">
                 <div class="proj-icon">
-                  <iconify-icon icon={p.icon} width="18"></iconify-icon>
+                  <Icon name={p.icon} width="18" height="18" />
                 </div>
                 {p.downloads && (
                   <span class="proj-dl">
-                    <iconify-icon icon="solar:download-linear" width="10"></iconify-icon>
+                    <Icon name="solar:download-linear" width="10" height="10" />
                     {p.downloads}
                   </span>
                 )}
@@ -202,7 +231,7 @@ const structuredData = {
                   rel="noopener noreferrer"
                   class="btn-sm"
                 >
-                  <iconify-icon icon="solar:smartphone-linear" width="12"></iconify-icon>
+                  <Icon name="solar:smartphone-linear" width="12" height="12" />
                   Play Store
                 </a>
               )}
@@ -228,7 +257,9 @@ const structuredData = {
                   class={`skill-tag level-${s.level}`}
                   title={s.tooltip}
                 >
-                  <span class="skill-dot" aria-hidden="true"></span>
+                  <span class="skill-meter" aria-hidden="true">
+                    <i></i><i></i><i></i>
+                  </span>
                   {s.name}
                 </span>
               ))}
@@ -247,11 +278,40 @@ const structuredData = {
       <div class="svc-grid">
         {services.map((s) => (
           <div class="svc-card">
-            <iconify-icon icon={s.icon} width="20" class="svc-icon"></iconify-icon>
+            <Icon name={s.icon} width="20" height="20" class="svc-icon" />
             <div class="svc-title">{s.title}</div>
             <p class="svc-desc">{s.desc}</p>
           </div>
         ))}
+      </div>
+    </section>
+
+    <!-- ── TIC-TAC-TOE ───────────────────────────── -->
+    <section class="section reveal" id="play">
+      <div class="section-head">
+        <h2 class="section-title">Tic-Tac-Toe</h2>
+        <span class="section-num">vs. AI</span>
+      </div>
+
+      <div class="ttt">
+        <div class="ttt-status" id="ttt-status">Your move — you're X</div>
+        <div class="ttt-board-wrap">
+          <div class="ttt-board" id="ttt-board">
+            <button class="ttt-cell" data-i="0" aria-label="cell 1"></button>
+            <button class="ttt-cell" data-i="1" aria-label="cell 2"></button>
+            <button class="ttt-cell" data-i="2" aria-label="cell 3"></button>
+            <button class="ttt-cell" data-i="3" aria-label="cell 4"></button>
+            <button class="ttt-cell" data-i="4" aria-label="cell 5"></button>
+            <button class="ttt-cell" data-i="5" aria-label="cell 6"></button>
+            <button class="ttt-cell" data-i="6" aria-label="cell 7"></button>
+            <button class="ttt-cell" data-i="7" aria-label="cell 8"></button>
+            <button class="ttt-cell" data-i="8" aria-label="cell 9"></button>
+          </div>
+          <svg class="ttt-line" id="ttt-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="0" x2="0" y2="0"></line>
+          </svg>
+        </div>
+        <button class="ttt-reset" id="ttt-reset">↺ New game</button>
       </div>
     </section>
 
@@ -278,7 +338,157 @@ const structuredData = {
     }, 1500);
   }
 
-  document.addEventListener('astro:page-load', initReveal);
+  function initCounts() {
+    const els = document.querySelectorAll('.stat-val');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        io.unobserve(el);
+        const raw = el.dataset.raw || el.textContent.trim();
+        el.dataset.raw = raw;
+        const m = raw.match(/^(\d+)(.*)$/);
+        if (!m) return;
+        const target = parseInt(m[1], 10);
+        const suffix = m[2];
+        const dur = 900;
+        const start = performance.now();
+        function tick(now) {
+          const p = Math.min(1, (now - start) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.5 });
+    els.forEach((el) => io.observe(el));
+  }
+
+  function initTTT() {
+    const boardEl  = document.getElementById('ttt-board');
+    const statusEl = document.getElementById('ttt-status');
+    const resetEl  = document.getElementById('ttt-reset');
+    if (!boardEl || !statusEl || !resetEl) return;
+
+    const HU = 'X', AI = 'O';
+    const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    const cells = Array.from(boardEl.querySelectorAll('.ttt-cell'));
+    const lineSvg = document.getElementById('ttt-line');
+    const lineEl = lineSvg ? lineSvg.querySelector('line') : null;
+    let board, over;
+
+    const COORDS = {
+      '0,1,2': [8,16.7,92,16.7], '3,4,5': [8,50,92,50], '6,7,8': [8,83.3,92,83.3],
+      '0,3,6': [16.7,8,16.7,92], '1,4,7': [50,8,50,92], '2,5,8': [83.3,8,83.3,92],
+      '0,4,8': [12,12,88,88], '2,4,6': [88,12,12,88],
+    };
+
+    const winInfo = (b) => {
+      for (const L of LINES) { const [a,c,d] = L; if (b[a] && b[a] === b[c] && b[a] === b[d]) return { mark: b[a], line: L }; }
+      return null;
+    };
+    const winner = (b) => { const w = winInfo(b); return w ? w.mark : null; };
+    const full = (b) => b.every(Boolean);
+
+    function drawLine(combo, mark) {
+      if (!lineEl) return;
+      const [x1,y1,x2,y2] = COORDS[combo.join(',')];
+      lineEl.setAttribute('x1', x1); lineEl.setAttribute('y1', y1);
+      lineEl.setAttribute('x2', x2); lineEl.setAttribute('y2', y2);
+      const len = Math.hypot(x2 - x1, y2 - y1);
+      lineEl.style.stroke = mark === HU ? '#ffffff' : 'var(--color-green)';
+      lineEl.style.transition = 'none';
+      lineEl.style.strokeDasharray = len;
+      lineEl.style.strokeDashoffset = len;
+      lineSvg.classList.add('show');
+      void lineEl.getBoundingClientRect();
+      lineEl.style.transition = 'stroke-dashoffset 0.5s cubic-bezier(0.4,0,0.2,1)';
+      lineEl.style.strokeDashoffset = '0';
+    }
+    function clearLine() {
+      if (!lineSvg) return;
+      lineSvg.classList.remove('show');
+      if (lineEl) { lineEl.style.transition = 'none'; lineEl.style.strokeDashoffset = ''; lineEl.style.strokeDasharray = ''; }
+    }
+
+    // minimax with depth so it prefers faster wins / slower losses
+    function minimax(b, player, depth) {
+      const w = winner(b);
+      if (w === AI) return { score: 10 - depth };
+      if (w === HU) return { score: depth - 10 };
+      if (full(b))  return { score: 0 };
+      let best = null;
+      for (let i = 0; i < 9; i++) {
+        if (!b[i]) {
+          b[i] = player;
+          const score = minimax(b, player === AI ? HU : AI, depth + 1).score;
+          b[i] = '';
+          if (best === null ||
+             (player === AI && score > best.score) ||
+             (player === HU && score < best.score)) best = { i, score };
+        }
+      }
+      return best;
+    }
+
+    const render = () => cells.forEach((c, i) => {
+      c.textContent = board[i] || '';
+      c.classList.toggle('x', board[i] === HU);
+      c.classList.toggle('o', board[i] === AI);
+      c.disabled = over || !!board[i];
+    });
+
+    function finish() {
+      const info = winInfo(board);
+      if (info) {
+        over = true;
+        drawLine(info.line, info.mark);
+        statusEl.textContent = info.mark === HU ? 'You win — how?! 🎉' : 'AI wins';
+      } else if (full(board)) {
+        over = true;
+        statusEl.textContent = 'Draw — well played';
+      }
+      if (over) render();
+      return over;
+    }
+
+    function aiMove() {
+      statusEl.textContent = 'AI thinking…';
+      cells.forEach((c) => c.disabled = true);
+      setTimeout(() => {
+        const { i } = minimax(board.slice(), AI, 0);
+        board[i] = AI;
+        if (!finish()) { statusEl.textContent = "Your move — you're X"; render(); }
+      }, 260);
+    }
+
+    function reset() {
+      board = Array(9).fill('');
+      over = false;
+      clearLine();
+      statusEl.textContent = "Your move — you're X";
+      render();
+    }
+
+    boardEl.onclick = (e) => {
+      const cell = e.target.closest('.ttt-cell');
+      if (!cell || over) return;
+      const i = Number(cell.dataset.i);
+      if (board[i]) return;
+      board[i] = HU;
+      render();
+      if (!finish()) aiMove();
+    };
+    resetEl.onclick = reset;
+    reset();
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    initReveal();
+    initCounts();
+    initTTT();
+  });
 </script>
 
 <style>
@@ -314,10 +524,15 @@ const structuredData = {
     letter-spacing: -0.03em;
     line-height: 1.0;
     margin-bottom: 0.5rem;
-    background: linear-gradient(160deg, #fff 40%, rgba(255,255,255,0.4));
+    background: linear-gradient(100deg, #fff 20%, rgba(255,255,255,0.4) 45%, #fff 70%);
+    background-size: 220% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+  @keyframes shimmer {
+    from { background-position: 180% center; }
+    to   { background-position: -80% center; }
   }
 
   .hero-role {
@@ -331,14 +546,27 @@ const structuredData = {
 
   .cursor {
     display: inline-block;
-    width: 2px;
-    height: 1em;
+    width: 8px;
+    height: 2px;
     background: var(--color-accent);
-    margin-left: 3px;
-    animation: blink 1s step-end infinite;
-    vertical-align: text-bottom;
+    margin-left: 5px;
+    align-self: flex-end;
+    margin-bottom: 0.28em;
+    animation: blink 1.1s step-end infinite;
   }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero-tagline {
+    max-width: 46ch;
+    font-size: clamp(0.82rem, 1.9vw, 0.95rem);
+    line-height: 1.65;
+    color: var(--color-txt-dim);
+    margin-bottom: 1.75rem;
+  }
+  .hero-tagline .hl {
+    color: var(--color-txt-main);
+    font-weight: 500;
+  }
 
   .hero-meta {
     display: flex;
@@ -621,14 +849,33 @@ const structuredData = {
   .level-advanced     { border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.65); }
   .level-intermediate { border-color: rgba(255,255,255,0.1);  color: rgba(255,255,255,0.38); }
 
-  .skill-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
+  /* level meter — signal-strength bars encode proficiency */
+  .skill-meter {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 9px;
     flex-shrink: 0;
+    line-height: 0;
+    position: relative;
+    top: -1px;
   }
-  .level-expert       .skill-dot { background: #fff; }
-  .level-advanced     .skill-dot { background: rgba(255,255,255,0.5); }
-  .level-intermediate .skill-dot { background: rgba(255,255,255,0.22); }
+  .skill-meter i {
+    display: block;
+    width: 2px;
+    border-radius: 1px;
+    background: rgba(255,255,255,0.16);
+    transition: background 0.2s ease, height 0.2s ease;
+  }
+  .skill-meter i:nth-child(1) { height: 4px; }
+  .skill-meter i:nth-child(2) { height: 7px; }
+  .skill-meter i:nth-child(3) { height: 10px; }
+
+  .level-expert   .skill-meter i               { background: rgba(255,255,255,0.9); }
+  .level-advanced .skill-meter i:nth-child(-n+2){ background: rgba(255,255,255,0.7); }
+  .level-intermediate .skill-meter i:nth-child(1){ background: rgba(255,255,255,0.55); }
+
+  .skill-tag:hover .skill-meter i { background: var(--color-accent); }
 
   /* ── SERVICES ─────────────────────────────────── */
   .svc-grid {
@@ -651,11 +898,11 @@ const structuredData = {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    transition: border-color 0.15s, transform 0.15s;
+    transition: border-color 0.15s, transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease;
   }
   .svc-card:hover {
     border-color: rgba(255,255,255,0.16);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 
   .svc-icon {
@@ -688,14 +935,129 @@ const structuredData = {
   .reveal.in { opacity: 1; transform: none; }
 
   /* hero animates immediately */
-  .hero .eyebrow  { animation: heroIn 0.5s 0.05s cubic-bezier(0.4,0,0.2,1) both; }
-  .hero .hero-name { animation: heroIn 0.5s 0.12s cubic-bezier(0.4,0,0.2,1) both; }
-  .hero .hero-role { animation: heroIn 0.5s 0.19s cubic-bezier(0.4,0,0.2,1) both; }
-  .hero .hero-meta { animation: heroIn 0.5s 0.25s cubic-bezier(0.4,0,0.2,1) both; }
-  .hero .hero-cta  { animation: heroIn 0.5s 0.31s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .eyebrow    { animation: heroIn 0.5s 0.05s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .hero-name  { animation: heroIn 0.5s 0.12s cubic-bezier(0.4,0,0.2,1) both,
+                                 shimmer 7s 0.9s linear infinite; }
+  .hero .hero-role  { animation: heroIn 0.5s 0.19s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .hero-tagline { animation: heroIn 0.5s 0.26s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .hero-meta  { animation: heroIn 0.5s 0.33s cubic-bezier(0.4,0,0.2,1) both; }
+  .hero .hero-cta   { animation: heroIn 0.5s 0.40s cubic-bezier(0.4,0,0.2,1) both; }
 
   @keyframes heroIn {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: none; }
+  }
+
+  /* ── TIC-TAC-TOE ───────────────────────────────── */
+  .ttt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    text-align: center;
+  }
+  .ttt-status {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-txt-dim);
+    min-height: 1em;
+    transition: color 0.2s;
+  }
+  .ttt-board-wrap {
+    position: relative;
+    width: clamp(200px, 62vw, 264px);
+    aspect-ratio: 1;
+  }
+  .ttt-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .ttt-line {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .ttt-line line {
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    opacity: 0;
+    filter: drop-shadow(0 0 5px currentColor);
+  }
+  .ttt-line.show line { opacity: 1; }
+  .ttt-cell {
+    background: var(--color-bg);
+    border: none;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: clamp(1.4rem, 6vw, 1.9rem);
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    transition: background 0.15s, color 0.15s;
+  }
+  .ttt-cell:hover:not(:disabled) { background: var(--color-surface); }
+  .ttt-cell:disabled { cursor: default; }
+  .ttt-cell.x { color: #fff; }
+  .ttt-cell.o { color: var(--color-green); }
+  .ttt-reset {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-txt-dim);
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .ttt-reset:hover { border-color: rgba(255,255,255,0.22); color: var(--color-accent); }
+
+  /* ── STAGGERED ENTRANCE: skills + services ─────── */
+  .section.reveal .skill-tag,
+  .section.reveal .svc-card {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .section.reveal.in .skill-tag,
+  .section.reveal.in .svc-card {
+    opacity: 1;
+    transform: none;
+  }
+  .cat-tags .skill-tag:nth-child(1) { transition-delay: 0.04s; }
+  .cat-tags .skill-tag:nth-child(2) { transition-delay: 0.08s; }
+  .cat-tags .skill-tag:nth-child(3) { transition-delay: 0.12s; }
+  .cat-tags .skill-tag:nth-child(4) { transition-delay: 0.16s; }
+  .cat-tags .skill-tag:nth-child(5) { transition-delay: 0.20s; }
+  .cat-tags .skill-tag:nth-child(6) { transition-delay: 0.24s; }
+  .svc-grid .svc-card:nth-child(1) { transition-delay: 0.05s; }
+  .svc-grid .svc-card:nth-child(2) { transition-delay: 0.10s; }
+  .svc-grid .svc-card:nth-child(3) { transition-delay: 0.15s; }
+  .svc-grid .svc-card:nth-child(4) { transition-delay: 0.20s; }
+  .svc-grid .svc-card:nth-child(5) { transition-delay: 0.25s; }
+  .svc-grid .svc-card:nth-child(6) { transition-delay: 0.30s; }
+
+  .svc-card:hover .svc-icon { color: var(--color-accent); transform: translateY(-1px); }
+  .svc-icon { transition: color 0.2s ease, transform 0.2s ease; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero .hero-name { animation: heroIn 0.5s 0.12s cubic-bezier(0.4,0,0.2,1) both; }
+    .cat-tags .skill-tag, .svc-grid .svc-card { transition-delay: 0s !important; }
   }
 </style>

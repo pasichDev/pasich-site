@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 export interface Props {
   icon: string;
   title: string;
@@ -12,7 +13,7 @@ const { icon, title, description, href, badge } = Astro.props;
 <a href={href} class="tool-card card">
   <div class="tool-top">
     <div class="tool-icon">
-      <iconify-icon icon={icon} width="22"></iconify-icon>
+      <Icon name={icon} width="22" height="22" />
     </div>
     {badge && <span class="tool-badge">{badge}</span>}
   </div>

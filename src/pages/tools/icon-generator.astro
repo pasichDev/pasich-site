@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -30,7 +31,7 @@ const structuredData = {
 
     <!-- Drop zone -->
     <div id="drop-zone" class="drop-zone">
-      <iconify-icon icon="solar:upload-linear" width="32" style="color:var(--color-txt-dim);margin-bottom:1rem"></iconify-icon>
+      <Icon name="solar:upload-linear" width="32" height="32" style="color:var(--color-txt-dim);margin-bottom:1rem" />
       <p class="text-dim text-sm">Drop PNG here or <label for="file-input" class="file-label">browse</label></p>
       <p class="text-xs text-dim" style="margin-top:.5rem;opacity:.5">1024×1024 px recommended</p>
       <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" style="display:none" />
@@ -123,22 +124,22 @@ const structuredData = {
       <div class="section-label" style="margin-top:2rem">Platforms</div>
       <div class="platform-toggles" id="platform-toggles">
         <button class="ptoggle active" data-platform="android">
-          <iconify-icon icon="solar:smartphone-linear" width="14"></iconify-icon> Android
+          <Icon name="solar:smartphone-linear" width="14" height="14" /> Android
         </button>
         <button class="ptoggle active" data-platform="ios">
-          <iconify-icon icon="solar:apple-linear" width="14"></iconify-icon> iOS
+          <Icon name="mdi:apple" width="14" height="14" /> iOS
         </button>
         <button class="ptoggle active" data-platform="macos">
-          <iconify-icon icon="solar:monitor-linear" width="14"></iconify-icon> macOS
+          <Icon name="solar:monitor-linear" width="14" height="14" /> macOS
         </button>
         <button class="ptoggle active" data-platform="windows">
-          <iconify-icon icon="solar:window-frame-linear" width="14"></iconify-icon> Windows
+          <Icon name="solar:window-frame-linear" width="14" height="14" /> Windows
         </button>
         <button class="ptoggle active" data-platform="linux">
-          <iconify-icon icon="solar:server-linear" width="14"></iconify-icon> Linux
+          <Icon name="solar:server-linear" width="14" height="14" /> Linux
         </button>
         <button class="ptoggle active" data-platform="web">
-          <iconify-icon icon="solar:global-linear" width="14"></iconify-icon> Web
+          <Icon name="solar:global-linear" width="14" height="14" /> Web
         </button>
       </div>
 
@@ -302,7 +303,7 @@ const structuredData = {
       <!-- Download -->
       <div class="download-bar">
         <button id="btn-generate" class="btn btn-primary">
-          <iconify-icon icon="solar:download-linear"></iconify-icon>
+          <Icon name="solar:download-linear" />
           Download ZIP
         </button>
         <p id="gen-status" class="text-xs text-dim"></p>

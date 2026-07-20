@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <BaseLayout 
@@ -18,7 +19,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           Felisca
         </h1>
         <p class="text-lg text-dim" style="margin-bottom: 0.5rem;">
-          Your Personal Mental Companion ✨
+          Your Personal Mental Companion
         </p>
         <p class="text-base text-dim" style="margin-bottom: 2rem; opacity: 0.9;">
           An innovative mobile app for deep monitoring of your mental state, focus, and energy with complete privacy.
@@ -27,7 +28,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <!-- Google Play Badge -->
         <div style="display: flex; justify-content: center;">
           <a href="https://play.google.com/store/apps/details?id=com.pasichdev.felisca" target="_blank" rel="noopener noreferrer" class="coming-soon-badge" style="display: inline-flex;">
-            <iconify-icon icon="mdi:google-play" style="margin-right: 0.5rem;"></iconify-icon>
+            <Icon name="mdi:google-play" style="margin-right: 0.5rem;" />
             <span>Download on Google Play</span>
           </a>
         </div>
@@ -60,11 +61,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
     <!-- Detailed Features -->
     <section class="features-detailed" style="margin-top: 5rem;">
-      <h2 class="section-title text-accent">📋 Key Features</h2>
+      <h2 class="section-title text-accent">Key Features</h2>
       
       <div class="feature-detail-card">
         <div class="feature-number-icon">
-          <iconify-icon icon="mdi:lightning-bolt" width="28"></iconify-icon>
+          <Icon name="mdi:lightning-bolt" width="28" height="28" />
         </div>
         <div class="feature-content">
           <h3 class="text-accent" style="font-size: 1.4rem; margin-bottom: 0.75rem;">Quick Check-in</h3>
@@ -80,7 +81,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <div class="feature-detail-card">
         <div class="feature-number-icon">
-          <iconify-icon icon="mdi:chart-line" width="28"></iconify-icon>
+          <Icon name="mdi:chart-line" width="28" height="28" />
         </div>
         <div class="feature-content">
           <h3 class="text-accent" style="font-size: 1.4rem; margin-bottom: 0.75rem;">Pulse Dashboard</h3>
@@ -98,7 +99,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <div class="feature-detail-card">
         <div class="feature-number-icon">
-          <iconify-icon icon="mdi:trophy" width="28"></iconify-icon>
+          <Icon name="mdi:trophy" width="28" height="28" />
         </div>
         <div class="feature-content">
           <h3 class="text-accent" style="font-size: 1.4rem; margin-bottom: 0.75rem;">Achievements System</h3>
@@ -117,10 +118,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <section class="privacy-notice" style="margin-top: 5rem;">
       <div class="notice-card">
         <div class="notice-icon">
-          <iconify-icon icon="mdi:shield-check" width="32"></iconify-icon>
+          <Icon name="mdi:shield-check" width="32" height="32" />
         </div>
         <div>
-          <h3 class="text-accent" style="margin-bottom: 1rem;">🔐 Privacy is Our Priority</h3>
+          <h3 class="text-accent" style="margin-bottom: 1rem;">Privacy is Our Priority</h3>
           <p class="text-dim" style="margin-bottom: 1rem;">
             Felisca is built as a completely offline-first app. Your emotions, focus levels, and energy data are personal and should never leave your device.
           </p>
@@ -140,7 +141,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           </div>
           <a href="/apps/felisca/privacy-policy" class="read-policy-link" style="display: inline-flex; margin-top: 1.5rem;">
             Read our full Privacy Policy
-            <iconify-icon icon="mdi:arrow-right" width="16"></iconify-icon>
+            <Icon name="mdi:arrow-right" width="16" height="16" />
           </a>
         </div>
       </div>
@@ -154,7 +155,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       </p>
       <div class="flex gap-4 justify-center flex-wrap">
         <a href="https://play.google.com/store/apps/details?id=com.pasichdev.felisca" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          <iconify-icon icon="mdi:google-play" style="margin-right: 0.5rem;"></iconify-icon>
+          <Icon name="mdi:google-play" style="margin-right: 0.5rem;" />
           Download on Google Play
         </a>
         <a href="/apps/felisca/privacy-policy" class="btn btn-secondary">
@@ -200,7 +201,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     padding: 0.75rem 1.5rem;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
+    border-radius: 2px;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-accent);
@@ -224,7 +225,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .uniqueness-section {
     background: rgba(255, 255, 255, 0.02);
     padding: 2.5rem;
-    border-radius: 16px;
+    border-radius: 2px;
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
@@ -244,7 +245,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     gap: 1rem;
     padding: 1.5rem;
     background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
+    border-radius: 2px;
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
@@ -262,7 +263,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     width: 48px;
     height: 48px;
     background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
+    border-radius: 2px;
     flex-shrink: 0;
     color: var(--color-accent);
     transition: all 0.3s ease;
@@ -291,7 +292,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     transition: all 0.3s ease;
     padding: 1.5rem;
     background: rgba(255, 255, 255, 0.02);
-    border-radius: 12px;
+    border-radius: 2px;
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
@@ -304,7 +305,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .screenshot-img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 2px;
     margin-bottom: 1rem;
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
     transition: all 0.3s ease;
@@ -330,7 +331,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     padding: 2rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 2px;
     transition: all 0.3s ease;
     margin-bottom: 2rem;
     align-items: flex-start;
@@ -350,7 +351,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     height: 60px;
     background: var(--color-accent);
     color: var(--color-bg);
-    border-radius: 12px;
+    border-radius: 2px;
     flex-shrink: 0;
     transition: all 0.3s ease;
   }
@@ -398,9 +399,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     display: flex;
     gap: 2rem;
     padding: 2.5rem;
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.02) 100%);
-    border-left: 4px solid var(--color-accent);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 2px;
     transition: all 0.3s ease;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-right: 1px solid rgba(255, 255, 255, 0.05);
@@ -408,8 +409,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 
   .notice-card:hover {
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.04) 100%);
-    border-left-color: #4caf50;
+    background: rgba(255, 255, 255, 0.04);
+    border-left-color: var(--color-accent);
   }
 
   .notice-icon {
@@ -419,7 +420,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     width: 60px;
     height: 60px;
     background: rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    border-radius: 2px;
     flex-shrink: 0;
     color: var(--color-accent);
     transition: all 0.3s ease;
@@ -451,7 +452,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .cta-section {
     padding: 2rem;
     background: rgba(255, 255, 255, 0.02);
-    border-radius: 12px;
+    border-radius: 2px;
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
@@ -461,7 +462,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     align-items: center;
     justify-content: center;
     padding: 0.875rem 2rem;
-    border-radius: 10px;
+    border-radius: 2px;
     font-size: 0.95rem;
     font-weight: 600;
     transition: all 0.3s ease;
