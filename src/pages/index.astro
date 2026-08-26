@@ -76,6 +76,15 @@ const services = [
 
 const projects = [
   {
+    icon: 'solar:broom-linear',
+    emoji: '◇',
+    title: 'Chystik',
+    description: 'Safety-first disk cleanup for developers. ~200 rules explain what each finding is and what losing it costs — protected paths are refused, and cleanup goes to the trash, never straight to unlink. Linux supported; macOS and Windows in preview.',
+    tags: ['Rust', 'egui', 'Cross-platform'],
+    href: 'https://github.com/pasichDev/chystik',
+    siteHref: 'https://pasichdev.github.io/chystik/',
+  },
+  {
     icon: 'solar:devices-linear',
     emoji: '⬡',
     title: 'Linqora',
@@ -119,7 +128,7 @@ const structuredData = {
   alternateName: 'pasichDev',
   url: 'https://pasichdev.xyz',
   jobTitle: 'Software Architect',
-  knowsAbout: ['Software Architecture', 'C++', 'Windows Services', 'WireGuard', 'Systems Security', 'Go', 'AEAD', 'Android', 'Kotlin', 'Swift', 'Flutter', 'Offline-first'],
+  knowsAbout: ['Software Architecture', 'C++', 'Rust', 'Windows Services', 'WireGuard', 'Systems Security', 'Go', 'AEAD', 'Android', 'Kotlin', 'Swift', 'Flutter', 'Offline-first'],
   sameAs: ['https://github.com/pasichDev', 'https://t.me/pasichdev'],
 };
 ---
@@ -191,7 +200,7 @@ const structuredData = {
     <section class="section reveal" id="projects">
       <div class="section-head">
         <h2 class="section-title">Selected Work</h2>
-        <span class="section-num">01 — 04</span>
+        <span class="section-num">01 — 05</span>
       </div>
 
       <div class="proj-grid">
@@ -224,6 +233,17 @@ const structuredData = {
               >
                 {p.href.startsWith('https://github.com') ? 'GitHub ↗' : 'Details →'}
               </a>
+              {p.siteHref && (
+                <a
+                  href={p.siteHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-sm"
+                >
+                  <Icon name="solar:global-linear" width="12" height="12" />
+                  Website
+                </a>
+              )}
               {p.playStoreHref && (
                 <a
                   href={p.playStoreHref}
@@ -711,6 +731,7 @@ const structuredData = {
   .reveal.in .proj-card:nth-child(2) { transition-delay: 0.12s; }
   .reveal.in .proj-card:nth-child(3) { transition-delay: 0.19s; }
   .reveal.in .proj-card:nth-child(4) { transition-delay: 0.26s; }
+  .reveal.in .proj-card:nth-child(5) { transition-delay: 0.33s; }
 
   .proj-card:hover {
     border-color: rgba(255,255,255,0.18);
