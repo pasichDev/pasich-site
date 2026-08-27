@@ -3,18 +3,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import data from '../data/links.json';
 import { Icon } from 'astro-icon/components';
 
-const { profile, links, seo } = data;
+const { profile, primary, groups, seo } = data;
+
+const allLinks = [...primary, ...groups.flatMap((g) => g.items)];
+
+const isExternal = (url: string) => url.startsWith('http');
 
 const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": profile.name,
-  "url": "https://pasichdev.xyz/links",
-  "sameAs": links.filter(l => l.url.startsWith('http')).map(l => l.url)
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  alternateName: 'pasichDev',
+  jobTitle: profile.role,
+  image: 'https://pasichdev.xyz' + profile.avatarFallback,
+  url: 'https://pasichdev.xyz/links',
+  sameAs: allLinks.filter((l) => isExternal(l.url)).map((l) => l.url),
 };
 ---
 
-<BaseLayout 
+<BaseLayout
   title={seo.title}
   description={seo.description}
   structuredData={structuredData}
@@ -22,81 +29,152 @@ const structuredData = {
   hideFooter={true}
 >
   <div class="links-wrapper animate-fade-in">
-    <!-- Profile Section -->
+    <span class="glow" aria-hidden="true"></span>
+
+    <!-- ── PROFILE ───────────────────────────────── -->
     <header class="profile-header">
-      <div class="profile-avatar mb-6">
-        <img src={profile.avatar} alt={profile.name} class="avatar-image" />
+      <div class="profile-avatar">
+        <picture>
+          <source srcset={profile.avatar} type="image/webp" />
+          <img
+            src={profile.avatarFallback}
+            alt={profile.name}
+            class="avatar-image"
+            width="400"
+            height="400"
+            fetchpriority="high"
+          />
+        </picture>
       </div>
-      <h1 class="text-xl font-medium text-accent mb-2">{profile.name}</h1>
-      <p class="text-sm text-dim leading-relaxed bio-text">
-        {profile.bio}
-      </p>
-      <div class="flex items-center gap-2 mt-4 text-xs font-mono text-dim">
-        <Icon name="solar:map-point-linear" />
-        {profile.location}
+
+      <h1 class="profile-name">{profile.name}</h1>
+      <p class="profile-role">{profile.role}</p>
+
+      <p class="profile-bio">{profile.bio}</p>
+
+      <div class="profile-meta">
+        <span class="meta-chip">
+          <Icon name="solar:map-point-linear" width="13" height="13" />
+          {profile.location}
+        </span>
+        {profile.available && (
+          <span class="meta-chip chip-avail">
+            <span class="dot" aria-hidden="true"></span>
+            Available
+          </span>
+        )}
       </div>
     </header>
 
-    <nav class="links-container">
-      {links.map((link) => (
-        <a 
-          href={link.url} 
-          target={link.url.startsWith('http') ? "_blank" : "_self"}
-          rel={link.url.startsWith('http') ? "noopener noreferrer" : ""}
-          class={`link-card card ${link.featured ? 'featured' : ''}`}
+    <!-- ── PRIMARY ───────────────────────────────── -->
+    <nav class="link-list primary-list" aria-label="Main links">
+      {primary.map((link) => (
+        <a
+          href={link.url}
+          target={isExternal(link.url) ? '_blank' : '_self'}
+          rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
+          class="link-card featured"
         >
-          <div class="link-card-inner">
-            <div class="flex items-center gap-4">
-              <div class="link-icon">
-                <Icon name={link.icon} width="20" height="20" />
-              </div>
-              <span class="font-medium text-sm">{link.title}</span>
-            </div>
-            <Icon name="solar:arrow-right-linear" class="arrow-icon" width="16" height="16" />
-          </div>
+          <span class="link-icon">
+            <Icon name={link.icon} width="18" height="18" />
+          </span>
+          <span class="link-text">
+            <span class="link-title">{link.title}</span>
+            <span class="link-sub">{link.subtitle}</span>
+          </span>
+          <Icon name="solar:arrow-right-up-linear" class="arrow-icon" width="15" height="15" />
         </a>
       ))}
     </nav>
 
-    <!-- Footer link -->
+    <!-- ── GROUPS ────────────────────────────────── -->
+    {groups.map((group) => (
+      <section class="link-group">
+        <div class="group-head">
+          <h2 class="group-label">{group.label}</h2>
+          <span class="group-line" aria-hidden="true"></span>
+          <span class="group-num">{group.num}</span>
+        </div>
+
+        <nav class="link-list" aria-label={group.label}>
+          {group.items.map((link) => (
+            <a
+              href={link.url}
+              target={isExternal(link.url) ? '_blank' : '_self'}
+              rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
+              class="link-card"
+            >
+              <span class="link-icon">
+                <Icon name={link.icon} width="18" height="18" />
+              </span>
+              <span class="link-text">
+                <span class="link-title">
+                  {link.title}
+                  {link.tags && (
+                    <span class="link-tags">
+                      {link.tags.map((t) => <span class="tag">{t}</span>)}
+                    </span>
+                  )}
+                </span>
+                <span class="link-sub">{link.subtitle}</span>
+              </span>
+              <Icon name="solar:arrow-right-up-linear" class="arrow-icon" width="15" height="15" />
+            </a>
+          ))}
+        </nav>
+      </section>
+    ))}
+
     <footer class="page-footer">
-      <a href="/" class="back-home text-xs font-mono">
-        pasichDev.xyz
-      </a>
+      <a href="/" class="back-home">pasichDev.xyz</a>
     </footer>
   </div>
 </BaseLayout>
 
 <style>
   .links-wrapper {
-    max-width: 580px;
+    position: relative;
+    max-width: 560px;
     margin: 0 auto;
-    padding: 2rem 1.5rem 4rem;
+    padding: 3rem 1.5rem 4rem;
     display: flex;
     flex-direction: column;
-    min-height: 80vh;
+    min-height: 90vh;
   }
 
+  .glow {
+    position: absolute;
+    top: -140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 460px;
+    height: 320px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.07), transparent 68%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ── Profile ─────────────────────────────────── */
   .profile-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-bottom: 3.5rem;
+    margin-bottom: 2.75rem;
   }
 
   .profile-avatar {
-    width: 88px;
-    height: 88px;
+    width: 128px;
+    height: 128px;
     border-radius: 50%;
     padding: 2px;
-    background: linear-gradient(135deg, var(--color-border), var(--color-accent));
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.06) 45%, var(--color-border));
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    margin-bottom: 1.25rem;
   }
 
   .avatar-image {
+    display: block;
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -104,73 +182,228 @@ const structuredData = {
     background: var(--color-surface);
   }
 
-  .bio-text {
-    max-width: 320px;
+  .profile-name {
+    font-size: 1.375rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--color-txt-main);
   }
 
-  .links-container {
+  .profile-role {
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-txt-dim);
+  }
+
+  .profile-bio {
+    max-width: 340px;
+    margin-top: 0.875rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--color-txt-dim);
+  }
+
+  .profile-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.125rem;
+  }
+
+  .meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.02);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-txt-dim);
+  }
+
+  .chip-avail {
+    color: var(--color-green);
+    border-color: rgba(34, 197, 94, 0.25);
+    background: rgba(34, 197, 94, 0.06);
+  }
+
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-green);
+    box-shadow: 0 0 8px var(--color-green);
+  }
+
+  /* ── Groups ──────────────────────────────────── */
+  .link-group {
+    margin-top: 2.5rem;
+  }
+
+  .group-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.875rem;
+    padding: 0 0.25rem;
+  }
+
+  .group-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-txt-dim);
+  }
+
+  .group-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--color-border), transparent);
+  }
+
+  .group-num {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-txt-dim);
+    opacity: 0.5;
+  }
+
+  /* ── Cards ───────────────────────────────────── */
+  .link-list {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    margin-bottom: 4rem;
+    gap: 0.625rem;
   }
 
   .link-card {
-    display: block;
-    padding: 1rem 1.25rem;
-    text-decoration: none;
-    transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem 1rem;
     border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.025);
+    text-decoration: none;
+    transition:
+      transform var(--transition-fast),
+      background var(--transition-fast),
+      border-color var(--transition-fast);
   }
 
   .link-card.featured {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.055);
+    border-color: rgba(255, 255, 255, 0.14);
   }
 
   .link-card:hover {
-    transform: scale(1.01);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.075);
+    border-color: rgba(255, 255, 255, 0.28);
   }
 
-  .link-card-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  .link-card:active {
+    transform: translateY(0);
   }
 
   .link-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-accent);
-    opacity: 0.8;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--color-txt-main);
+    opacity: 0.85;
+    transition: opacity var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .link-card:hover .link-icon {
+    opacity: 1;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .link-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .link-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-txt-main);
+  }
+
+  .link-sub {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--color-txt-dim);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .link-tags {
+    display: inline-flex;
+    gap: 0.3rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    padding: 0.05rem 0.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    color: var(--color-txt-dim);
   }
 
   .arrow-icon {
+    flex-shrink: 0;
     color: var(--color-txt-dim);
-    transition: transform 0.25s ease;
+    opacity: 0.5;
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
   }
 
   .link-card:hover .arrow-icon {
-    transform: translateX(3px);
+    opacity: 1;
+    transform: translate(2px, -2px);
     color: var(--color-accent);
   }
 
+  /* ── Footer ──────────────────────────────────── */
   .page-footer {
-    margin-top: auto;
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
     text-align: center;
   }
 
   .back-home {
-    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
     color: var(--color-txt-dim);
-    opacity: 0.5;
-    transition: opacity 0.2s ease;
+    opacity: 0.6;
+    transition: opacity var(--transition-fast);
   }
 
   .back-home:hover {
@@ -180,15 +413,26 @@ const structuredData = {
 
   @media (max-width: 480px) {
     .links-wrapper {
-      padding: 1.5rem 1rem 3rem;
-    }
-    
-    .profile-header {
-      margin-bottom: 2.5rem;
+      padding: 2rem 1rem 3rem;
     }
 
-    .link-card {
-      padding: 0.875rem 1rem;
+    .profile-header {
+      margin-bottom: 2rem;
+    }
+
+    .link-group {
+      margin-top: 2rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-card,
+    .arrow-icon {
+      transition: none;
+    }
+
+    .link-card:hover {
+      transform: none;
     }
   }
 </style>

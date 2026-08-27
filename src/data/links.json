@@ -1,65 +1,106 @@
 {
     "profile": {
         "name": "Andrii Pasichnyk",
-        "avatar": "/assets/developer-avatar.svg",
-        "bio": "Android & Flutter Engineer | Building mobile experiences with precision.",
+        "handle": "@pasichDev",
+        "avatar": "/assets/avatar.webp",
+        "avatarFallback": "/assets/avatar.jpg",
+        "role": "Software Architect",
+        "bio": "Full-stack, leaning to systems. C++ services on Windows, Go on the backend, mobile in Kotlin, Swift & Flutter.",
         "email": "apasichnik9@gmail.com",
-        "location": "Ukraine"
+        "location": "Rivne, Ukraine · UTC+2",
+        "available": true
     },
-    "links": [
+    "primary": [
         {
             "title": "Portfolio Website",
+            "subtitle": "pasichdev.xyz",
             "url": "https://pasichdev.xyz",
-            "icon": "solar:globus-linear",
-            "featured": true
+            "icon": "solar:globus-linear"
         },
         {
-            "title": "Skinlytics — CS2 Analytics",
-            "url": "https://skinlytics.pro/",
-            "icon": "solar:chart-square-linear",
-            "featured": false
-        },
-        {
-            "title": "My Notes — Android App",
-            "url": "/apps/mynotes",
-            "icon": "solar:notebook-linear",
-            "featured": false
-        },
-        {
-            "title": "Contact on Telegram",
-            "url": "https://t.me/pasichdev",
-            "icon": "solar:plain-linear",
-            "featured": true
-        },
-        {
-            "title": "Send an Email",
-            "url": "mailto:apasichnik9@gmail.com",
-            "icon": "solar:letter-linear",
-            "featured": false
-        },
-        {
-            "title": "Discord",
-            "url": "https://discord.com/users/931603849528098898",
-            "icon": "solar:dialog-linear",
-            "featured": false
-        },
-        {
-            "title": "GitHub Profile",
-            "url": "https://github.com/pasichDev",
-            "icon": "mdi:github",
-            "featured": false
-        },
-        {
-            "title": "View Resume (CV)",
+            "title": "Resume / CV",
+            "subtitle": "Experience, stack, contacts",
             "url": "/cv",
-            "icon": "solar:user-id-linear",
-            "featured": true
+            "icon": "solar:user-id-linear"
+        }
+    ],
+    "groups": [
+        {
+            "label": "Connect",
+            "num": "01",
+            "items": [
+                {
+                    "title": "Telegram",
+                    "subtitle": "Fastest way to reach me",
+                    "url": "https://t.me/pasichdev",
+                    "icon": "mdi:telegram"
+                },
+                {
+                    "title": "Email",
+                    "subtitle": "apasichnik9@gmail.com",
+                    "url": "mailto:apasichnik9@gmail.com",
+                    "icon": "solar:letter-linear"
+                },
+                {
+                    "title": "GitHub",
+                    "subtitle": "pasichDev",
+                    "url": "https://github.com/pasichDev",
+                    "icon": "mdi:github"
+                },
+                {
+                    "title": "LinkedIn",
+                    "subtitle": "in/pasichdev",
+                    "url": "https://www.linkedin.com/in/pasichdev/",
+                    "icon": "mdi:linkedin"
+                },
+                {
+                    "title": "Discord",
+                    "subtitle": "pasichdev",
+                    "url": "https://discord.com/users/931603849528098898",
+                    "icon": "mdi:discord"
+                }
+            ]
         },
         {
-            "title": "LinkedIn Profile",
-            "url": "https://www.linkedin.com/in/pasichdev/",
-            "icon": "mdi:linkedin",
-            "featured": false
+            "label": "Projects",
+            "num": "02",
+            "items": [
+                {
+                    "title": "Chystik",
+                    "subtitle": "Safety-first disk cleanup for developers",
+                    "url": "https://pasichdev.github.io/chystik/",
+                    "icon": "solar:broom-linear",
+                    "tags": ["Rust", "egui"]
+                },
+                {
+                    "title": "Linqora",
+                    "subtitle": "PC ↔ mobile bridge over WebSocket / mDNS",
+                    "url": "https://github.com/pasichDev/linqora",
+                    "icon": "solar:devices-linear",
+                    "tags": ["Go", "Flutter"]
+                },
+                {
+                    "title": "SovaWallet",
+                    "subtitle": "NosoCoin wallet with custom binary protocols",
+                    "url": "https://github.com/Noso-Project/NosoSova",
+                    "icon": "solar:wallet-linear",
+                    "tags": ["C++", "Dart FFI"]
+                },
+                {
+                    "title": "My Notes",
+                    "subtitle": "Offline-first Android notebook · 30k+ installs",
+                    "url": "/apps/mynotes",
+                    "icon": "solar:notebook-linear",
+                    "tags": ["Kotlin", "Room"]
+                },
+                {
+                    "title": "Felisca",
+                    "subtitle": "Private, offline-only mood tracking",
+                    "url": "/apps/felisca",
+                    "icon": "solar:heart-linear",
+                    "tags": ["Flutter", "Privacy-First"]
+                }
+            ]
         }
     ],
     "seo": {
