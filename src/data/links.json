@@ -99,6 +99,13 @@
                     "url": "/apps/felisca",
                     "icon": "solar:heart-linear",
                     "tags": ["Flutter", "Privacy-First"]
+                },
+                {
+                    "title": "Encly",
+                    "subtitle": "Offline encrypted notes & tasks · coming soon",
+                    "url": "/apps/encly/",
+                    "icon": "solar:lock-keyhole-linear",
+                    "tags": ["Kotlin", "SQLCipher"]
                 }
             ]
         }

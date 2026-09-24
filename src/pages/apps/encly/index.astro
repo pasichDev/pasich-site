@@ -1,0 +1,383 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FeatureCard from '../../../components/ui/FeatureCard.astro';
+import { Icon } from 'astro-icon/components';
+
+// Store and source links. Encly is not published yet: while a URL is empty the
+// page shows "Coming soon" instead of a link. Fill these in when each goes live.
+const links = {
+  googlePlay: '', // e.g. https://play.google.com/store/apps/details?id=com.pasich.encly
+  fdroid: '',     // e.g. https://f-droid.org/packages/com.pasich.encly/
+  source: '',     // GitHub repo URL, once the repo is public
+};
+const hasStore = Boolean(links.googlePlay || links.fdroid);
+
+const features = [
+  {
+    icon: 'solar:lock-keyhole-linear',
+    title: 'Encrypted at Rest',
+    description: 'Notes live in a SQLCipher (AES-256) database under a random 256-bit key. When Encly goes to the background, the database is closed and the key is wiped from memory.'
+  },
+  {
+    icon: 'solar:shield-keyhole-linear',
+    title: 'PIN & Biometrics',
+    description: 'A 6-digit PIN every time you open the app, plus optional fingerprint or face unlock (strong biometrics only).'
+  },
+  {
+    icon: 'solar:key-minimalistic-linear',
+    title: 'Recovery Phrase',
+    description: 'An optional 12-word recovery phrase unlocks your vault if you forget your PIN. Nobody else can recover your notes, not even the developer.'
+  },
+  {
+    icon: 'solar:archive-linear',
+    title: 'Encrypted Backups',
+    description: 'Export notes, tasks and tags to one AES-256-GCM file sealed with your 12 words. Save it wherever you choose and restore it on a new phone.'
+  },
+  {
+    icon: 'solar:checklist-minimalistic-linear',
+    title: 'Tags & Tasks',
+    description: 'A block editor with headings, quotes and checklists, tags and search, tasks with priorities next to your notes, and a trash with restore.'
+  },
+  {
+    icon: 'solar:palette-linear',
+    title: 'Themes & Languages',
+    description: 'Five themes (Paper, Forest, Ocean, Graphite, Midnight) in light, dark or system mode, and 9 languages you can pick for Encly alone.'
+  }
+];
+
+const screens = [
+  { src: '/assets/apps/encly/screen-1.webp', alt: 'Encly notes list: private notes, encrypted on your phone' },
+  { src: '/assets/apps/encly/screen-2.webp', alt: 'Encly lock screen: locked with a PIN or your fingerprint' },
+  { src: '/assets/apps/encly/screen-5.webp', alt: 'Encly recovery phrase: a 12-word phrase only you hold' },
+  { src: '/assets/apps/encly/screen-6.webp', alt: 'Encly restore screen: encrypted backups you keep yourself' }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Encly",
+  "alternateName": "Encly: Encrypted Offline Notes",
+  "description": "Offline, encrypted notes and tasks for Android with a PIN lock. No account, no internet permission, no ads, no tracking.",
+  "applicationCategory": "NoteTakingApplication",
+  "operatingSystem": "Android 8.0+",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "isAccessibleForFree": true,
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "author": {
+    "@type": "Person",
+    "name": "pasichDev"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "pasichDev"
+  },
+  "inLanguage": "en",
+  "image": "https://pasichdev.xyz/assets/apps/encly/encly-og.png",
+  "url": "https://pasichdev.xyz/apps/encly/",
+  "featureList": [
+    "Encrypted SQLCipher database",
+    "PIN lock with optional biometrics",
+    "12-word recovery phrase",
+    "Encrypted backup export and import",
+    "Tags and tasks with priorities",
+    "5 themes, 9 languages",
+    "No internet permission"
+  ]
+};
+---
+
+<BaseLayout
+  title="Encly – Encrypted Offline Notes & Tasks for Android"
+  description="Encly keeps your notes and tasks encrypted on your phone. PIN lock, optional biometrics, 12-word recovery phrase, encrypted backups. No account, no ads, no internet permission."
+  canonical="https://pasichdev.xyz/apps/encly/"
+  ogImage="/assets/apps/encly/encly-og.png"
+  structuredData={structuredData}
+>
+  <div class="container animate-fade-in">
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <div class="hero-content">
+        <div class="app-icon-wrapper">
+          <div class="app-icon">
+            <img src="/assets/apps/encly/encly-icon.webp" alt="Encly logo" width="96" height="96" />
+          </div>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="gradient-text">Encly</span><br>
+          <span class="hero-subtitle">Encrypted notes that never leave your phone</span>
+        </h1>
+
+        <p class="text-lg text-dim leading-relaxed mx-auto" style="max-width: 32rem;">
+          Offline, encrypted notes and tasks for Android, locked with a PIN.
+          No account, no cloud, no ads, no tracking, and no internet permission at all.
+        </p>
+
+        <div class="flex gap-2 mt-8 flex-wrap justify-center">
+          <span class="badge badge-accent">
+            <Icon name="solar:lock-keyhole-bold" /> Encrypted
+          </span>
+          <span class="badge badge-accent">
+            <Icon name="solar:wi-fi-router-minimalistic-bold" /> Offline
+          </span>
+          <span class="badge badge-accent">
+            <Icon name="solar:code-square-bold" /> Open Source
+          </span>
+          <span class="badge badge-accent">
+            <Icon name="solar:smartphone-bold" /> Android
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+      <div class="section-header">
+        <h2 class="font-medium tracking-tight">Main Features</h2>
+        <span class="section-counter">01 — 06</span>
+      </div>
+
+      <div class="features-grid">
+        {features.map((feature) => (
+          <FeatureCard {...feature} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screens" class="section">
+      <div class="section-header">
+        <h2 class="font-medium tracking-tight">App Screens</h2>
+        <span class="section-counter">01 — 04</span>
+      </div>
+
+      <div class="screens-grid">
+        {screens.map((screen) => (
+          <img src={screen.src} alt={screen.alt} width="540" height="960" loading="lazy" decoding="async" class="screen-img" />
+        ))}
+      </div>
+    </section>
+
+    <!-- Download CTA -->
+    <section class="cta-section glass">
+      <h2 class="text-xl font-medium text-accent mb-4">Notes that stay yours</h2>
+      <p class="text-dim mb-8">
+        Free and open source (Apache-2.0). Works without Google Play Services on Android 8.0 or newer.
+      </p>
+      {hasStore ? (
+        <div class="flex gap-2 flex-wrap justify-center">
+          {links.googlePlay && (
+            <a href={links.googlePlay} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+              <Icon name="mdi:google-play" width="20" height="20" />
+              Get it on Google Play
+            </a>
+          )}
+          {links.fdroid && (
+            <a href={links.fdroid} target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+              <Icon name="mdi:android" width="20" height="20" />
+              Get it on F-Droid
+            </a>
+          )}
+        </div>
+      ) : (
+        <div class="coming-soon-badge">
+          <Icon name="solar:hourglass-linear" width="18" height="18" />
+          <span>Coming soon to Google Play and F-Droid</span>
+        </div>
+      )}
+    </section>
+
+    <!-- Links -->
+    <footer class="page-links">
+      <a href="/apps/encly/privacy-policy/" class="link-hover">Privacy Policy</a>
+      {links.source && (
+        <>
+          <span class="divider">/</span>
+          <a href={links.source} target="_blank" rel="noopener noreferrer" class="link-hover flex items-center gap-1">
+            <Icon name="mdi:github" /> GitHub
+          </a>
+        </>
+      )}
+    </footer>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .hero-section {
+    text-align: center;
+    padding: 4rem 0 6rem;
+  }
+
+  .hero-content {
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+
+  .app-icon-wrapper {
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .app-icon {
+    width: 96px;
+    height: 96px;
+    background: linear-gradient(135deg, var(--color-border), var(--color-accent));
+    padding: 2px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .app-icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 22px;
+  }
+
+  .app-icon:hover {
+    transform: scale(1.05) rotate(5deg);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.5em;
+    opacity: 0.7;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .gradient-text {
+    background: linear-gradient(to bottom, #fff, rgba(255,255,255,0.7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .badge-accent {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-border);
+    color: var(--color-txt-main);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .screens-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    .screens-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .screen-img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s;
+  }
+
+  .screen-img:hover {
+    transform: translateY(-4px);
+  }
+
+  .cta-section {
+    text-align: center;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 4rem 2rem;
+    margin-top: 6rem;
+  }
+
+  .coming-soon-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-accent);
+  }
+
+  .page-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--color-txt-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .divider {
+    opacity: 0.2;
+  }
+
+  .link-hover:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 640px) {
+    .hero-section {
+      padding: 2rem 0 4rem;
+    }
+
+    .cta-section {
+      padding: 3rem 1.5rem;
+      margin-top: 4rem;
+    }
+  }
+</style>

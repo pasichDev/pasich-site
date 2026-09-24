@@ -10,7 +10,7 @@ Built with [Astro](https://astro.build) — static, zero client-side framework, 
 - **Home** — intro, GitHub activity heatmap, contact section.
 - **CV** (`/cv`) — experience and skills.
 - **Links** (`/links`) — link-in-bio hub (data-driven from `src/data/links.json`).
-- **Apps** (`/apps/*`) — landing + privacy policy pages for **Felisca** and **MyNotes**.
+- **Apps** (`/apps/*`) — landing + privacy policy pages for **Felisca**, **MyNotes** and **Encly**.
 - **Tools** (`/tools/*`) — in-browser utilities: **QR generator** and **icon generator** (run fully client-side).
 
 ## Tech stack

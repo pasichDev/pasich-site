@@ -119,6 +119,16 @@ const projects = [
     href: '/apps/felisca',
     playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasichdev.felisca',
   },
+  {
+    icon: 'solar:lock-keyhole-linear',
+    emoji: '◈',
+    title: 'Encly',
+    description: 'Offline, encrypted notes and tasks for Android. SQLCipher at rest, PIN lock with optional biometrics, a 12-word recovery phrase and encrypted backups. No account, no ads, no internet permission.',
+    tags: ['Kotlin', 'Compose', 'SQLCipher'],
+    href: '/apps/encly/',
+    // Not published yet: add playStoreHref (and drop status) once it is on Google Play / F-Droid.
+    status: 'Coming soon',
+  },
 ];
 
 const structuredData = {
@@ -200,7 +210,7 @@ const structuredData = {
     <section class="section reveal" id="projects">
       <div class="section-head">
         <h2 class="section-title">Selected Work</h2>
-        <span class="section-num">01 — 05</span>
+        <span class="section-num">01 — 06</span>
       </div>
 
       <div class="proj-grid">
@@ -215,6 +225,12 @@ const structuredData = {
                   <span class="proj-dl">
                     <Icon name="solar:download-linear" width="10" height="10" />
                     {p.downloads}
+                  </span>
+                )}
+                {p.status && (
+                  <span class="proj-dl proj-soon">
+                    <Icon name="solar:hourglass-linear" width="10" height="10" />
+                    {p.status}
                   </span>
                 )}
               </div>
@@ -732,6 +748,7 @@ const structuredData = {
   .reveal.in .proj-card:nth-child(3) { transition-delay: 0.19s; }
   .reveal.in .proj-card:nth-child(4) { transition-delay: 0.26s; }
   .reveal.in .proj-card:nth-child(5) { transition-delay: 0.33s; }
+  .reveal.in .proj-card:nth-child(6) { transition-delay: 0.40s; }
 
   .proj-card:hover {
     border-color: rgba(255,255,255,0.18);
@@ -769,6 +786,10 @@ const structuredData = {
     border: 1px solid rgba(34,197,94,0.28);
     padding: 0.15rem 0.45rem;
     border-radius: 999px;
+  }
+  .proj-soon {
+    color: var(--color-txt-dim);
+    border-color: var(--color-border);
   }
 
   .proj-name {
