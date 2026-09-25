@@ -73,7 +73,7 @@ import { Icon } from 'astro-icon/components';
         <p class="text-dim leading-relaxed mt-4">
           The short version: <strong class="text-accent">everything stays on your device, encrypted, and nobody (including the developer) receives any of it.</strong>
         </p>
-        <p class="text-sm text-dim mt-4"><strong>Effective:</strong> September 22, 2026</p>
+        <p class="text-sm text-dim mt-4"><strong>Effective:</strong> September 25, 2026</p>
       </section>
 
       <section class="policy-section">
@@ -83,6 +83,9 @@ import { Icon } from 'astro-icon/components';
         <h3 class="font-medium text-accent mb-4">What Encly Collects</h3>
         <p class="text-dim leading-relaxed mb-4">
           <strong class="text-accent">Nothing.</strong> Encly has no account, no server, no analytics, no crash reporting, no advertising and no tracking. The app does not request the Android <code>INTERNET</code> permission, so it cannot send data over the network itself.
+        </p>
+        <p class="text-dim leading-relaxed mb-4">
+          Encly asks every keyboard not to learn from what you type, and the optional <strong class="text-accent">"Strict keyboard privacy"</strong> setting (Settings → Security) also asks it for no suggestions, no cloud prediction and no access to the text around the cursor. A keyboard app still receives each key you type and may ignore these requests, so use one you trust.
         </p>
 
         <div class="data-item">
@@ -160,9 +163,32 @@ import { Icon } from 'astro-icon/components';
           <div>
             <h5 class="font-medium text-accent">Biometrics (<code>USE_BIOMETRIC</code>)</h5>
             <p class="text-sm text-dim">Optional fingerprint / face unlock of your vault. Biometric data never leaves the Android system; Encly only receives "authenticated" or "not authenticated".</p>
-            <span class="text-xs text-dim" style="opacity: 0.7;">This is the only permission Encly requests. It has no internet permission and needs no storage permission.</span>
           </div>
         </div>
+
+        <div class="permission-item mt-4">
+          <div class="permission-icon">
+            <Icon name="mdi:fingerprint" width="24" height="24" />
+          </div>
+          <div>
+            <h5 class="font-medium text-accent">Fingerprint on Android 8.x (<code>USE_FINGERPRINT</code>)</h5>
+            <p class="text-sm text-dim">Added by Android's biometric library for fingerprint unlock on Android 8.x, which predates <code>USE_BIOMETRIC</code>. Same purpose, same limits.</p>
+          </div>
+        </div>
+
+        <div class="permission-item mt-4">
+          <div class="permission-icon">
+            <Icon name="solar:layers-minimalistic-linear" width="24" height="24" />
+          </div>
+          <div>
+            <h5 class="font-medium text-accent">Hide overlays (<code>HIDE_OVERLAY_WINDOWS</code>)</h5>
+            <p class="text-sm text-dim">Lets Encly stop other apps from drawing over its screens (Android 12 and later), so an overlay cannot cover or imitate the PIN pad. It gives Encly no access to any data.</p>
+          </div>
+        </div>
+
+        <p class="text-sm text-dim mt-4">
+          Encly requests no internet, storage, contacts, location, camera, microphone or notification permission.
+        </p>
       </section>
 
       <section class="policy-section">
@@ -174,9 +200,9 @@ import { Icon } from 'astro-icon/components';
           A few items open a page outside Encly, <strong class="text-accent">only when you tap them</strong>:
         </p>
         <ul class="policy-list">
-          <li><Icon name="solar:check-circle-bold" class="text-purple" /> On the About screen: this privacy policy, the GitHub issue tracker and an email to the developer.</li>
-          <li><Icon name="solar:check-circle-bold" class="text-purple" /> In builds distributed through Google Play only: the Play Store listing.</li>
-          <li><Icon name="solar:check-circle-bold" class="text-purple" /> In builds distributed through F-Droid only: the developer's Ko-fi donation page (Support screen).</li>
+          <li><Icon name="solar:check-circle-bold" class="text-purple" /> On the About screen: this privacy policy, the GitHub issue tracker, an email to the developer and, in the Google Play build only, the Play Store listing.</li>
+          <li><Icon name="solar:check-circle-bold" class="text-purple" /> On the open-source licenses screen: each library's or font's license.</li>
+          <li><Icon name="solar:check-circle-bold" class="text-purple" /> In the F-Droid build only (also offered as the <code>fdroid</code> APK on GitHub Releases): the developer's Ko-fi donation page (Support screen).</li>
           <li><Icon name="solar:check-circle-bold" class="text-purple" /> A link block you added to a note, which opens in your browser.</li>
         </ul>
         <p class="text-dim leading-relaxed mt-4">
@@ -189,7 +215,7 @@ import { Icon } from 'astro-icon/components';
         <div>
           <h4 class="font-medium text-accent mb-2">We DO NOT share your data</h4>
           <p class="text-sm text-dim">
-            Encly does not share, sell or transfer any data to anyone. It has no share flow for note content, and the only thing it copies to the clipboard is a link from a note's link block, when you choose to copy it (marked as sensitive on Android 13 and later, so it is hidden from the clipboard preview). Apart from that, the only way data leaves the app is an encrypted backup file that you export yourself.
+            Encly does not share, sell or transfer any data to anyone. It has no share flow for note content. It puts something on the clipboard only when you copy it yourself: text you select, or a link from a note's link block. Every copy is marked as sensitive (on Android 13 and later it is hidden from the clipboard preview) and cleared after about a minute. Apart from that, the only way data leaves the app is an encrypted backup file that you export yourself.
           </p>
         </div>
       </section>
@@ -237,7 +263,7 @@ import { Icon } from 'astro-icon/components';
         </div>
         <h3 class="font-medium text-accent mb-4">Deleting Your Data</h3>
         <p class="text-dim leading-relaxed">
-          Uninstalling Encly, or clearing its storage in Android settings, permanently deletes all of it. There is no copy anywhere else, apart from encrypted backups you exported yourself. If you did not keep a recovery seed, a forgotten PIN also means the data cannot be recovered.
+          Uninstalling Encly, or clearing its storage in Android settings, permanently deletes all of it, and so does <strong class="text-accent">Settings → Security → Erase all data</strong>. There is no copy anywhere else, apart from encrypted backups you exported yourself. If you did not keep a recovery seed, a forgotten PIN also means the data cannot be recovered.
         </p>
       </section>
 
@@ -257,7 +283,7 @@ import { Icon } from 'astro-icon/components';
         </div>
         <h3 class="font-medium text-accent mb-4">Changes</h3>
         <p class="text-dim leading-relaxed">
-          Changes to this policy are published on this page with a new effective date and noted in the Encly changelog.
+          Changes to this policy are published on this page with a new effective date, mirrored in <code>PRIVACY.md</code> in the Encly repository, and noted in the Encly changelog.
         </p>
       </section>
 
@@ -275,6 +301,9 @@ import { Icon } from 'astro-icon/components';
             <span>Email: pasichdev@outlook.com</span>
           </a>
         </div>
+        <p class="text-sm text-dim mt-4">
+          Or open an issue in the Encly repository on GitHub.
+        </p>
       </section>
 
     </div>

@@ -16,12 +16,12 @@ const features = [
   {
     icon: 'solar:lock-keyhole-linear',
     title: 'Encrypted at Rest',
-    description: 'Notes live in a SQLCipher (AES-256) database under a random 256-bit key. When Encly goes to the background, the database is closed and the key is wiped from memory.'
+    description: 'Notes live in a SQLCipher (AES-256) database under a random 256-bit key. After you leave the app (15 s by default, adjustable from immediately to 2 minutes) or turn the screen off, the database is closed and the key is wiped from memory.'
   },
   {
     icon: 'solar:shield-keyhole-linear',
     title: 'PIN & Biometrics',
-    description: 'A 6-digit PIN every time you open the app, plus optional fingerprint or face unlock (strong biometrics only).'
+    description: 'A mandatory 6-digit PIN bound to the Android Keystore of your phone, so it can only be guessed on the device, plus optional fingerprint or face unlock (strong biometrics only).'
   },
   {
     icon: 'solar:key-minimalistic-linear',
