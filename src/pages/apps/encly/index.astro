@@ -3,12 +3,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import FeatureCard from '../../../components/ui/FeatureCard.astro';
 import { Icon } from 'astro-icon/components';
 
-// Store and source links. Encly is not published yet: while a URL is empty the
-// page shows "Coming soon" instead of a link. Fill these in when each goes live.
+// Store and source links. A store whose URL is empty is not shown; fill in
+// googlePlay once Encly is live on Google Play.
 const links = {
   googlePlay: '', // e.g. https://play.google.com/store/apps/details?id=com.pasich.encly
-  fdroid: '',     // e.g. https://f-droid.org/packages/com.pasich.encly/
-  source: '',     // GitHub repo URL, once the repo is public
+  fdroid: 'https://f-droid.org/packages/com.pasich.encly/',
+  source: 'https://github.com/pasichDev/Encly',
 };
 const hasStore = Boolean(links.googlePlay || links.fdroid);
 
@@ -78,6 +78,7 @@ const structuredData = {
   "inLanguage": "en",
   "image": "https://pasichdev.xyz/assets/apps/encly/encly-og.png",
   "url": "https://pasichdev.xyz/apps/encly/",
+  "downloadUrl": "https://f-droid.org/packages/com.pasich.encly/",
   "featureList": [
     "Encrypted SQLCipher database",
     "PIN lock with optional biometrics",

@@ -102,7 +102,7 @@
                 },
                 {
                     "title": "Encly",
-                    "subtitle": "Offline encrypted notes & tasks · coming soon",
+                    "subtitle": "Offline encrypted notes & tasks · on F-Droid",
                     "url": "/apps/encly/",
                     "icon": "solar:lock-keyhole-linear",
                     "tags": ["Kotlin", "SQLCipher"]
