@@ -30,7 +30,7 @@ Built with [Astro](https://astro.build) — static, zero client-side framework, 
 
 - [`public/.well-known/security.txt`](public/.well-known/security.txt) — RFC 9116 security policy.
 - [`public/_headers`](public/_headers) — CSP, HSTS, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, COOP/CORP.
-  Netlify / Cloudflare Pages format; replicate at the server/CDN layer if hosted elsewhere.
+  Netlify / Cloudflare Pages format — **not applied on GitHub Pages**; replicate at a CDN layer (e.g. Cloudflare) if needed.
 
 ## Project structure
 
@@ -43,7 +43,10 @@ src/
 └── styles/          global.css
 public/
 ├── .well-known/     security.txt
+├── CNAME            custom domain for GitHub Pages
 └── _headers         security & cache headers
+.github/workflows/
+└── deploy.yml       build & deploy to GitHub Pages
 ```
 
 ## Development
@@ -54,6 +57,11 @@ npm run dev        # local dev server (http://localhost:4321)
 npm run build      # production build → ./dist
 npm run preview    # preview the production build locally
 ```
+
+## Deployment
+
+Hosted on **GitHub Pages**. Every push to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml),
+which builds the site and publishes `./dist`. The custom domain comes from [`public/CNAME`](public/CNAME).
 
 ## License
 
