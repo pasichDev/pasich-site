@@ -4,11 +4,16 @@ import { Icon } from 'astro-icon/components';
 
 const experience = [
   {
-    title: 'Software Engineer',
+    title: 'Software Developer',
     period: '2026 — Present',
     company: 'InTallyCon · Full-time',
-    achievements: [],
-    tags: []
+    achievements: [
+      'Develop <strong>Flutter</strong> applications for embedded Linux devices.',
+      'Build services and tooling in <strong>Go</strong>.',
+      'Work with <strong>Yocto</strong>-based Linux images: layers, BitBake recipes, cross-compilation toolchains.',
+      'Cover the surrounding embedded stack — system services, build & packaging, debugging on target hardware.'
+    ],
+    tags: ['Flutter', 'Go', 'Yocto', 'Embedded Linux']
   },
   {
     title: 'Flutter / Dart Developer',
@@ -65,7 +70,7 @@ const structuredData = {
 
 <BaseLayout 
   title="CV — Andrii Pasichnyk"
-  description="Resume of Andrii Pasichnyk — Software Architect. C++ system services on Windows, Go backends, and mobile apps in Kotlin, Swift and Flutter."
+  description="Resume of Andrii Pasichnyk — Software Architect. Flutter, Go and Yocto-based embedded Linux; C++ system services on Windows; mobile apps in Kotlin and Swift."
   canonical="https://pasichdev.xyz/cv"
   structuredData={structuredData}
 >
@@ -98,8 +103,9 @@ const structuredData = {
       <p class="text-accent leading-relaxed" style="font-weight: 300; opacity: 0.9;">
         Software engineer and architect working across the stack — from
         <strong class="font-medium">C++ system services on Windows</strong> and
-        <strong class="font-medium">Go backends</strong> to
-        <strong class="font-medium">Android and cross-platform apps</strong> in Kotlin, Swift and Flutter.
+        <strong class="font-medium">Go services</strong> and
+        <strong class="font-medium">Yocto-based embedded Linux</strong> to
+        <strong class="font-medium">Flutter, Android and iOS apps</strong> in Dart, Kotlin and Swift.
         Comfortable low-level (memory and concurrency, native Windows APIs, custom cryptography, TCP/UDP/RPC)
         and at product level (clean architecture, offline-first sync, real-time transport).
         Focused on clean, maintainable code and design that holds up as a project grows.
@@ -146,6 +152,13 @@ const structuredData = {
           <h4 class="text-accent text-sm font-medium mb-4">Systems & Backend</h4>
           <p class="text-sm text-dim leading-relaxed">
             C++ (Windows services, WireGuard-NT, Win32/IPC, BCrypt/CNG, memory safety), Go (REST, encryption at rest, reproducible builds, SQLite without cgo).
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-accent text-sm font-medium mb-4">Embedded Linux</h4>
+          <p class="text-sm text-dim leading-relaxed">
+            Yocto Project / OpenEmbedded (layers, BitBake recipes, SDKs), cross-compilation, systemd, Flutter on embedded targets.
           </p>
         </div>
 
