@@ -4,47 +4,61 @@ import { Icon } from 'astro-icon/components';
 
 const experience = [
   {
-    title: 'Software Developer',
-    period: '2026 — Present',
-    company: 'InTallyCon · Full-time',
+    title: 'Software Engineer',
+    period: '02/2026 - Present',
+    company: 'InTallyCon',
     achievements: [
-      'Develop <strong>Flutter</strong> applications for embedded Linux devices.',
-      'Build services and tooling in <strong>Go</strong>.',
-      'Work with <strong>Yocto</strong>-based Linux images: layers, BitBake recipes, cross-compilation toolchains.',
-      'Cover the surrounding embedded stack — system services, build & packaging, debugging on target hardware.'
+      'The open-source Flutter plugin for <strong>WireGuard</strong> we started from was abandoned in 2024 and ran on each platform\'s stock backend. Those backends drop the tunnel whenever peers change, which ruled out direct P2P connections. I forked it and turned it into our own plugin for Android, iOS, macOS and Windows.',
+      'Wrote one data plane on top of <strong>wireguard-go</strong> that owns the tunnel and the UDP socket itself, and reused it on every platform (gomobile, cgo). Peers now change without a reconnect, and a fix lands on all platforms at once.',
+      'On top of it built a <strong>P2P core in Go</strong>, so devices can connect to each other directly instead of going through a relay.',
+      'Added split DNS and LAN bypass. Before that, turning on a full tunnel cut users off from their own router and NAS.',
+      'On Windows the old plugin needed admin rights to start the tunnel. I replaced that with a <strong>C++</strong> SYSTEM service on WireGuard-NT: one install, after that the app talks to it over a named pipe, and the private key never leaves the service.',
+      'Besides the VPN, I built several Flutter apps and Go backend services, take part in architecture decisions and review code on the Flutter and Go projects.',
+      'Also work on embedded Linux built with <strong>Yocto</strong> (BitBake recipes, layers, cross-compilation, systemd).'
     ],
-    tags: ['Flutter', 'Go', 'Yocto', 'Embedded Linux']
+    tags: ['Flutter', 'Dart', 'Go', 'C++', 'Swift', 'Kotlin', 'WireGuard', 'Windows Services', 'Yocto', 'Embedded Linux']
   },
   {
-    title: 'Flutter / Dart Developer',
-    period: '2023 — 2024',
-    company: 'NosoCoin Ecosystem · Freelance & Open Source',
+    title: 'Open Source: Linux Kernel / WireGuard',
+    period: '2026',
+    company: 'github.com/pasichDev/rtl8196e-wireguard',
     achievements: [
-      'Developed <strong>SovaWallet</strong>, a cross-platform crypto wallet with adaptive UI for mobile/desktop.',
-      'Migrated core blockchain logic (Pascal-based) to modern Dart, including custom cryptographic algorithms and protocol operations.',
-      'Implemented Dart FFI bindings for C++ libraries to ensure performance and security.',
-      'Designed robust networking for distributed nodes (balancing, failover, background syncing).'
+      'Got WireGuard on a cheap single-core router chip (Realtek RTL8196E, 400 MHz) running twice as fast: TCP went from 9.4 to 18.8 Mbit/s, and ping through a busy tunnel dropped from 108 to 31 ms.',
+      'The cipher wasn\'t the bottleneck. Profiling showed a context switch on almost every packet, because WireGuard hands packets to worker queues built for multi-core machines. My patch skips those queues when there is only one CPU.',
+      'Found a memory leak in WireGuard that had been in the kernel since 2019, and sent the fix to the netdev mailing list.'
     ],
-    tags: ['Flutter', 'Dart FFI', 'C++']
+    tags: ['Linux Kernel', 'C', 'WireGuard', 'Networking', 'Profiling']
+  },
+  {
+    title: 'Flutter Developer',
+    period: '2023 - 2024',
+    company: 'NosoCoin (freelance, open source)',
+    achievements: [
+      'Wrote <strong>SovaWallet</strong>, a Flutter crypto wallet for phones and desktop.',
+      'The coin\'s reference code was in Pascal, so I ported its hashing, signatures and network protocol to Dart.',
+      'Where Dart was too slow, called C++ libraries through FFI.',
+      'The wallet picks a node on its own, switches when one goes down and syncs in the background.'
+    ],
+    tags: ['Flutter', 'Dart', 'Dart FFI', 'C++']
   },
   {
     title: 'Android Developer',
-    period: '2021 — Present',
-    company: 'Self-Employed · My Notes & Applied Projects',
+    period: '2021 - Present',
+    company: 'Own apps (side projects)',
     achievements: [
-      'Built <strong>My Notes</strong> (10k+ downloads), an offline notebook with custom block-based editor engine (no 3rd party libs).',
-      'Implemented Clean Architecture with MVVM, Hilt, and Room (complex migrations, caching).',
-      'Integrated Google Maps API for custom tracking, geocoding, and route generation features.',
-      'Optimized rendering performance for large lists and complex UI using RecyclerView and custom Views.'
+      '<strong>My Notes</strong> has 10k+ downloads. Its block-based editor is my own, written without third-party editor libraries.',
+      '<strong>Encly</strong> is on Google Play and F-Droid: encrypted notes and tasks with no account, no cloud and no internet permission at all.',
+      'Both are built with Clean Architecture, MVVM, Hilt and Room, with database migrations between versions.',
+      'In other projects used the Google Maps API for tracking, geocoding and routes.'
     ],
-    tags: ['Kotlin', 'Jetpack Compose', 'Room']
+    tags: ['Kotlin', 'Jetpack Compose', 'Room', 'Hilt']
   },
   {
     title: 'Web Developer',
-    period: '2015 — 2020',
+    period: '2015 - 2020',
     company: 'Freelance',
     achievements: [
-      'Full-stack development for REST APIs, admin panels, and SaaS tools using PHP, JS, and SQL.'
+      'Built REST APIs, admin panels and small SaaS tools in PHP, JavaScript and SQL.'
     ],
     tags: []
   }
@@ -55,7 +69,7 @@ const structuredData = {
   "@type": "Person",
   "name": "Andrii Pasichnyk",
   "alternateName": "pasichDev",
-  "jobTitle": "Software Architect",
+  "jobTitle": "Software Engineer",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Rivne",
@@ -70,7 +84,7 @@ const structuredData = {
 
 <BaseLayout 
   title="CV — Andrii Pasichnyk"
-  description="Resume of Andrii Pasichnyk — Software Architect. Flutter, Go and Yocto-based embedded Linux; C++ system services on Windows; mobile apps in Kotlin and Swift."
+  description="Resume of Andrii Pasichnyk, Software Engineer. Flutter, Go and C++: a cross-platform WireGuard VPN, Go backends, Yocto-based embedded Linux, Linux kernel patches."
   canonical="https://pasichdev.xyz/cv"
   structuredData={structuredData}
 >
@@ -80,7 +94,7 @@ const structuredData = {
     <header class="cv-header">
       <div>
         <h1 class="text-accent" style="font-size: 1.875rem; margin-bottom: 0.5rem;">Andrii Pasichnyk</h1>
-        <p class="text-lg text-dim" style="font-weight: 300;">Software Architect</p>
+        <p class="text-lg text-dim" style="font-weight: 300;">Software Engineer</p>
         <div class="flex items-center gap-4 mt-4 text-sm text-dim flex-wrap">
           <span class="flex items-center gap-1">
             <Icon name="solar:map-point-linear" /> Rivne, Ukraine
@@ -101,14 +115,13 @@ const structuredData = {
     <section class="section" style="margin-bottom: 3rem;">
       <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-6">Profile</h2>
       <p class="text-accent leading-relaxed" style="font-weight: 300; opacity: 0.9;">
-        Software engineer and architect working across the stack — from
-        <strong class="font-medium">C++ system services on Windows</strong> and
-        <strong class="font-medium">Go services</strong> and
-        <strong class="font-medium">Yocto-based embedded Linux</strong> to
-        <strong class="font-medium">Flutter, Android and iOS apps</strong> in Dart, Kotlin and Swift.
-        Comfortable low-level (memory and concurrency, native Windows APIs, custom cryptography, TCP/UDP/RPC)
-        and at product level (clean architecture, offline-first sync, real-time transport).
-        Focused on clean, maintainable code and design that holds up as a project grows.
+        I'm a software engineer at InTallyCon, where I work on our
+        <strong class="font-medium">WireGuard VPN</strong>: the Flutter plugin and apps on top, Go and C++ underneath,
+        on Android, iOS, macOS and Windows. I also write
+        <strong class="font-medium">Go backends</strong> and work on
+        <strong class="font-medium">Yocto-based embedded Linux</strong>.
+        Outside work I dig into the Linux kernel (my WireGuard patch doubled throughput on a single-core router)
+        and keep a couple of Android apps going.
       </p>
     </section>
     
@@ -149,46 +162,44 @@ const structuredData = {
       
       <div class="skills-grid">
         <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Systems & Backend</h4>
+          <h4 class="text-accent text-sm font-medium mb-4">Programming Languages</h4>
           <p class="text-sm text-dim leading-relaxed">
-            C++ (Windows services, WireGuard-NT, Win32/IPC, BCrypt/CNG, memory safety), Go (REST, encryption at rest, reproducible builds, SQLite without cgo).
+            Go, Dart, C++, C, Kotlin, Swift, Java, SQL.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-accent text-sm font-medium mb-4">Networking & VPN</h4>
+          <p class="text-sm text-dim leading-relaxed">
+            WireGuard (wireguard-go, WireGuard-NT, Linux kernel), TCP/IP, UDP, DNS, NAT, iptables, P2P, REST, WebSocket, gRPC, Protocol Buffers.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-accent text-sm font-medium mb-4">Mobile & Desktop</h4>
+          <p class="text-sm text-dim leading-relaxed">
+            Flutter (platform plugins, Dart FFI, Bloc, Riverpod), Android (VpnService, Jetpack Compose, Room, Hilt, WorkManager), iOS/macOS (Network Extension, Keychain), Windows (Win32, services, named pipes, DPAPI, CNG).
           </p>
         </div>
 
         <div>
           <h4 class="text-accent text-sm font-medium mb-4">Embedded Linux</h4>
           <p class="text-sm text-dim leading-relaxed">
-            Yocto Project / OpenEmbedded (layers, BitBake recipes, SDKs), cross-compilation, systemd, Flutter on embedded targets.
+            Yocto Project, OpenEmbedded, BitBake, cross-compilation, systemd, Linux kernel patches, kernel profiling.
           </p>
         </div>
 
         <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Mobile & Cross-platform</h4>
-          <div class="flex flex-wrap gap-2">
-            <span class="skill-tag">Kotlin / Java</span>
-            <span class="skill-tag">Swift</span>
-            <span class="skill-tag">Flutter / Dart</span>
-          </div>
-        </div>
-        
-        <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Architecture & patterns</h4>
+          <h4 class="text-accent text-sm font-medium mb-4">Backend & Data</h4>
           <p class="text-sm text-dim leading-relaxed">
-            Clean Architecture, SOLID, MVVM, MVI, State Management (Bloc/Riverpod), Dependency Injection (Hilt).
+            Go services (REST, encryption at rest, SQLite without cgo), PostgreSQL, SQLite, Firebase.
           </p>
         </div>
-        
+
         <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Networking & Data</h4>
+          <h4 class="text-accent text-sm font-medium mb-4">Practices</h4>
           <p class="text-sm text-dim leading-relaxed">
-            REST, WebSocket, gRPC, TCP/UDP, SQLite (Room/Drift), Firebase, Protocol Buffers, PostgreSQL (basic CRUD, joins, indexes).
-          </p>
-        </div>
-        
-        <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Android Native</h4>
-          <p class="text-sm text-dim leading-relaxed">
-            WorkManager, Services, CameraX, BLE, NFC, Custom Views, Gradle, Proguard/R8.
+            Software architecture, Clean Architecture, MVVM, code review, Git, GitLab CI, GitHub Actions, unit testing.
           </p>
         </div>
       </div>
@@ -196,18 +207,15 @@ const structuredData = {
     
     <!-- Languages -->
     <section class="section" style="border-top: 1px solid var(--color-border); padding-top: 2rem; margin-bottom: 3rem;">
+      <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-6">Languages</h2>
       <div class="flex gap-8 text-sm flex-wrap">
         <div>
           <span class="block text-dim text-xs uppercase mb-1">Ukrainian</span>
           <span class="text-accent">Native</span>
         </div>
         <div>
-          <span class="block text-dim text-xs uppercase mb-1">Russian</span>
-          <span class="text-accent">Fluent</span>
-        </div>
-        <div>
           <span class="block text-dim text-xs uppercase mb-1">English</span>
-          <span class="text-accent">Intermediate (Technical)</span>
+          <span class="text-accent">A1 (Beginner)</span>
         </div>
       </div>
     </section>

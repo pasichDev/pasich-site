@@ -1,6 +1,6 @@
 # pasich-site
 
-Personal website of **Andrii Pasichnyk** ([pasichDev](https://github.com/pasichDev)) — Software Architect, systems & security engineer.
+Personal website of **Andrii Pasichnyk** ([pasichDev](https://github.com/pasichDev)) — Software Engineer.
 Live at **[pasichdev.xyz](https://pasichdev.xyz/)**.
 
 Built with [Astro](https://astro.build) — static, zero client-side framework, shipped as plain HTML/CSS with a few small islands.
