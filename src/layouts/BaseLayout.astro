@@ -109,7 +109,7 @@ const jsonLd = structuredData ?? defaultStructuredData;
   
   <!-- Navigation -->
   {!hideNav && (
-    <nav class="glass no-print" style="position: fixed; top: 0; width: 100%; z-index: 50; border-bottom: 1px solid var(--color-border);">
+    <nav class="glass no-print" style="position: fixed; top: 0; width: 100%; z-index: 50; border-bottom: 1px solid var(--color-border); box-shadow: 0 10px 30px -18px rgba(0,0,0,0.9);">
       <div class="container flex items-center justify-between" style="height: var(--nav-height);">
         <a href="/" class="flex items-center gap-2" style="text-decoration: none;">
           <img src="/assets/favicon.svg" width="24" height="24" alt="" class="nav-logo">
@@ -133,8 +133,8 @@ const jsonLd = structuredData ?? defaultStructuredData;
     </nav>
   )}
 
-  <div class="nav-overlay" id="nav-overlay"></div>
-  <div class="nav-drawer" id="nav-drawer">
+  <div class="nav-overlay no-print" id="nav-overlay"></div>
+  <div class="nav-drawer no-print" id="nav-drawer">
     <div class="nav-drawer-header">
       <span class="nav-drawer-logo">pasichDev</span>
       <button class="nav-drawer-close" id="nav-drawer-close" aria-label="Close menu">
@@ -163,7 +163,6 @@ const jsonLd = structuredData ?? defaultStructuredData;
       <div class="container">
         <div class="contact-grid">
         <div class="contact-intro">
-          <span class="contact-status"><span class="status-dot"></span>Open to select collaborations &amp; OSS</span>
           <h2 class="contact-title">Have a problem that fights back?</h2>
           <p class="contact-lead">Systems, security, or mobile — if it's low-level and it matters, I want to hear about it. Fastest to reach on Telegram.</p>
         </div>
@@ -320,35 +319,6 @@ const jsonLd = structuredData ?? defaultStructuredData;
       margin-bottom: 2rem;
     }
     .contact-intro { max-width: 36rem; }
-    .contact-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--color-txt-dim);
-      border: 1px solid var(--color-border);
-      border-radius: 999px;
-      padding: 0.28rem 0.7rem;
-      margin-bottom: 1.15rem;
-    }
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #3ecf6b;
-      box-shadow: 0 0 0 0 rgba(62,207,107,0.5);
-      animation: status-pulse 2.4s infinite;
-    }
-    @keyframes status-pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(62,207,107,0.45); }
-      70%  { box-shadow: 0 0 0 6px rgba(62,207,107,0); }
-      100% { box-shadow: 0 0 0 0 rgba(62,207,107,0); }
-    }
-    @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
-
     .contact-title {
       font-size: clamp(1.35rem, 3.5vw, 2rem);
       font-weight: 600;
@@ -382,6 +352,7 @@ const jsonLd = structuredData ?? defaultStructuredData;
       border-radius: 2px;
       text-decoration: none;
       transition: transform 0.15s, opacity 0.15s;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 8px 24px -8px rgba(255,255,255,0.22);
     }
     .contact-cta:hover { transform: translateY(-1px); opacity: 0.88; }
     .cta-arrow { opacity: 0.6; }
