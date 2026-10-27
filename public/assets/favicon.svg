@@ -1,5 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px"><svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M7 8L3 11.6923L7 16M17 8L21 11.6923L17 16M14 4L10 20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: none; } }
-</style></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#0A0A0A"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none" stroke="#2A2A2A"/>
+  <rect x="10.80" y="7.34" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+  <rect x="13.76" y="7.34" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+  <rect x="16.72" y="7.34" width="2.52" height="2.52" rx="0.44" fill="#9A9A9A"/>
+  <rect x="10.80" y="10.30" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+  <rect x="19.68" y="10.30" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+  <rect x="10.80" y="13.26" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+  <rect x="19.68" y="13.26" width="2.52" height="2.52" rx="0.44" fill="#22C55E"/>
+  <rect x="10.80" y="16.22" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+  <rect x="13.76" y="16.22" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+  <rect x="16.72" y="16.22" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+  <rect x="10.80" y="19.18" width="2.52" height="2.52" rx="0.44" fill="#9A9A9A"/>
+  <rect x="10.80" y="22.14" width="2.52" height="2.52" rx="0.44" fill="#EDEDED"/>
+</svg>

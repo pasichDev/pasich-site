@@ -112,7 +112,7 @@ const jsonLd = structuredData ?? defaultStructuredData;
     <nav class="glass no-print" style="position: fixed; top: 0; width: 100%; z-index: 50; border-bottom: 1px solid var(--color-border);">
       <div class="container flex items-center justify-between" style="height: var(--nav-height);">
         <a href="/" class="flex items-center gap-2" style="text-decoration: none;">
-          <div style="width: 24px; height: 24px; background: white; color: black; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; border-radius: 2px; transition: transform 0.3s;">P</div>
+          <img src="/assets/favicon.svg" width="24" height="24" alt="" class="nav-logo">
           <span class="font-medium text-sm tracking-tight">pasichDev</span>
         </a>
 
@@ -196,7 +196,8 @@ const jsonLd = structuredData ?? defaultStructuredData;
   
   <style>
     .nav-link:hover { color: var(--color-accent); }
-    nav a:has(div):hover div { transform: rotate(12deg); }
+    .nav-logo { display: block; transition: transform 0.3s; }
+    nav a:hover .nav-logo { transform: rotate(12deg); }
 
     /* ── hamburger ───────────────────────────────── */
     .nav-hamburger {
