@@ -661,6 +661,8 @@ const structuredData = {
     border-radius: 2px;
     margin-bottom: clamp(3rem, 6vw, 4.5rem);
     overflow: hidden;
+    background: var(--surface-sheen), var(--color-surface);
+    box-shadow: var(--shadow-md);
   }
 
   .stat-item {
@@ -734,12 +736,13 @@ const structuredData = {
     border: 1px solid var(--color-border);
     border-radius: 2px;
     padding: clamp(1rem, 3vw, 1.375rem);
-    background: var(--color-surface);
+    background: var(--surface-sheen), var(--color-surface);
+    box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
     opacity: 0;
     transform: translateY(12px);
-    transition: border-color 0.2s, transform 0.3s, opacity 0.4s;
+    transition: border-color 0.2s, transform 0.3s, opacity 0.4s, box-shadow 0.3s;
   }
   .reveal.in .proj-card {
     opacity: 1;
@@ -754,7 +757,8 @@ const structuredData = {
 
   .proj-card:hover {
     border-color: rgba(255,255,255,0.18);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
   }
 
   /* body grows to fill card, pushes actions to bottom */
@@ -776,6 +780,8 @@ const structuredData = {
     align-items: center;
     justify-content: center;
     color: var(--color-txt-dim);
+    background: rgba(255,255,255,0.02);
+    box-shadow: var(--shadow-sm);
   }
 
   .proj-dl {
@@ -847,8 +853,9 @@ const structuredData = {
     border: 1px solid var(--color-border);
     color: var(--color-txt-dim);
     text-decoration: none;
-    transition: border-color 0.15s, color 0.15s;
+    transition: border-color 0.15s, color 0.15s, box-shadow 0.15s;
     min-height: 32px;
+    box-shadow: var(--shadow-sm);
   }
   .btn-sm:hover { border-color: rgba(255,255,255,0.22); color: var(--color-accent); }
 
@@ -889,7 +896,7 @@ const structuredData = {
   }
   .skill-tag:hover { border-color: rgba(255,255,255,0.4); color: var(--color-accent); }
 
-  .level-expert       { border-color: rgba(255,255,255,0.35); color: #fff; background: rgba(255,255,255,0.03); }
+  .level-expert       { border-color: rgba(255,255,255,0.35); color: #fff; background: rgba(255,255,255,0.03); box-shadow: var(--shadow-sm); }
   .level-advanced     { border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.65); }
   .level-intermediate { border-color: rgba(255,255,255,0.1);  color: rgba(255,255,255,0.38); }
 
@@ -938,15 +945,17 @@ const structuredData = {
     border: 1px solid var(--color-border);
     border-radius: 2px;
     padding: clamp(0.875rem, 2.5vw, 1.125rem);
-    background: var(--color-surface);
+    background: var(--surface-sheen), var(--color-surface);
+    box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    transition: border-color 0.15s, transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease;
+    transition: border-color 0.15s, transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease, box-shadow 0.3s;
   }
   .svc-card:hover {
     border-color: rgba(255,255,255,0.16);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
   }
 
   .svc-icon {
