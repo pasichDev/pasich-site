@@ -5,53 +5,61 @@ import { Icon } from 'astro-icon/components';
 
 const skillGroups = [
   {
-    label: 'Systems',
+    label: 'Networking & VPN',
     skills: [
-      { name: 'C++',               level: 'expert',   tooltip: 'Systems code — memory, concurrency, low-level control' },
-      { name: 'Windows Services',  level: 'expert',   tooltip: 'Long-running background services — lifecycle and IPC' },
-      { name: 'WireGuard-NT',      level: 'advanced', tooltip: 'VPN tunnel management from native code' },
-      { name: 'Memory Safety',     level: 'advanced', tooltip: 'Chasing down use-after-free and data races' },
-      { name: 'BCrypt / CNG',      level: 'advanced', tooltip: 'Windows crypto APIs and certificate validation' },
-      { name: 'Win32 API',         level: 'advanced', tooltip: 'Native Windows APIs — services, IPC, sockets' },
+      { name: 'WireGuard',       level: 'expert',   tooltip: 'wireguard-go, WireGuard-NT and the Linux kernel module — tunnels on Android, iOS, macOS, Windows and routers' },
+      { name: 'P2P & NAT',       level: 'advanced', tooltip: 'Direct device-to-device connections instead of a relay' },
+      { name: 'Split DNS',       level: 'advanced', tooltip: 'Split DNS and LAN bypass, so a full tunnel keeps the home router and NAS reachable' },
+      { name: 'TCP/IP & UDP',    level: 'advanced', tooltip: 'Sockets, MTU, routing and packet paths' },
+      { name: 'iptables',        level: 'advanced', tooltip: 'Firewall and NAT rules on Linux' },
+      { name: 'gRPC / Protobuf', level: 'advanced', tooltip: 'Typed APIs between services and clients' },
     ],
   },
   {
-    label: 'Backend',
+    label: 'Systems & Embedded',
     skills: [
-      { name: 'Go',                 level: 'expert',   tooltip: 'Go services — goroutines, clean layering, production APIs' },
-      { name: 'Encryption at rest', level: 'advanced', tooltip: 'Authenticated encryption of sensitive fields (AEAD)' },
-      { name: 'SQLite (no cgo)',    level: 'advanced', tooltip: 'Pure-Go SQLite — portable static binaries' },
-      { name: 'Reproducible Builds',level: 'advanced', tooltip: 'Deterministic, verifiable release builds' },
-      { name: 'WebSocket',          level: 'advanced', tooltip: 'Real-time transport — media control and file sync in Linqora' },
+      { name: 'C++',              level: 'expert',   tooltip: 'Native services and libraries — memory, concurrency, low-level control' },
+      { name: 'C',                level: 'advanced', tooltip: 'Kernel code and native libraries' },
+      { name: 'Linux Kernel',     level: 'advanced', tooltip: 'WireGuard patch that doubled throughput on a single-core router, plus a leak fix sent to netdev' },
+      { name: 'Yocto / BitBake',  level: 'advanced', tooltip: 'Recipes, layers, cross-compilation and systemd for embedded Linux images' },
+      { name: 'Windows Services', level: 'expert',   tooltip: 'SYSTEM service on WireGuard-NT — named pipes, DPAPI, no admin prompts for the app' },
+      { name: 'Win32 / CNG',      level: 'advanced', tooltip: 'Native Windows APIs and crypto' },
+      { name: 'Profiling',        level: 'advanced', tooltip: 'Finding where the time actually goes — down to context switches per packet' },
+    ],
+  },
+  {
+    label: 'Backend & Data',
+    skills: [
+      { name: 'Go',                 level: 'expert',   tooltip: 'Backend services, a P2P core and a shared VPN data plane' },
+      { name: 'cgo / gomobile',     level: 'advanced', tooltip: 'One Go core shared with C++, Flutter and mobile apps' },
       { name: 'REST API',           level: 'expert',   tooltip: 'API design, versioning, auth' },
+      { name: 'WebSocket',          level: 'advanced', tooltip: 'Real-time transport between devices and services' },
+      { name: 'PostgreSQL',         level: 'advanced', tooltip: 'Schemas, queries and migrations for backend services' },
+      { name: 'SQLite',             level: 'advanced', tooltip: 'Embedded storage from Go — pure-Go driver for static binaries, or via cgo' },
+      { name: 'Encryption at rest', level: 'advanced', tooltip: 'Authenticated encryption of sensitive fields (AEAD)' },
     ],
   },
   {
-    label: 'Mobile',
+    label: 'Mobile & Desktop',
     skills: [
-      { name: 'Kotlin',          level: 'expert',   tooltip: 'Main Android language — Coroutines, Flow, Jetpack, Hilt, Room' },
-      { name: 'Swift',           level: 'advanced', tooltip: 'Native iOS across the Apple platform' },
-      { name: 'Java',            level: 'expert',   tooltip: 'Android and JVM — legacy code, Kotlin interop, JNI' },
-      { name: 'Jetpack Compose', level: 'advanced', tooltip: 'Declarative UI — layouts, theming, state, animations' },
-      { name: 'BLE / NFC',       level: 'advanced', tooltip: 'BLE scanning and GATT, NFC read/write in shipped apps' },
-      { name: 'Offline-first',   level: 'expert',   tooltip: 'Room with migrations, SQLCipher, local-only data' },
+      { name: 'Flutter',          level: 'expert',   tooltip: 'Apps and platform plugins for Android, iOS, macOS and Windows — Bloc, Riverpod' },
+      { name: 'Dart',             level: 'expert',   tooltip: 'Async, isolates, FFI into C++ libraries' },
+      { name: 'Kotlin',           level: 'expert',   tooltip: 'Android — VpnService, Coroutines, Hilt, Room, WorkManager' },
+      { name: 'Swift',            level: 'advanced', tooltip: 'iOS and macOS — Network Extension, Keychain' },
+      { name: 'Java',             level: 'expert',   tooltip: 'Android and JVM — legacy code, Kotlin interop, JNI' },
+      { name: 'Jetpack Compose',  level: 'advanced', tooltip: 'Declarative UI — layouts, theming, state, animations' },
+      { name: 'Offline-first',    level: 'expert',   tooltip: 'Room with migrations, SQLCipher, local-only data' },
     ],
   },
   {
-    label: 'Cross-platform',
+    label: 'Infra & Practices',
     skills: [
-      { name: 'Flutter',   level: 'expert',   tooltip: 'Apps for Android, iOS and Desktop — Bloc, Riverpod, platform channels' },
-      { name: 'Dart',      level: 'expert',   tooltip: 'Async, isolates, FFI — C++ bindings in SovaWallet' },
-      { name: 'C++ / NDK', level: 'expert',   tooltip: 'Android NDK and JNI — native libs bridged into Flutter via FFI' },
-    ],
-  },
-  {
-    label: 'Realtime & Infra',
-    skills: [
-      { name: 'Firebase FCM',   level: 'advanced', tooltip: 'Push notifications' },
-      { name: 'SSE',            level: 'advanced', tooltip: 'Server-Sent Events — one-way live streams' },
-      { name: 'Event Pipelines',level: 'advanced', tooltip: 'Event-driven flows between services' },
-      { name: 'GitLab CI/CD',   level: 'advanced', tooltip: 'Pipelines and release builds' },
+      { name: 'AWS',             level: 'advanced', tooltip: 'Deploying and running backend services on AWS' },
+      { name: 'GitLab CI',       level: 'advanced', tooltip: 'Pipelines and release builds' },
+      { name: 'GitHub Actions',  level: 'advanced', tooltip: 'Build, test and deploy workflows' },
+      { name: 'Firebase',        level: 'advanced', tooltip: 'Push notifications, auth and analytics' },
+      { name: 'Architecture',    level: 'advanced', tooltip: 'Clean Architecture, MVVM, decisions on how services and apps fit together' },
+      { name: 'Code Review',     level: 'advanced', tooltip: 'Reviewing Flutter and Go projects' },
     ],
   },
   {
@@ -71,34 +79,19 @@ const services = [
   { icon: 'solar:diagram-up-linear',      title: 'Architecture',       desc: 'Keeping services, data and boundaries clean as things grow' },
   { icon: 'solar:smartphone-linear',      title: 'Mobile Apps',        desc: 'Kotlin, Swift and Flutter — from first build to store release' },
   { icon: 'solar:global-linear',          title: 'Web Apps',           desc: 'React / Next.js — fast, accessible, SEO-friendly' },
-  { icon: 'solar:refresh-circle-linear',  title: 'Realtime & Infra',   desc: 'Push, live updates and CI/CD — FCM, SSE, GitLab' },
+  { icon: 'solar:refresh-circle-linear',  title: 'Realtime & Infra',   desc: 'Push, live updates, CI/CD and cloud — FCM, SSE, GitLab, AWS' },
 ];
 
 const projects = [
   {
-    icon: 'solar:broom-linear',
-    emoji: '◇',
-    title: 'Chystik',
-    description: 'Safety-first disk cleanup for developers. ~200 rules explain what each finding is and what losing it costs — protected paths are refused, and cleanup goes to the trash, never straight to unlink. Linux supported; macOS and Windows in preview.',
-    tags: ['Rust', 'egui', 'Cross-platform'],
-    href: 'https://github.com/pasichDev/chystik',
-    siteHref: 'https://pasichdev.github.io/chystik/',
-  },
-  {
-    icon: 'solar:devices-linear',
-    emoji: '⬡',
-    title: 'Linqora',
-    description: 'Seamless PC-Mobile integration. Control media, monitor resources, and transfer files via WebSocket/mDNS.',
-    tags: ['Go', 'Flutter', 'WebSocket'],
-    href: 'https://github.com/pasichDev/linqora',
-  },
-  {
-    icon: 'solar:wallet-linear',
-    emoji: '◎',
-    title: 'SovaWallet',
-    description: 'NosoCoin ecosystem wallet. Complex cryptographic implementation, node balancing, and custom binary protocols.',
-    tags: ['C++', 'Dart FFI', 'Flutter'],
-    href: 'https://github.com/Noso-Project/NosoSova',
+    icon: 'solar:lock-keyhole-linear',
+    emoji: '◈',
+    title: 'Encly',
+    description: 'Offline, encrypted notes and tasks for Android. SQLCipher at rest, PIN lock with optional biometrics, a 12-word recovery phrase and encrypted backups. No account, no ads, no internet permission.',
+    tags: ['Kotlin', 'Compose', 'SQLCipher'],
+    href: '/apps/encly/',
+    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasich.encly',
+    fdroidHref: 'https://f-droid.org/packages/com.pasich.encly/',
   },
   {
     icon: 'solar:notebook-linear',
@@ -111,23 +104,21 @@ const projects = [
     downloads: '30k+',
   },
   {
-    icon: 'solar:heart-linear',
-    emoji: '♥',
-    title: 'Felisca',
-    description: 'Personal mental companion. Deep mood tracking with privacy-first architecture. Offline-only, encrypted locally, complete control.',
-    tags: ['Flutter', 'Dart', 'Privacy-First'],
-    href: '/apps/felisca',
-    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasichdev.felisca',
+    icon: 'solar:wallet-linear',
+    emoji: '◎',
+    title: 'SovaWallet',
+    description: 'NosoCoin ecosystem wallet. Complex cryptographic implementation, node balancing, and custom binary protocols.',
+    tags: ['C++', 'Dart FFI', 'Flutter'],
+    href: 'https://github.com/Noso-Project/NosoSova',
   },
   {
-    icon: 'solar:lock-keyhole-linear',
-    emoji: '◈',
-    title: 'Encly',
-    description: 'Offline, encrypted notes and tasks for Android. SQLCipher at rest, PIN lock with optional biometrics, a 12-word recovery phrase and encrypted backups. No account, no ads, no internet permission.',
-    tags: ['Kotlin', 'Compose', 'SQLCipher'],
-    href: '/apps/encly/',
-    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasich.encly',
-    fdroidHref: 'https://f-droid.org/packages/com.pasich.encly/',
+    icon: 'solar:devices-linear',
+    emoji: '⬡',
+    title: 'Linqora',
+    description: 'Research project: PC-mobile integration — media control, resource monitoring and file transfer over WebSocket with mDNS discovery. No longer maintained.',
+    tags: ['Go', 'Flutter', 'WebSocket'],
+    href: 'https://github.com/pasichDev/linqora',
+    archived: true,
   },
 ];
 
@@ -210,7 +201,7 @@ const structuredData = {
     <section class="section reveal" id="projects">
       <div class="section-head">
         <h2 class="section-title">Selected Work</h2>
-        <span class="section-num">01 — 06</span>
+        <span class="section-num">01 — {String(projects.length).padStart(2, '0')}</span>
       </div>
 
       <div class="proj-grid">
@@ -227,10 +218,10 @@ const structuredData = {
                     {p.downloads}
                   </span>
                 )}
-                {p.status && (
+                {p.archived && (
                   <span class="proj-dl proj-soon">
-                    <Icon name="solar:hourglass-linear" width="10" height="10" />
-                    {p.status}
+                    <Icon name="solar:archive-linear" width="10" height="10" />
+                    Archived
                   </span>
                 )}
               </div>
