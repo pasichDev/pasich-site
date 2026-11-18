@@ -73,7 +73,7 @@ import { Icon } from 'astro-icon/components';
         <p class="text-dim leading-relaxed mt-4">
           The short version: <strong class="text-accent">everything stays on your device, encrypted, and nobody (including the developer) receives any of it.</strong>
         </p>
-        <p class="text-sm text-dim mt-4"><strong>Effective:</strong> September 25, 2026</p>
+        <p class="text-sm text-dim mt-4"><strong>Effective:</strong> November 18, 2026</p>
       </section>
 
       <section class="policy-section">
@@ -100,7 +100,7 @@ import { Icon } from 'astro-icon/components';
           <Icon name="solar:check-circle-bold" class="text-purple" />
           <div>
             <h5 class="font-medium text-accent">Note Content</h5>
-            <p class="text-sm text-dim"><strong>We DO NOT receive</strong> your notes, tasks or tags. They never leave your device unless you export an encrypted backup yourself.</p>
+            <p class="text-sm text-dim"><strong>We DO NOT receive</strong> your notes, tasks or tags. They never leave your device unless you export them yourself: an encrypted backup or, if you choose, a readable Markdown export.</p>
           </div>
         </div>
 
@@ -215,7 +215,7 @@ import { Icon } from 'astro-icon/components';
         <div>
           <h4 class="font-medium text-accent mb-2">We DO NOT share your data</h4>
           <p class="text-sm text-dim">
-            Encly does not share, sell or transfer any data to anyone. It has no share flow for note content. It puts something on the clipboard only when you copy it yourself: text you select, or a link from a note's link block. Every copy is marked as sensitive (on Android 13 and later it is hidden from the clipboard preview) and cleared after about a minute. Apart from that, the only way data leaves the app is an encrypted backup file that you export yourself.
+            Encly does not share, sell or transfer any data to anyone. It has no share sheet and no share flow for note content. It puts something on the clipboard only when you copy it yourself: text you select, or a link from a note's link block. Every copy is marked as sensitive (on Android 13 and later it is hidden from the clipboard preview) and cleared after about a minute. Apart from that, data leaves the app only in files that you export yourself: an encrypted backup or, if you choose, a readable Markdown export (both below).
           </p>
         </div>
       </section>
@@ -233,7 +233,7 @@ import { Icon } from 'astro-icon/components';
           <div class="security-item">
             <Icon name="solar:document-text-linear" width="20" height="20" />
             <h5>What It Contains</h5>
-            <p>All your notes (title, content, trash state, created and edited dates), tags (name, visibility, order) and tasks (title, description, completion, dates, priority, order). It does <strong>not</strong> contain your PIN, your recovery phrase, biometric data, any encryption key of the app itself, or app settings.</p>
+            <p>All your notes (title, content, trash, pin, archive and colour state, created and edited dates), tags (name, visibility, order) and tasks (title, description, completion, dates, priority, order), plus your display and behaviour preferences (theme, fonts, language, list layout, auto-lock delay and similar). It does <strong>not</strong> contain your PIN, your recovery phrase, biometric data, or any encryption key of the app itself.</p>
           </div>
           <div class="security-item">
             <Icon name="solar:lock-linear" width="20" height="20" />
@@ -255,6 +255,47 @@ import { Icon } from 'astro-icon/components';
         <p class="text-dim leading-relaxed mt-4">
           Anyone who has both the file and your 12 words can read that backup, and an exported file cannot be revoked, so keep the words and the file apart.
         </p>
+      </section>
+
+      <section class="policy-section">
+        <div class="section-icon">
+          <Icon name="solar:document-text-linear" width="24" height="24" />
+        </div>
+        <h3 class="font-medium text-accent mb-4">Markdown Export (Not Encrypted)</h3>
+        <p class="text-dim leading-relaxed mb-4">
+          You can also export your notes as plain, readable Markdown: from a note's menu (<strong class="text-accent">Export as Markdown</strong>, one <code>.md</code> file) or in <strong class="text-accent">Settings → Backup</strong> (<strong class="text-accent">Export as Markdown</strong>, one <code>.zip</code>). Nothing is exported automatically.
+        </p>
+
+        <div class="security-grid">
+          <div class="security-item">
+            <Icon name="solar:document-text-linear" width="20" height="20" />
+            <h5>What It Contains</h5>
+            <p>One <code>.md</code> file per note (title, tag, dates, pin, archive and colour in a small header, then the text, checklists, links and so on), archived notes in an <code>archive</code> folder, and <code>tasks.md</code> with your tasks and sub-tasks. Notes in the trash are left out. It does <strong>not</strong> contain your PIN, recovery phrase, keys or app settings.</p>
+          </div>
+          <div class="security-item">
+            <Icon name="solar:lock-unlocked-linear" width="20" height="20" />
+            <h5>It Is Not Encrypted</h5>
+            <p>Anyone who gets the file can read it, and wherever you save it (a folder, a USB stick, a cloud drive) holds a readable copy that Encly cannot protect or take back. Encly says so before every export and asks for your PIN (or biometrics) again.</p>
+          </div>
+          <div class="security-item">
+            <Icon name="solar:folder-open-linear" width="20" height="20" />
+            <h5>Where It Goes</h5>
+            <p>Only to the document you create in Android's save dialog. Encly shows no share sheet, writes no temporary copy, and never uploads it.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="policy-section">
+        <div class="section-icon">
+          <Icon name="solar:import-linear" width="24" height="24" />
+        </div>
+        <h3 class="font-medium text-accent mb-4">Importing Notes</h3>
+
+        <h5 class="font-medium text-accent">From My Notes</h5>
+        <p class="text-sm text-dim mb-4">If you also use My Notes (the developer's earlier notes app), it can move its notes, tasks, tags and task categories into Encly. This happens <strong>only on your device</strong>, only when you start it in My Notes, and only after you unlock Encly and confirm what will be imported. Encly accepts the data only from the genuine My Notes app (checked by its signing certificate). The temporary copy Encly makes while reading it is deleted right away (or, if Encly is closed in the middle, the next time it starts); the imported notes are stored encrypted like everything else. Nothing is sent over the network, and Encly sends nothing back to My Notes except how many items were imported. Attachments and images stay in My Notes.</p>
+
+        <h5 class="font-medium text-accent">From Other Apps</h5>
+        <p class="text-sm text-dim"><strong>Settings → Import notes</strong> reads export files of Google Keep (Takeout), Standard Notes (decrypted backup), Joplin (JEX or RAW), Notesnook (Markdown or plain-text export) and plain Markdown/text notes such as an Obsidian vault. You choose the files or folder in the system file picker; Encly reads only what you picked, only while the app is unlocked, and only on this phone. Nothing is uploaded, no account is needed, and no network is used. The files are read into memory, never copied to disk, and the files themselves are left unchanged. You see the list of notes before anything is saved, pick which ones to import, and the selected notes are stored encrypted in the vault that is open. Encrypted exports of those apps are not read; export them in a readable format first.</p>
       </section>
 
       <section class="policy-section">
