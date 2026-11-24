@@ -1,36 +1,31 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import FeatureCard from '../../../components/ui/FeatureCard.astro';
+import AppMotion from '../../../components/ui/AppMotion.astro';
 import { Icon } from 'astro-icon/components';
+import '../../../styles/app-page.css';
 
 const features = [
   {
-    icon: 'solar:pen-new-square-linear',
     title: 'Easy to Use',
     description: 'Intuitive interface allows you to quickly create and edit notes without unnecessary steps.'
   },
   {
-    icon: 'solar:tag-linear',
     title: 'Tags',
     description: 'Organize notes by categories for quick access to needed information.'
   },
   {
-    icon: 'solar:magnifer-linear',
     title: 'Quick Search',
     description: 'Instantly find needed notes using powerful search functionality.'
   },
   {
-    icon: 'solar:cloud-upload-linear',
     title: 'Backup',
     description: 'Your data is always safe thanks to backup and restore functionality.'
   },
   {
-    icon: 'solar:palette-linear',
     title: 'Modern Design',
     description: 'Beautiful Material Design interface that\'s pleasant to use every day.'
   },
   {
-    icon: 'solar:lock-linear',
     title: 'Privacy',
     description: 'Your notes are stored locally on your device. Complete confidentiality guaranteed.'
   }
@@ -75,223 +70,137 @@ const structuredData = {
     "Complete privacy"
   ]
 };
+
+const playUrl = 'https://play.google.com/store/apps/details?id=com.pasich.mynotes';
 ---
 
-<BaseLayout 
+<BaseLayout
   title="My Notes – Free, Secure, Android | Download from Google Play"
   description="Simple and convenient app for storing your notes and important details. Available on Google Play Store."
   canonical="https://pasichdev.xyz/apps/mynotes/"
   structuredData={structuredData}
+  bleed
 >
-  <div class="container animate-fade-in">
-    
-    <!-- Hero Section -->
-    <header class="hero-section">
-      <div class="hero-content">
-        <div class="app-icon-wrapper">
-          <div class="app-icon">
-            <Icon name="solar:notebook-bold" width="48" height="48" />
+  <div class="app app--notes">
+
+    <header class="app-hero" data-parallax>
+      <div class="app-hero__copy">
+        <div>
+          <nav class="app-hero__crumbs mono up" aria-label="Breadcrumbs"><a href="/">pasichdev</a><a href="/#work">Work</a><span>My Notes</span></nav>
+          <span class="notes-icon app-hero__icon"><Icon name="solar:notebook-bold" width="40" height="40" /></span>
+          <h1>
+            <span class="app-hero__name wide" data-scramble>My Notes</span>
+            <span class="app-hero__tagline">Your ideas are always with you</span>
+          </h1>
+          <p class="app-hero__lede">
+            Simple and convenient app for storing notes, ideas and important details.
+            Organize your thoughts with categories, quick search and reliable backup.
+          </p>
+        </div>
+        <div class="app-hero__foot">
+          <div class="app-chips">
+            <span class="app-chip">Free</span>
+            <span class="app-chip">Private</span>
+            <span class="app-chip">Android</span>
+          </div>
+          <div class="app-cta-row">
+            <a class="app-btn" href={playUrl} target="_blank" rel="noopener noreferrer"><Icon name="mdi:google-play" />Google Play</a>
           </div>
         </div>
-        
-        <h1 class="hero-title">
-          <span class="gradient-text">My Notes</span><br>
-          <span class="hero-subtitle">Your ideas are always with you</span>
-        </h1>
-        
-        <p class="text-lg text-dim leading-relaxed mx-auto" style="max-width: 32rem;">
-          Simple and convenient app for storing notes, ideas and important details. 
-          Organize your thoughts with categories, quick search and reliable backup.
-        </p>
-        
-     
-        
-        <div class="flex gap-2 mt-8 flex-wrap justify-center">
-          <span class="badge badge-accent">
-            <Icon name="solar:star-bold" /> Free
-          </span>
-          <span class="badge badge-accent">
-            <Icon name="solar:shield-check-bold" /> Private
-          </span>
-          <span class="badge badge-accent">
-            <Icon name="solar:smartphone-bold" /> Android
-          </span>
+      </div>
+
+      <!-- No real screenshots in the repo yet: two drawn phones — the list and the block editor -->
+      <div class="app-hero__visual" aria-hidden="true">
+        <div class="mock app-shot" data-speed="-0.06" style="left:8%;top:12%">
+          <div class="mock__screen">
+            <div class="mock__bar"><b>Notes</b><i></i></div>
+            <div class="mock__search">Search notes</div>
+            <div class="mock__chips"><span class="on">All</span><span>Ideas</span><span>Work</span><span>Home</span></div>
+            <div class="mock__card"><b>Groceries</b><span style="width:72%"></span><span style="width:46%"></span><em>Home · Today</em></div>
+            <div class="mock__card"><b>Ideas for the weekend</b><span style="width:88%"></span><span style="width:60%"></span><span style="width:34%"></span><em>Ideas · Yesterday</em></div>
+            <div class="mock__card"><b>Router notes</b><span style="width:58%"></span><em>Work · Mon</em></div>
+            <div class="mock__fab">+</div>
+          </div>
+        </div>
+        <div class="mock app-shot" data-speed="0.09" style="left:50%;top:26%;z-index:2">
+          <div class="mock__screen">
+            <div class="mock__bar"><b>Ideas for the weekend</b></div>
+            <p class="mock__h">Saturday</p>
+            <div class="mock__check on">Market in the morning</div>
+            <div class="mock__check on">Call grandma</div>
+            <div class="mock__check">Fix the bike chain</div>
+            <blockquote class="mock__quote">Do one thing well, then the next.</blockquote>
+            <p class="mock__h">Sunday</p>
+            <span class="mock__line" style="width:84%"></span><span class="mock__line" style="width:64%"></span>
+            <div class="mock__tools"><i>H</i><i>☐</i><i>“</i><i>•</i></div>
+          </div>
         </div>
       </div>
     </header>
-    
-    <!-- Features Section -->
-    <section id="features" class="section">
-      <div class="section-header">
-        <h2 class="font-medium tracking-tight">Main Features</h2>
-        <span class="section-counter">01 — 06</span>
-      </div>
-      
-      <div class="features-grid">
-        {features.map((feature) => (
-          <FeatureCard {...feature} />
-        ))}
+
+    <section id="features" class="app-sec">
+      <div class="sec-head"><h2 class="wide">Main Features</h2><span class="app-count mono up">01 — 06</span></div>
+      {features.map((f, i) => (
+        <article class="feat reveal">
+          <span class="feat__n mono up">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="feat__title">{f.title}</h3>
+          <div class="feat__body"><p>{f.description}</p></div>
+        </article>
+      ))}
+    </section>
+
+    <section class="app-cta">
+      <h2 class="wide">Start taking notes today</h2>
+      <p>Download My Notes now and organize your ideas with complete privacy.</p>
+      <div class="app-cta-row">
+        <a href={playUrl} target="_blank" rel="noopener noreferrer" class="app-btn">
+          <Icon name="mdi:google-play" />
+          Get it on Google Play
+        </a>
       </div>
     </section>
-    
-    <!-- Download CTA -->
-    <section class="cta-section glass">
-      <h2 class="text-xl font-medium text-accent mb-4">Start taking notes today</h2>
-      <p class="text-dim mb-8">Download My Notes now and organize your ideas with complete privacy.</p>
-      <a href="https://play.google.com/store/apps/details?id=com.pasich.mynotes" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
-        <Icon name="mdi:google-play" width="20" height="20" />
-        Get it on Google Play
-      </a>
-    </section>
-    
-    <!-- Links -->
-    <footer class="page-links">
-      <a href="/apps/mynotes/privacy-policy" class="link-hover">Privacy Policy</a>
-      <span class="divider">/</span>
-      <a href="https://github.com/pasichDev/MyNotes" target="_blank" rel="noopener noreferrer" class="link-hover flex items-center gap-1">
-        <Icon name="mdi:github" /> GitHub
-      </a>
-    </footer>
-    
+
+    <nav class="app-links mono up" aria-label="My Notes links">
+      <a href="/apps/mynotes/privacy-policy">Privacy Policy →</a>
+      <a href="https://github.com/pasichDev/MyNotes" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </nav>
   </div>
+  <AppMotion />
 </BaseLayout>
 
 <style>
-  .hero-section {
-    text-align: center;
-    padding: 4rem 0 6rem;
-  }
-  
-  .hero-content {
-    max-width: 42rem;
-    margin: 0 auto;
-  }
-  
-  .app-icon-wrapper {
-    margin-bottom: 2.5rem;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .app-icon {
-    width: 96px;
-    height: 96px;
-    background: linear-gradient(135deg, var(--color-border), var(--color-accent));
-    padding: 2px;
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-bg);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  .app--notes {
+    --brand: #e8e2d4;
+    --brand-ink: #1d1b17;
+    --brand-accent: #e0c391;
+    --name-fit: 6.4;
+    --name-fit-sm: 12.5;
   }
 
-  .app-icon svg {
-    background: var(--color-bg);
-    color: var(--color-accent);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 22px;
-  }
-  
-  .app-icon:hover {
-    transform: scale(1.05) rotate(5deg);
-  }
-  
-  .hero-title {
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 2rem;
-  }
+  .notes-icon { display: grid; place-items: center; background: #1d1b17; color: #e8e2d4; }
 
-  .hero-subtitle {
-    font-size: 0.5em;
-    opacity: 0.7;
-    font-weight: 400;
-    letter-spacing: 0;
-  }
-  
-  .gradient-text {
-    background: linear-gradient(to bottom, #fff, rgba(255,255,255,0.7));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .mx-auto {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .badge-accent {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--color-border);
-    color: var(--color-txt-main);
-  }
-  
-  .features-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  @media (min-width: 640px) {
-    .features-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .features-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-  }
-  
-  .cta-section {
-    text-align: center;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    padding: 4rem 2rem;
-    margin-top: 6rem;
-  }
-  
-  .page-links {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    font-size: 0.75rem;
-    font-family: var(--font-mono);
-    color: var(--color-txt-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .divider {
-    opacity: 0.2;
-  }
-  
-  .link-hover:hover {
-    color: var(--color-accent);
-  }
-
-  @media (max-width: 640px) {
-    .hero-section {
-      padding: 2rem 0 4rem;
-    }
-    
-    .cta-section {
-      padding: 3rem 1.5rem;
-      margin-top: 4rem;
-    }
-  }
+  /* Drawn phone */
+  .mock { aspect-ratio: 9 / 19; padding: 9px; border-radius: 34px; background: #1d1b17; }
+  .mock__screen { position: relative; height: 100%; overflow: hidden; padding: 34px 14px 14px; border-radius: 26px; background: #f6f2e9; color: #1d1b17; font-family: var(--font-sans); }
+  .mock__screen::before { content: ''; position: absolute; top: 10px; left: 50%; width: 28%; height: 14px; border-radius: 99px; background: #1d1b17; transform: translateX(-50%); }
+  .mock__bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .mock__bar b { font-size: 20px; font-weight: 800; line-height: 1.1; }
+  .mock__bar i { width: 22px; height: 22px; border-radius: 50%; background: #e3dccb; }
+  .mock__search { margin-bottom: 10px; padding: 8px 12px; border-radius: 99px; background: #ece6d8; color: #8a8374; font-size: 11px; }
+  .mock__chips { display: flex; gap: 5px; margin-bottom: 12px; }
+  .mock__chips span { padding: 4px 9px; border-radius: 99px; background: #e8e1d2; font-size: 10px; }
+  .mock__chips span.on { background: #1d1b17; color: #f6f2e9; }
+  .mock__card { margin-bottom: 8px; padding: 11px 12px; border-radius: 12px; background: #fff; }
+  .mock__card b { display: block; font-size: 13px; }
+  .mock__card span, .mock__line { display: block; height: 6px; margin-top: 7px; border-radius: 3px; background: #e5dfd1; }
+  .mock__card em { display: block; margin-top: 8px; color: #9a9384; font: 400 9px var(--font-mono); font-style: normal; }
+  .mock__fab { position: absolute; right: 14px; bottom: 14px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: #1d1b17; color: #f6f2e9; font-size: 22px; }
+  .mock__h { margin: 12px 0 6px; color: #1d1b17; font-size: 15px; font-weight: 700; }
+  .mock__check { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; }
+  .mock__check::before { content: ''; width: 13px; height: 13px; border: 1.5px solid #1d1b17; border-radius: 3px; }
+  .mock__check.on { color: #9a9384; text-decoration: line-through; }
+  .mock__check.on::before { background: #1d1b17; }
+  .mock__quote { margin: 10px 0 0; padding-left: 10px; border-left: 3px solid #b45309; font: italic 400 12px/1.4 var(--font-sans); color: #5c5649; }
+  .mock__tools { position: absolute; right: 12px; bottom: 12px; left: 12px; display: flex; justify-content: space-around; padding: 9px; border-radius: 12px; background: #ece6d8; }
+  .mock__tools i { font: 700 12px var(--font-mono); font-style: normal; }
 </style>

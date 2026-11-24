@@ -1,595 +1,230 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { Icon } from 'astro-icon/components';
+import DocToc from '../../../components/ui/DocToc.astro';
+import '../../../styles/policy-page.css';
+
+const toc = [
+  { id: 'general', label: 'General Information' },
+  { id: 'collects', label: 'What Encly Collects' },
+  { id: 'stores', label: 'What Encly Stores on Your Device' },
+  { id: 'permissions', label: 'App Permissions' },
+  { id: 'links', label: 'Links That Leave the App' },
+  { id: 'sharing', label: 'We DO NOT share your data' },
+  { id: 'backup', label: 'Encrypted Backup File' },
+  { id: 'markdown', label: 'Markdown Export (Not Encrypted)' },
+  { id: 'import', label: 'Importing Notes' },
+  { id: 'deleting', label: 'Deleting Your Data' },
+  { id: 'children', label: 'Children' },
+  { id: 'changes', label: 'Changes' },
+  { id: 'contact', label: 'Contact' },
+];
 ---
 
 <BaseLayout
   title="Privacy Policy - Encly"
   description="Privacy Policy for Encly, the offline encrypted notes app for Android. Encly collects no data, has no internet permission and keeps everything encrypted on your device."
   canonical="https://pasichdev.xyz/apps/encly/privacy-policy/"
+  bleed
 >
-  <div class="container container-sm animate-fade-in">
+  <header class="page-hero pp-hero">
+    <nav class="page-hero__crumbs mono up" aria-label="Breadcrumbs"><a href="/">pasichdev</a><span><a href="/apps/encly/">Encly</a></span><span>Privacy Policy</span></nav>
+    <p class="pp-hero__app mono up">Encly</p>
+    <h1 class="wide" data-scramble>Privacy Policy</h1>
+    <p class="page-hero__lede">
+      Everything stays on your device, encrypted, and nobody (including the developer) receives any of it.
+    </p>
+    <div class="page-hero__meta mono up">
+      <span class="pp-badge">No data collected</span>
+      <span class="pp-badge">Encrypted on device</span>
+      <span class="pp-badge">No internet permission</span>
+      <span class="pp-date">Effective: November 18, 2026</span>
+    </div>
+  </header>
 
-    <!-- Header -->
-    <header class="privacy-hero">
-      <div class="icon-shield">
-        <Icon name="solar:shield-check-bold" width="48" height="48" />
+  <div class="doc">
+    <DocToc items={toc} />
+
+    <article class="doc__body">
+
+      <div class="pp-keys">
+        <div class="pp-key">
+          <h3>Nothing Collected</h3>
+          <p>No account, no server, no analytics, no crash reporting, no advertising and no tracking.</p>
+        </div>
+        <div class="pp-key">
+          <h3>No Network Access</h3>
+          <p>Encly does not request the Android INTERNET permission, so it cannot send data over the network itself.</p>
+        </div>
+        <div class="pp-key">
+          <h3>Encrypted Locally</h3>
+          <p>Your notes, tasks and tags are kept in a SQLCipher (AES-256) database on your device only.</p>
+        </div>
       </div>
-      <h1 class="text-accent" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Privacy Policy</h1>
-      <p class="text-lg text-dim">
-        Everything stays on your device, encrypted, and nobody (including the developer) receives any of it.
+
+      <h2 id="general">General Information</h2>
+      <p>
+        This Privacy Policy explains what happens to your data in <strong>Encly</strong>, an offline notes and tasks app for Android developed by pasichDev. It applies to Encly 2.0.0 and later (package <code>com.pasich.encly</code>).
       </p>
-      <div class="flex gap-2 mt-6 flex-wrap justify-center">
-        <span class="badge badge-purple">
-          <Icon name="solar:check-circle-bold" /> No data collected
-        </span>
-        <span class="badge badge-purple">
-          <Icon name="solar:lock-bold" /> Encrypted on device
-        </span>
-        <span class="badge badge-purple">
-          <Icon name="solar:eye-closed-bold" /> No internet permission
-        </span>
-      </div>
-    </header>
+      <p>
+        The short version: <strong>everything stays on your device, encrypted, and nobody (including the developer) receives any of it.</strong>
+      </p>
+      <p class="pp-small"><strong>Effective:</strong> November 18, 2026</p>
 
-    <!-- Key Points -->
-    <section class="key-points">
-      <div class="point-card">
-        <div class="point-icon">
-          <Icon name="solar:forbidden-linear" width="28" height="28" />
+      <h2 id="collects">What Encly Collects</h2>
+      <p>
+        <strong>Nothing.</strong> Encly has no account, no server, no analytics, no crash reporting, no advertising and no tracking. The app does not request the Android <code>INTERNET</code> permission, so it cannot send data over the network itself.
+      </p>
+      <p>
+        Encly asks every keyboard not to learn from what you type, and the optional <strong>"Strict keyboard privacy"</strong> setting (Settings → Security) also asks it for no suggestions, no cloud prediction and no access to the text around the cursor. A keyboard app still receives each key you type and may ignore these requests, so use one you trust.
+      </p>
+      <div class="pp-items">
+        <div class="pp-item">
+          <h3>Personal Data</h3>
+          <p><strong>We DO NOT collect</strong> any personal data. There is no account or sign-up.</p>
         </div>
-        <h4 class="font-medium text-accent mb-2">Nothing Collected</h4>
-        <p class="text-sm text-dim">No account, no server, no analytics, no crash reporting, no advertising and no tracking.</p>
-      </div>
-
-      <div class="point-card">
-        <div class="point-icon">
-          <Icon name="solar:wi-fi-router-minimalistic-linear" width="28" height="28" />
+        <div class="pp-item">
+          <h3>Note Content</h3>
+          <p><strong>We DO NOT receive</strong> your notes, tasks or tags. They never leave your device unless you export them yourself: an encrypted backup or, if you choose, a readable Markdown export.</p>
         </div>
-        <h4 class="font-medium text-accent mb-2">No Network Access</h4>
-        <p class="text-sm text-dim">Encly does not request the Android INTERNET permission, so it cannot send data over the network itself.</p>
+        <div class="pp-item">
+          <h3>Usage and Crash Data</h3>
+          <p><strong>We DO NOT track</strong> how you use the app, and Encly sends no analytics or crash reports.</p>
+        </div>
       </div>
 
-      <div class="point-card">
-        <div class="point-icon">
-          <Icon name="solar:lock-keyhole-linear" width="28" height="28" />
+      <h2 id="stores">What Encly Stores on Your Device</h2>
+      <div class="pp-items">
+        <div class="pp-item">
+          <h3>Notes, Tasks and Tags</h3>
+          <p>The notes, tasks and tags you create, stored in a database encrypted with SQLCipher (AES-256) under a random key that only your PIN, your biometric key or your recovery seed can unlock.</p>
         </div>
-        <h4 class="font-medium text-accent mb-2">Encrypted Locally</h4>
-        <p class="text-sm text-dim">Your notes, tasks and tags are kept in a SQLCipher (AES-256) database on your device only.</p>
+        <div class="pp-item">
+          <h3>Security Metadata</h3>
+          <p>What is needed to unlock that database: encrypted key envelopes, a PBKDF2 salt, lockout counters and whether biometrics are enabled. Your PIN and seed words themselves are never stored.</p>
+        </div>
+        <div class="pp-item">
+          <h3>App Settings</h3>
+          <p>Settings such as theme, sort order and editor font.</p>
+        </div>
       </div>
-    </section>
+      <p>
+        This data is stored in Encly's private app storage. Android cloud backup and device-to-device transfer are disabled for it, so it is not copied to Google Drive or another phone.
+      </p>
 
-    <!-- Policy Content -->
-    <div class="policy-content">
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:info-circle-linear" width="24" height="24" />
+      <h2 id="permissions">App Permissions</h2>
+      <div class="pp-items">
+        <div class="pp-item">
+          <h3>Biometrics (<code>USE_BIOMETRIC</code>)</h3>
+          <p>Optional fingerprint / face unlock of your vault. Biometric data never leaves the Android system; Encly only receives "authenticated" or "not authenticated".</p>
         </div>
-        <h3 class="font-medium text-accent mb-4">General Information</h3>
-        <p class="text-dim leading-relaxed">
-          This Privacy Policy explains what happens to your data in <strong class="text-accent">Encly</strong>, an offline notes and tasks app for Android developed by pasichDev. It applies to Encly 2.0.0 and later (package <code>com.pasich.encly</code>).
-        </p>
-        <p class="text-dim leading-relaxed mt-4">
-          The short version: <strong class="text-accent">everything stays on your device, encrypted, and nobody (including the developer) receives any of it.</strong>
-        </p>
-        <p class="text-sm text-dim mt-4"><strong>Effective:</strong> November 18, 2026</p>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:database-linear" width="24" height="24" />
+        <div class="pp-item">
+          <h3>Fingerprint on Android 8.x (<code>USE_FINGERPRINT</code>)</h3>
+          <p>Added by Android's biometric library for fingerprint unlock on Android 8.x, which predates <code>USE_BIOMETRIC</code>. Same purpose, same limits.</p>
         </div>
-        <h3 class="font-medium text-accent mb-4">What Encly Collects</h3>
-        <p class="text-dim leading-relaxed mb-4">
-          <strong class="text-accent">Nothing.</strong> Encly has no account, no server, no analytics, no crash reporting, no advertising and no tracking. The app does not request the Android <code>INTERNET</code> permission, so it cannot send data over the network itself.
-        </p>
-        <p class="text-dim leading-relaxed mb-4">
-          Encly asks every keyboard not to learn from what you type, and the optional <strong class="text-accent">"Strict keyboard privacy"</strong> setting (Settings → Security) also asks it for no suggestions, no cloud prediction and no access to the text around the cursor. A keyboard app still receives each key you type and may ignore these requests, so use one you trust.
-        </p>
-
-        <div class="data-item">
-          <Icon name="solar:check-circle-bold" class="text-purple" />
-          <div>
-            <h5 class="font-medium text-accent">Personal Data</h5>
-            <p class="text-sm text-dim"><strong>We DO NOT collect</strong> any personal data. There is no account or sign-up.</p>
-          </div>
+        <div class="pp-item">
+          <h3>Hide overlays (<code>HIDE_OVERLAY_WINDOWS</code>)</h3>
+          <p>Lets Encly stop other apps from drawing over its screens (Android 12 and later), so an overlay cannot cover or imitate the PIN pad. It gives Encly no access to any data.</p>
         </div>
+      </div>
+      <p class="pp-small">
+        Encly requests no internet, storage, contacts, location, camera, microphone or notification permission.
+      </p>
 
-        <div class="data-item">
-          <Icon name="solar:check-circle-bold" class="text-purple" />
-          <div>
-            <h5 class="font-medium text-accent">Note Content</h5>
-            <p class="text-sm text-dim"><strong>We DO NOT receive</strong> your notes, tasks or tags. They never leave your device unless you export them yourself: an encrypted backup or, if you choose, a readable Markdown export.</p>
-          </div>
+      <h2 id="links">Links That Leave the App</h2>
+      <p>
+        A few items open a page outside Encly, <strong>only when you tap them</strong>:
+      </p>
+      <ul>
+        <li>On the About screen: this privacy policy, the GitHub issue tracker, an email to the developer and, in the Google Play build only, the Play Store listing.</li>
+        <li>On the open-source licenses screen: each library's or font's license.</li>
+        <li>In the F-Droid build only (also offered as the <code>fdroid</code> APK on GitHub Releases): the developer's Ko-fi donation page (Support screen).</li>
+        <li>A link block you added to a note, which opens in your browser.</li>
+      </ul>
+      <p>
+        These are handled by your browser, email or store app under their own privacy policies. Encly sends them nothing beyond the fact that the link was opened (for a link block, the address you wrote).
+      </p>
+
+      <h2 id="sharing">We DO NOT share your data</h2>
+      <p class="doc__callout">
+        Encly does not share, sell or transfer any data to anyone. It has no share sheet and no share flow for note content. It puts something on the clipboard only when you copy it yourself: text you select, or a link from a note's link block. Every copy is marked as sensitive (on Android 13 and later it is hidden from the clipboard preview) and cleared after about a minute. Apart from that, data leaves the app only in files that you export yourself: an encrypted backup or, if you choose, a readable Markdown export (both below).
+      </p>
+
+      <h2 id="backup">Encrypted Backup File</h2>
+      <p>
+        You can export a backup in <strong>Settings → Backup</strong>. Nothing is exported automatically.
+      </p>
+      <div class="pp-items">
+        <div class="pp-item">
+          <h3>What It Contains</h3>
+          <p>All your notes (title, content, trash, pin, archive and colour state, created and edited dates), tags (name, visibility, order) and tasks (title, description, completion, dates, priority, order), plus your display and behaviour preferences (theme, fonts, language, list layout, auto-lock delay and similar). It does <strong>not</strong> contain your PIN, your recovery phrase, biometric data, or any encryption key of the app itself.</p>
         </div>
-
-        <div class="data-item">
-          <Icon name="solar:check-circle-bold" class="text-purple" />
-          <div>
-            <h5 class="font-medium text-accent">Usage and Crash Data</h5>
-            <p class="text-sm text-dim"><strong>We DO NOT track</strong> how you use the app, and Encly sends no analytics or crash reports.</p>
-          </div>
+        <div class="pp-item">
+          <h3>How It Is Protected</h3>
+          <p>The whole file is encrypted with AES-256-GCM under a key derived from your 12-word recovery phrase. There is no separate backup password; without the 12 words the file cannot be read or changed unnoticed, not even by the developer. If your vault has no recovery phrase yet, Encly creates one before the first export.</p>
         </div>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:server-linear" width="24" height="24" />
+        <div class="pp-item">
+          <h3>Where It Goes</h3>
+          <p>Encly writes it only to the location you pick in Android's save dialog and needs no storage permission for that. Where the file goes afterwards (a folder, a USB stick, a cloud drive, e-mail) is your choice and is then governed by that service's own policy. Encly never uploads it anywhere and keeps no copy.</p>
         </div>
-        <h3 class="font-medium text-accent mb-4">What Encly Stores on Your Device</h3>
-
-        <div class="storage-grid">
-          <div class="storage-item">
-            <Icon name="solar:notebook-linear" class="text-purple" width="24" height="24" />
-            <div>
-              <h5 class="font-medium text-accent">Notes, Tasks and Tags</h5>
-              <p class="text-sm text-dim">The notes, tasks and tags you create, stored in a database encrypted with SQLCipher (AES-256) under a random key that only your PIN, your biometric key or your recovery seed can unlock.</p>
-            </div>
-          </div>
-
-          <div class="storage-item">
-            <Icon name="solar:key-linear" class="text-purple" width="24" height="24" />
-            <div>
-              <h5 class="font-medium text-accent">Security Metadata</h5>
-              <p class="text-sm text-dim">What is needed to unlock that database: encrypted key envelopes, a PBKDF2 salt, lockout counters and whether biometrics are enabled. Your PIN and seed words themselves are never stored.</p>
-            </div>
-          </div>
-
-          <div class="storage-item">
-            <Icon name="solar:settings-linear" class="text-purple" width="24" height="24" />
-            <div>
-              <h5 class="font-medium text-accent">App Settings</h5>
-              <p class="text-sm text-dim">Settings such as theme, sort order and editor font.</p>
-            </div>
-          </div>
+        <div class="pp-item">
+          <h3>Restoring</h3>
+          <p>"Restore from backup" (first-run setup) or Settings → Backup reads a file you pick and asks for the 12 words; the file is decrypted on the device only.</p>
         </div>
+      </div>
+      <p>
+        Anyone who has both the file and your 12 words can read that backup, and an exported file cannot be revoked, so keep the words and the file apart.
+      </p>
 
-        <p class="text-dim leading-relaxed mt-4">
-          This data is stored in Encly's private app storage. Android cloud backup and device-to-device transfer are disabled for it, so it is not copied to Google Drive or another phone.
-        </p>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:key-minimalistic-linear" width="24" height="24" />
+      <h2 id="markdown">Markdown Export (Not Encrypted)</h2>
+      <p>
+        You can also export your notes as plain, readable Markdown: from a note's menu (<strong>Export as Markdown</strong>, one <code>.md</code> file) or in <strong>Settings → Backup</strong> (<strong>Export as Markdown</strong>, one <code>.zip</code>). Nothing is exported automatically.
+      </p>
+      <div class="pp-items">
+        <div class="pp-item">
+          <h3>What It Contains</h3>
+          <p>One <code>.md</code> file per note (title, tag, dates, pin, archive and colour in a small header, then the text, checklists, links and so on), archived notes in an <code>archive</code> folder, and <code>tasks.md</code> with your tasks and sub-tasks. Notes in the trash are left out. It does <strong>not</strong> contain your PIN, recovery phrase, keys or app settings.</p>
         </div>
-        <h3 class="font-medium text-accent mb-4">App Permissions</h3>
-
-        <div class="permission-item">
-          <div class="permission-icon">
-            <Icon name="mdi:fingerprint" width="24" height="24" />
-          </div>
-          <div>
-            <h5 class="font-medium text-accent">Biometrics (<code>USE_BIOMETRIC</code>)</h5>
-            <p class="text-sm text-dim">Optional fingerprint / face unlock of your vault. Biometric data never leaves the Android system; Encly only receives "authenticated" or "not authenticated".</p>
-          </div>
+        <div class="pp-item">
+          <h3>It Is Not Encrypted</h3>
+          <p>Anyone who gets the file can read it, and wherever you save it (a folder, a USB stick, a cloud drive) holds a readable copy that Encly cannot protect or take back. Encly says so before every export and asks for your PIN (or biometrics) again.</p>
         </div>
-
-        <div class="permission-item mt-4">
-          <div class="permission-icon">
-            <Icon name="mdi:fingerprint" width="24" height="24" />
-          </div>
-          <div>
-            <h5 class="font-medium text-accent">Fingerprint on Android 8.x (<code>USE_FINGERPRINT</code>)</h5>
-            <p class="text-sm text-dim">Added by Android's biometric library for fingerprint unlock on Android 8.x, which predates <code>USE_BIOMETRIC</code>. Same purpose, same limits.</p>
-          </div>
+        <div class="pp-item">
+          <h3>Where It Goes</h3>
+          <p>Only to the document you create in Android's save dialog. Encly shows no share sheet, writes no temporary copy, and never uploads it.</p>
         </div>
+      </div>
 
-        <div class="permission-item mt-4">
-          <div class="permission-icon">
-            <Icon name="solar:layers-minimalistic-linear" width="24" height="24" />
-          </div>
-          <div>
-            <h5 class="font-medium text-accent">Hide overlays (<code>HIDE_OVERLAY_WINDOWS</code>)</h5>
-            <p class="text-sm text-dim">Lets Encly stop other apps from drawing over its screens (Android 12 and later), so an overlay cannot cover or imitate the PIN pad. It gives Encly no access to any data.</p>
-          </div>
-        </div>
+      <h2 id="import">Importing Notes</h2>
+      <h3>From My Notes</h3>
+      <p>If you also use My Notes (the developer's earlier notes app), it can move its notes, tasks, tags and task categories into Encly. This happens <strong>only on your device</strong>, only when you start it in My Notes, and only after you unlock Encly and confirm what will be imported. Encly accepts the data only from the genuine My Notes app (checked by its signing certificate). The temporary copy Encly makes while reading it is deleted right away (or, if Encly is closed in the middle, the next time it starts); the imported notes are stored encrypted like everything else. Nothing is sent over the network, and Encly sends nothing back to My Notes except how many items were imported. Attachments and images stay in My Notes.</p>
+      <h3>From Other Apps</h3>
+      <p><strong>Settings → Import notes</strong> reads export files of Google Keep (Takeout), Standard Notes (decrypted backup), Joplin (JEX or RAW), Notesnook (Markdown or plain-text export) and plain Markdown/text notes such as an Obsidian vault. You choose the files or folder in the system file picker; Encly reads only what you picked, only while the app is unlocked, and only on this phone. Nothing is uploaded, no account is needed, and no network is used. The files are read into memory, never copied to disk, and the files themselves are left unchanged. You see the list of notes before anything is saved, pick which ones to import, and the selected notes are stored encrypted in the vault that is open. Encrypted exports of those apps are not read; export them in a readable format first.</p>
 
-        <p class="text-sm text-dim mt-4">
-          Encly requests no internet, storage, contacts, location, camera, microphone or notification permission.
-        </p>
-      </section>
+      <h2 id="deleting">Deleting Your Data</h2>
+      <p>
+        Uninstalling Encly, or clearing its storage in Android settings, permanently deletes all of it, and so does <strong>Settings → Security → Erase all data</strong>. There is no copy anywhere else, apart from encrypted backups you exported yourself. If you did not keep a recovery seed, a forgotten PIN also means the data cannot be recovered.
+      </p>
 
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:link-linear" width="24" height="24" />
-        </div>
-        <h3 class="font-medium text-accent mb-4">Links That Leave the App</h3>
-        <p class="text-dim leading-relaxed mb-4">
-          A few items open a page outside Encly, <strong class="text-accent">only when you tap them</strong>:
-        </p>
-        <ul class="policy-list">
-          <li><Icon name="solar:check-circle-bold" class="text-purple" /> On the About screen: this privacy policy, the GitHub issue tracker, an email to the developer and, in the Google Play build only, the Play Store listing.</li>
-          <li><Icon name="solar:check-circle-bold" class="text-purple" /> On the open-source licenses screen: each library's or font's license.</li>
-          <li><Icon name="solar:check-circle-bold" class="text-purple" /> In the F-Droid build only (also offered as the <code>fdroid</code> APK on GitHub Releases): the developer's Ko-fi donation page (Support screen).</li>
-          <li><Icon name="solar:check-circle-bold" class="text-purple" /> A link block you added to a note, which opens in your browser.</li>
-        </ul>
-        <p class="text-dim leading-relaxed mt-4">
-          These are handled by your browser, email or store app under their own privacy policies. Encly sends them nothing beyond the fact that the link was opened (for a link block, the address you wrote).
-        </p>
-      </section>
+      <h2 id="children">Children</h2>
+      <p>
+        Encly collects no data from anyone, including children.
+      </p>
 
-      <section class="policy-section no-sharing">
-        <Icon name="solar:close-circle-bold" class="no-share-icon" width="32" height="32" />
-        <div>
-          <h4 class="font-medium text-accent mb-2">We DO NOT share your data</h4>
-          <p class="text-sm text-dim">
-            Encly does not share, sell or transfer any data to anyone. It has no share sheet and no share flow for note content. It puts something on the clipboard only when you copy it yourself: text you select, or a link from a note's link block. Every copy is marked as sensitive (on Android 13 and later it is hidden from the clipboard preview) and cleared after about a minute. Apart from that, data leaves the app only in files that you export yourself: an encrypted backup or, if you choose, a readable Markdown export (both below).
-          </p>
-        </div>
-      </section>
+      <h2 id="changes">Changes</h2>
+      <p>
+        Changes to this policy are published on this page with a new effective date, mirrored in <code>PRIVACY.md</code> in the Encly repository, and noted in the Encly changelog.
+      </p>
 
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:archive-linear" width="24" height="24" />
-        </div>
-        <h3 class="font-medium text-accent mb-4">Encrypted Backup File</h3>
-        <p class="text-dim leading-relaxed mb-4">
-          You can export a backup in <strong class="text-accent">Settings → Backup</strong>. Nothing is exported automatically.
-        </p>
+      <h2 id="contact">Contact</h2>
+      <p>
+        Questions about this Privacy Policy or the app:
+      </p>
+      <p class="pp-contact"><a href="mailto:pasichdev@outlook.com">Email: pasichdev@outlook.com</a></p>
+      <p class="pp-small">
+        Or open an issue in the Encly repository on GitHub.
+      </p>
 
-        <div class="security-grid">
-          <div class="security-item">
-            <Icon name="solar:document-text-linear" width="20" height="20" />
-            <h5>What It Contains</h5>
-            <p>All your notes (title, content, trash, pin, archive and colour state, created and edited dates), tags (name, visibility, order) and tasks (title, description, completion, dates, priority, order), plus your display and behaviour preferences (theme, fonts, language, list layout, auto-lock delay and similar). It does <strong>not</strong> contain your PIN, your recovery phrase, biometric data, or any encryption key of the app itself.</p>
-          </div>
-          <div class="security-item">
-            <Icon name="solar:lock-linear" width="20" height="20" />
-            <h5>How It Is Protected</h5>
-            <p>The whole file is encrypted with AES-256-GCM under a key derived from your 12-word recovery phrase. There is no separate backup password; without the 12 words the file cannot be read or changed unnoticed, not even by the developer. If your vault has no recovery phrase yet, Encly creates one before the first export.</p>
-          </div>
-          <div class="security-item">
-            <Icon name="solar:folder-open-linear" width="20" height="20" />
-            <h5>Where It Goes</h5>
-            <p>Encly writes it only to the location you pick in Android's save dialog and needs no storage permission for that. Where the file goes afterwards (a folder, a USB stick, a cloud drive, e-mail) is your choice and is then governed by that service's own policy. Encly never uploads it anywhere and keeps no copy.</p>
-          </div>
-          <div class="security-item">
-            <Icon name="solar:restart-linear" width="20" height="20" />
-            <h5>Restoring</h5>
-            <p>"Restore from backup" (first-run setup) or Settings → Backup reads a file you pick and asks for the 12 words; the file is decrypted on the device only.</p>
-          </div>
-        </div>
-
-        <p class="text-dim leading-relaxed mt-4">
-          Anyone who has both the file and your 12 words can read that backup, and an exported file cannot be revoked, so keep the words and the file apart.
-        </p>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:document-text-linear" width="24" height="24" />
-        </div>
-        <h3 class="font-medium text-accent mb-4">Markdown Export (Not Encrypted)</h3>
-        <p class="text-dim leading-relaxed mb-4">
-          You can also export your notes as plain, readable Markdown: from a note's menu (<strong class="text-accent">Export as Markdown</strong>, one <code>.md</code> file) or in <strong class="text-accent">Settings → Backup</strong> (<strong class="text-accent">Export as Markdown</strong>, one <code>.zip</code>). Nothing is exported automatically.
-        </p>
-
-        <div class="security-grid">
-          <div class="security-item">
-            <Icon name="solar:document-text-linear" width="20" height="20" />
-            <h5>What It Contains</h5>
-            <p>One <code>.md</code> file per note (title, tag, dates, pin, archive and colour in a small header, then the text, checklists, links and so on), archived notes in an <code>archive</code> folder, and <code>tasks.md</code> with your tasks and sub-tasks. Notes in the trash are left out. It does <strong>not</strong> contain your PIN, recovery phrase, keys or app settings.</p>
-          </div>
-          <div class="security-item">
-            <Icon name="solar:lock-unlocked-linear" width="20" height="20" />
-            <h5>It Is Not Encrypted</h5>
-            <p>Anyone who gets the file can read it, and wherever you save it (a folder, a USB stick, a cloud drive) holds a readable copy that Encly cannot protect or take back. Encly says so before every export and asks for your PIN (or biometrics) again.</p>
-          </div>
-          <div class="security-item">
-            <Icon name="solar:folder-open-linear" width="20" height="20" />
-            <h5>Where It Goes</h5>
-            <p>Only to the document you create in Android's save dialog. Encly shows no share sheet, writes no temporary copy, and never uploads it.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:import-linear" width="24" height="24" />
-        </div>
-        <h3 class="font-medium text-accent mb-4">Importing Notes</h3>
-
-        <h5 class="font-medium text-accent">From My Notes</h5>
-        <p class="text-sm text-dim mb-4">If you also use My Notes (the developer's earlier notes app), it can move its notes, tasks, tags and task categories into Encly. This happens <strong>only on your device</strong>, only when you start it in My Notes, and only after you unlock Encly and confirm what will be imported. Encly accepts the data only from the genuine My Notes app (checked by its signing certificate). The temporary copy Encly makes while reading it is deleted right away (or, if Encly is closed in the middle, the next time it starts); the imported notes are stored encrypted like everything else. Nothing is sent over the network, and Encly sends nothing back to My Notes except how many items were imported. Attachments and images stay in My Notes.</p>
-
-        <h5 class="font-medium text-accent">From Other Apps</h5>
-        <p class="text-sm text-dim"><strong>Settings → Import notes</strong> reads export files of Google Keep (Takeout), Standard Notes (decrypted backup), Joplin (JEX or RAW), Notesnook (Markdown or plain-text export) and plain Markdown/text notes such as an Obsidian vault. You choose the files or folder in the system file picker; Encly reads only what you picked, only while the app is unlocked, and only on this phone. Nothing is uploaded, no account is needed, and no network is used. The files are read into memory, never copied to disk, and the files themselves are left unchanged. You see the list of notes before anything is saved, pick which ones to import, and the selected notes are stored encrypted in the vault that is open. Encrypted exports of those apps are not read; export them in a readable format first.</p>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:trash-bin-2-linear" width="24" height="24" />
-        </div>
-        <h3 class="font-medium text-accent mb-4">Deleting Your Data</h3>
-        <p class="text-dim leading-relaxed">
-          Uninstalling Encly, or clearing its storage in Android settings, permanently deletes all of it, and so does <strong class="text-accent">Settings → Security → Erase all data</strong>. There is no copy anywhere else, apart from encrypted backups you exported yourself. If you did not keep a recovery seed, a forgotten PIN also means the data cannot be recovered.
-        </p>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:user-hand-up-linear" width="24" height="24" />
-        </div>
-        <h3 class="font-medium text-accent mb-4">Children</h3>
-        <p class="text-dim leading-relaxed">
-          Encly collects no data from anyone, including children.
-        </p>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:refresh-linear" width="24" height="24" />
-        </div>
-        <h3 class="font-medium text-accent mb-4">Changes</h3>
-        <p class="text-dim leading-relaxed">
-          Changes to this policy are published on this page with a new effective date, mirrored in <code>PRIVACY.md</code> in the Encly repository, and noted in the Encly changelog.
-        </p>
-      </section>
-
-      <section class="policy-section">
-        <div class="section-icon">
-          <Icon name="solar:letter-linear" width="24" height="24" />
-        </div>
-        <h3 class="font-medium text-accent mb-4">Contact</h3>
-        <p class="text-dim leading-relaxed mb-4">
-          Questions about this Privacy Policy or the app:
-        </p>
-        <div class="contact-links">
-          <a href="mailto:pasichdev@outlook.com" class="contact-item">
-            <Icon name="solar:letter-linear" width="18" height="18" />
-            <span>Email: pasichdev@outlook.com</span>
-          </a>
-        </div>
-        <p class="text-sm text-dim mt-4">
-          Or open an issue in the Encly repository on GitHub.
-        </p>
-      </section>
-
-    </div>
-
-    <!-- Navigation Links -->
-    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border);">
-      <a href="/apps/encly/" class="back-link">
-        <Icon name="solar:arrow-left-linear" width="16" height="16" />
-        Back to Encly
-      </a>
-    </div>
-
+      <p class="pp-back"><a href="/apps/encly/" class="back-link">Back to Encly</a></p>
+    </article>
   </div>
 </BaseLayout>
-
-<style>
-  .privacy-hero {
-    text-align: center;
-    padding: 3rem 0 4rem;
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: 3rem;
-  }
-
-  .icon-shield {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 1.5rem;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9F7AEA;
-  }
-
-  .key-points {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  @media (min-width: 768px) {
-    .key-points {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .point-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: center;
-  }
-
-  .point-icon {
-    width: 56px;
-    height: 56px;
-    margin: 0 auto 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-accent);
-  }
-
-  .policy-content {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 2rem;
-  }
-
-  .policy-section {
-    padding: 2rem 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .policy-section:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .policy-section:first-child {
-    padding-top: 0;
-  }
-
-  .section-icon {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-txt-dim);
-    margin-bottom: 1rem;
-  }
-
-  code {
-    font-family: var(--font-mono);
-    font-size: 0.85em;
-  }
-
-  .data-item {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .data-item svg {
-    flex-shrink: 0;
-    margin-top: 0.25rem;
-  }
-
-  .policy-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .policy-list li {
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    font-size: 0.875rem;
-    color: var(--color-txt-dim);
-    line-height: 1.6;
-  }
-
-  .policy-list li svg {
-    flex-shrink: 0;
-    margin-top: 0.25rem;
-  }
-
-  .text-purple { color: #9F7AEA; }
-
-  .badge-purple {
-    background: rgba(102, 126, 234, 0.15);
-    border-color: rgba(102, 126, 234, 0.3);
-    color: #9F7AEA;
-  }
-
-  .storage-grid {
-    display: grid;
-    gap: 1.5rem;
-  }
-
-  .storage-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .storage-item svg {
-    flex-shrink: 0;
-  }
-
-  .permission-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 8px;
-  }
-
-  .permission-icon {
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-txt-dim);
-    flex-shrink: 0;
-  }
-
-  .no-sharing {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    background: rgba(102, 126, 234, 0.1);
-    border: 1px solid rgba(102, 126, 234, 0.2);
-    border-radius: 8px;
-    padding: 1.5rem !important;
-    margin: 2rem 0;
-  }
-
-  .no-share-icon {
-    color: #9F7AEA;
-    flex-shrink: 0;
-  }
-
-  .security-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .security-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .security-item {
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 8px;
-    padding: 1rem;
-  }
-
-  .security-item svg {
-    color: var(--color-txt-dim);
-    margin-bottom: 0.5rem;
-  }
-
-  .security-item h5 {
-    font-size: 0.875rem;
-    color: var(--color-accent);
-    margin-bottom: 0.25rem;
-  }
-
-  .security-item p {
-    font-size: 0.75rem;
-    color: var(--color-txt-dim);
-  }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--color-txt-dim);
-    font-size: 0.875rem;
-  }
-</style>

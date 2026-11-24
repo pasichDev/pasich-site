@@ -1,0 +1,53 @@
+---
+// Table of contents for long documents (privacy policies). Renders into the
+// global `.doc__toc` column and highlights the section currently in view.
+export interface Props {
+  items: Array<{ id: string; label: string }>;
+}
+const { items } = Astro.props;
+---
+
+<nav class="doc__toc" aria-label="On this page" data-doc-toc>
+  <span class="mono up faint doc-toc__label">On this page</span>
+  {items.map((item, i) => (
+    <a href={`#${item.id}`} data-toc-link={item.id}><span class="doc-toc__n">{String(i + 1).padStart(2, '0')}</span>{item.label}</a>
+  ))}
+</nav>
+
+<style>
+  .doc-toc__label { display: block; grid-column: 1 / -1; margin-bottom: 10px; font-size: 11px; }
+  .doc__toc a { display: grid; grid-template-columns: 26px 1fr; gap: 6px; transition: color .2s, transform .3s var(--ease); }
+  .doc__toc a.is-active { transform: translateX(4px); }
+  .doc-toc__n { color: var(--color-txt-faint); }
+  .doc__toc a.is-active .doc-toc__n { color: var(--color-accent); }
+</style>
+
+<script>
+  let stop: (() => void) | null = null;
+
+  function initToc() {
+    const toc = document.querySelector<HTMLElement>('[data-doc-toc]');
+    if (!toc) return;
+    const links = [...toc.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+    const targets = links.map((a) => document.getElementById(a.dataset.tocLink!)).filter(Boolean) as HTMLElement[];
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      // The last heading that has passed the upper third of the viewport is "current".
+      const line = innerHeight * 0.33;
+      let current = targets[0]?.id;
+      for (const t of targets) if (t.getBoundingClientRect().top <= line) current = t.id;
+      // At the very bottom the last short sections never reach the line.
+      if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) current = targets[targets.length - 1]?.id;
+      links.forEach((a) => a.classList.toggle('is-active', a.dataset.tocLink === current));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    stop = () => { cancelAnimationFrame(raf); removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); };
+  }
+
+  document.addEventListener('astro:page-load', initToc);
+  document.addEventListener('astro:before-swap', () => { stop?.(); stop = null; });
+</script>

@@ -1,0 +1,37 @@
+/* =====================================================================
+   Privacy policy pages (/apps/{app}/privacy-policy). Built on the global
+   `.page-hero` and `.doc` layout; this only adds the policy-specific parts.
+   ===================================================================== */
+
+.pp-hero h1 { font-size: clamp(44px, 8.4vw, 136px); }
+.pp-hero__app { margin-bottom: 18px; color: var(--color-accent); }
+.pp-badge { display: inline-flex; align-items: center; gap: 8px; }
+.pp-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); }
+.pp-date { color: var(--color-txt-main); }
+
+/* Three key points above the policy text */
+.pp-keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-border); }
+.pp-key { padding: 20px 18px; background: var(--color-surface); }
+.doc__body .pp-key h3 { margin-top: 0; font-size: 17px; }
+.doc__body .pp-key p { margin-top: 8px; color: var(--color-txt-dim); font-size: 15px; line-height: 1.55; }
+
+/* Definition-style items: a heading and its text, hung off a hairline */
+.pp-items { display: grid; gap: 4px; }
+.pp-item { padding: 12px 0 12px 20px; border-left: 2px solid var(--color-border); transition: border-color .3s; }
+.pp-item:hover { border-left-color: var(--color-accent); }
+.doc__body .pp-item h3 { margin-top: 0; font-size: 17px; }
+.doc__body .pp-item p { margin-top: 6px; font-size: 16px; }
+
+.doc__body .pp-small { color: var(--color-txt-dim); font-size: 15px; }
+.doc__body .pp-small strong { color: var(--color-txt-main); }
+.doc__body .pp-contact a { font: 500 15px var(--font-mono); }
+.doc__body .pp-closing { padding: 22px 22px 20px; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-surface); }
+.doc__body .pp-closing h2 { margin-top: 0; padding-top: 0; border-top: 0; }
+.pp-back { margin-top: 3.5em !important; }
+.doc__body .back-link { margin-bottom: 0; color: var(--color-txt-dim); text-decoration: none; }
+.doc__body .back-link::before { content: '←'; }
+.doc__body .back-link:hover { color: var(--color-accent); }
+
+@media (max-width: 700px) {
+  .pp-keys { grid-template-columns: 1fr; }
+}
