@@ -1,0 +1,49 @@
+/* Shared form controls for the tool pages (/tools/*): fields, selects,
+   range sliders and pill toggles. Page-specific layout stays in each page. */
+
+.tool-shell { padding: clamp(50px, 7vw, 100px) var(--pad) clamp(80px, 10vw, 140px); }
+.tool-shell--narrow { max-width: 1180px; }
+
+/* ── Fields ── */
+.field-group { display: flex; flex-direction: column; gap: 10px; }
+.field-label { font: 500 11px/1.4 var(--font-mono); color: var(--color-txt-dim); text-transform: uppercase; letter-spacing: .1em; }
+.field-input {
+  width: 100%; height: 50px; padding: 0 16px;
+  border: 1px solid var(--color-border-strong); border-radius: 6px;
+  background: var(--color-surface); color: var(--color-txt-main);
+  font: 400 16px var(--font-sans); outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field-input::placeholder { color: var(--color-txt-faint); }
+.field-input:hover { border-color: rgba(235,231,222,.45); }
+.field-input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(255,181,71,.16); }
+.field-textarea { height: auto; min-height: 96px; padding: 14px 16px; resize: vertical; line-height: 1.5; }
+select.field-input {
+  appearance: none; cursor: pointer; padding-right: 44px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23ffb547' stroke-width='1.6'/></svg>");
+  background-repeat: no-repeat; background-position: right 16px center;
+}
+select.field-input option { background: var(--color-surface-2); color: var(--color-txt-main); }
+
+/* ── Range: hairline track, amber thumb ── */
+.range { width: 100%; height: 22px; margin: 0; background: none; appearance: none; -webkit-appearance: none; cursor: pointer; }
+.range::-webkit-slider-runnable-track { height: 2px; background: var(--color-border-strong); }
+.range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; margin-top: -8px; border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 0 5px rgba(255,181,71,.15); }
+.range::-moz-range-track { height: 2px; background: var(--color-border-strong); }
+.range::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: var(--color-accent); }
+.range:focus-visible { outline: none; }
+.range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px rgba(255,181,71,.35); }
+
+/* ── Pill toggles: segmented choices ── */
+.pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: 40px; padding: 0 16px;
+  border: 1px solid var(--color-border-strong); border-radius: 999px;
+  background: none; color: var(--color-txt-dim);
+  font: 500 12px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
+  cursor: pointer; transition: color .2s, border-color .2s, background .2s;
+}
+.pill:hover { color: var(--color-txt-main); border-color: rgba(235,231,222,.5); }
+.pill.active { color: var(--color-accent-ink); background: var(--color-accent); border-color: var(--color-accent); }
+/* Soft variant: a choice that should not shout (background swatches) */
+.pill--soft.active { color: var(--color-txt-main); border-color: var(--color-accent); background: rgba(255,181,71,.08); }

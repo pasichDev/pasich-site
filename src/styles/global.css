@@ -111,8 +111,14 @@ img { display: block; max-width: 100%; }
 .sec-head h2 { font-size: clamp(30px, 3.6vw, 56px); font-weight: 800; }
 
 /* ===== Motion primitives (driven by the site script in BaseLayout) ===== */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+/* Hidden until the IntersectionObserver adds .in. The site script arms each
+   element with .is-armed; if it never runs (no JS, an error, a slow load) the
+   fallback animation shows everything after 2.5s anyway. --rd is the stagger
+   delay; it is part of the shorthand so it never delays other transitions. */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ease) var(--rd, 0s), transform 0.9s var(--ease) var(--rd, 0s); animation: reveal-fallback 0.6s var(--ease) 2.5s forwards; }
+.reveal.is-armed { animation: none; }
 .reveal.in { opacity: 1; transform: none; }
+@keyframes reveal-fallback { to { opacity: 1; transform: none; } }
 .caret { display: inline-block; width: 0.55em; height: 1em; margin-left: 2px; background: var(--color-accent); vertical-align: -0.12em; animation: caret 1s steps(2) infinite; }
 @keyframes caret { 50% { opacity: 0; } }
 

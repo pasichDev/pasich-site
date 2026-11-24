@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/tool-page.css';
 import { Icon } from 'astro-icon/components';
 
 const structuredData = {
@@ -29,7 +30,7 @@ const structuredData = {
     <div class="page-hero__meta mono up"><span>Android · iOS · macOS · Windows · Linux · Web</span><span>Nothing is uploaded</span></div>
   </header>
 
-  <div class="tool-shell">
+  <div class="tool-shell tool-shell--narrow">
 
     <!-- Drop zone -->
     <div id="drop-zone" class="drop-zone">
@@ -69,16 +70,16 @@ const structuredData = {
           <div class="ctrl-group">
             <div class="ctrl-label">Background</div>
             <div class="bg-options">
-              <button class="bg-opt active" data-bg="transparent">
+              <button class="pill pill--soft bg-opt active" data-bg="transparent">
                 <i class="bg-checker-icon"></i>None
               </button>
-              <button class="bg-opt" data-bg="#FFFFFF">
+              <button class="pill pill--soft bg-opt" data-bg="#FFFFFF">
                 <i class="bg-swatch" style="background:#fff"></i>White
               </button>
-              <button class="bg-opt" data-bg="#000000">
+              <button class="pill pill--soft bg-opt" data-bg="#000000">
                 <i class="bg-swatch" style="background:#111;border-color:#444"></i>Black
               </button>
-              <button class="bg-opt" id="bg-custom-btn">
+              <button class="pill pill--soft bg-opt" id="bg-custom-btn">
                 <i class="bg-swatch" id="bg-custom-swatch" style="background:#4F46E5"></i>Custom
               </button>
             </div>
@@ -90,7 +91,7 @@ const structuredData = {
               <span class="ctrl-label">Padding</span>
               <span class="ctrl-val" id="padding-val">0%</span>
             </div>
-            <input type="range" class="ctrl-slider" id="ctrl-padding" min="0" max="40" value="0" step="1" />
+            <input type="range" class="range" id="ctrl-padding" min="0" max="40" value="0" step="1" />
           </div>
 
           <div class="ctrl-group">
@@ -98,7 +99,7 @@ const structuredData = {
               <span class="ctrl-label">Scale</span>
               <span class="ctrl-val" id="scale-val">100%</span>
             </div>
-            <input type="range" class="ctrl-slider" id="ctrl-scale" min="40" max="100" value="100" step="1" />
+            <input type="range" class="range" id="ctrl-scale" min="40" max="100" value="100" step="1" />
           </div>
 
           <div class="ctrl-group">
@@ -106,7 +107,7 @@ const structuredData = {
               <span class="ctrl-label">Offset X</span>
               <span class="ctrl-val" id="offsetx-val">0%</span>
             </div>
-            <input type="range" class="ctrl-slider" id="ctrl-offsetx" min="-30" max="30" value="0" step="0.5" />
+            <input type="range" class="range" id="ctrl-offsetx" min="-30" max="30" value="0" step="0.5" />
           </div>
 
           <div class="ctrl-group">
@@ -114,7 +115,7 @@ const structuredData = {
               <span class="ctrl-label">Offset Y</span>
               <span class="ctrl-val" id="offsety-val">0%</span>
             </div>
-            <input type="range" class="ctrl-slider" id="ctrl-offsety" min="-30" max="30" value="0" step="0.5" />
+            <input type="range" class="range" id="ctrl-offsety" min="-30" max="30" value="0" step="0.5" />
           </div>
 
           <button id="btn-reset-params" class="btn btn-outline btn-sm reset-params">Reset edits</button>
@@ -124,22 +125,22 @@ const structuredData = {
       <!-- Platform toggles -->
       <div class="section-label"><span>02</span>Platforms</div>
       <div class="platform-toggles" id="platform-toggles">
-        <button class="ptoggle active" data-platform="android">
+        <button class="pill ptoggle active" data-platform="android">
           <Icon name="solar:smartphone-linear" width="14" height="14" /> Android
         </button>
-        <button class="ptoggle active" data-platform="ios">
+        <button class="pill ptoggle active" data-platform="ios">
           <Icon name="mdi:apple" width="14" height="14" /> iOS
         </button>
-        <button class="ptoggle active" data-platform="macos">
+        <button class="pill ptoggle active" data-platform="macos">
           <Icon name="solar:monitor-linear" width="14" height="14" /> macOS
         </button>
-        <button class="ptoggle active" data-platform="windows">
+        <button class="pill ptoggle active" data-platform="windows">
           <Icon name="solar:window-frame-linear" width="14" height="14" /> Windows
         </button>
-        <button class="ptoggle active" data-platform="linux">
+        <button class="pill ptoggle active" data-platform="linux">
           <Icon name="solar:server-linear" width="14" height="14" /> Linux
         </button>
-        <button class="ptoggle active" data-platform="web">
+        <button class="pill ptoggle active" data-platform="web">
           <Icon name="solar:global-linear" width="14" height="14" /> Web
         </button>
       </div>
@@ -731,7 +732,6 @@ const structuredData = {
 </script>
 
 <style>
-  .tool-shell { max-width: 1180px; padding: clamp(50px, 7vw, 100px) var(--pad) clamp(80px, 10vw, 140px); }
 
   /* Section label: amber step number + hairline */
   .section-label { display: flex; align-items: baseline; gap: 14px; margin: 56px 0 22px; padding-bottom: 14px; border-bottom: 1px solid var(--color-border); color: var(--color-txt-main); font: 800 clamp(22px, 2.2vw, 30px)/1 var(--font-sans); font-stretch: 125%; font-variation-settings: 'wdth' 125; text-transform: uppercase; }
@@ -774,25 +774,10 @@ const structuredData = {
   .ctrl-label-row { display: flex; justify-content: space-between; align-items: baseline; }
   .ctrl-label { color: var(--color-txt-dim); font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
   .ctrl-val { min-width: 3rem; color: var(--color-accent); font: 500 12px var(--font-mono); text-align: right; }
-  .ctrl-slider { width: 100%; height: 22px; margin: 0; background: none; appearance: none; -webkit-appearance: none; cursor: pointer; outline: none; }
-  .ctrl-slider::-webkit-slider-runnable-track { height: 2px; background: var(--color-border-strong); }
-  .ctrl-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -8px; border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 0 5px rgba(255,181,71,.15); }
-  .ctrl-slider::-moz-range-track { height: 2px; background: var(--color-border-strong); }
-  .ctrl-slider::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: var(--color-accent); }
-  .ctrl-slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px rgba(255,181,71,.35); }
   .reset-params { align-self: flex-start; }
 
-  /* Background choices as pills */
+  /* Background choices and platform toggles: .pill from styles/tool-page.css */
   .bg-options { display: flex; flex-wrap: wrap; gap: 8px; }
-  .bg-opt, .ptoggle {
-    display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px;
-    border: 1px solid var(--color-border-strong); border-radius: 999px; background: none;
-    color: var(--color-txt-dim); font: 500 12px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
-    cursor: pointer; transition: color .2s, border-color .2s, background .2s;
-  }
-  .bg-opt:hover, .ptoggle:hover { color: var(--color-txt-main); border-color: rgba(235,231,222,.5); }
-  .bg-opt.active { color: var(--color-txt-main); border-color: var(--color-accent); background: rgba(255,181,71,.08); }
-  .ptoggle.active { color: var(--color-accent-ink); border-color: var(--color-accent); background: var(--color-accent); }
   .bg-checker-icon { display: inline-block; width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; background: repeating-conic-gradient(#777 0% 25%, #3a3a3a 0% 50%) 0 0 / 7px 7px; }
   .bg-swatch { display: inline-block; width: 14px; height: 14px; flex-shrink: 0; border: 1px solid rgba(235,231,222,.3); border-radius: 50%; }
   #bg-color-input { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }

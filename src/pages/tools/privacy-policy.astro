@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/tool-page.css';
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -142,7 +143,7 @@ const structuredData = {
   if (!document.getElementById('pp-form')) return;
   document.getElementById('collects-data')!.addEventListener('change', () => {
     const val = (document.getElementById('collects-data') as HTMLSelectElement).value;
-    (document.getElementById('data-types-wrap') as HTMLElement).style.display = val === 'yes' ? 'block' : 'none';
+    (document.getElementById('data-types-wrap') as HTMLElement).style.display = val === 'yes' ? '' : 'none';
   });
 
   document.getElementById('pp-form')!.addEventListener('submit', (e) => {
@@ -311,7 +312,7 @@ const structuredData = {
   });
 
   document.getElementById('btn-reset-pp')!.addEventListener('click', () => {
-    (document.getElementById('pp-form') as HTMLElement).style.display = 'block';
+    (document.getElementById('pp-form') as HTMLElement).style.display = '';
     (document.getElementById('pp-result') as HTMLElement).style.display = 'none';
   });
   }
@@ -329,24 +330,7 @@ const structuredData = {
   /* ── Form ── */
   .pp-form { display: flex; flex-direction: column; gap: 26px; }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .field-group { display: flex; flex-direction: column; gap: 10px; }
-  .field-label { font: 500 11px/1.4 var(--font-mono); color: var(--color-txt-dim); text-transform: uppercase; letter-spacing: .1em; }
-  .field-input {
-    width: 100%; height: 50px; padding: 0 16px;
-    border: 1px solid var(--color-border-strong); border-radius: 6px;
-    background: var(--color-surface); color: var(--color-txt-main);
-    font: 400 16px var(--font-sans); outline: none;
-    transition: border-color .2s, box-shadow .2s;
-  }
-  .field-input::placeholder { color: var(--color-txt-faint); }
-  .field-input:hover { border-color: rgba(235,231,222,.45); }
-  .field-input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(255,181,71,.16); }
-  select.field-input {
-    appearance: none; cursor: pointer; padding-right: 44px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23ffb547' stroke-width='1.6'/></svg>");
-    background-repeat: no-repeat; background-position: right 16px center;
-  }
-  select.field-input option { background: var(--color-surface-2); color: var(--color-txt-main); }
+  /* .field-* controls come from styles/tool-page.css */
 
   /* Checkboxes as toggle tiles; the input stays real for keyboard and forms */
   .checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }

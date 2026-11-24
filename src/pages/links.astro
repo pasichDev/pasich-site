@@ -111,7 +111,7 @@ const structuredData = {
   .lk-bio { max-width: 40ch; margin-top: clamp(28px, 4vw, 50px); color: var(--color-txt-main); font-size: clamp(20px, 2.1vw, 30px); line-height: 1.25; font-weight: 500; }
 
   /* Rows: an amber sheet sweeps in from the left on hover */
-  .lk-big, .lk-row { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: center; gap: 20px; padding-inline: var(--pad); border-bottom: 1px solid var(--color-border); transition: color .3s; }
+  .lk-big, .lk-row { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: center; gap: 20px; padding-inline: var(--pad); border-bottom: 1px solid var(--color-border); transition: color .3s, opacity .9s var(--ease) var(--rd, 0s), transform .9s var(--ease) var(--rd, 0s); }
   .lk-big::before, .lk-row::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--color-accent); transform: scaleX(0); transform-origin: right; transition: transform .6s var(--ease); }
   .lk-big:hover, .lk-row:hover, .lk-big:focus-visible, .lk-row:focus-visible { color: var(--color-accent-ink); }
   .lk-big:hover::before, .lk-row:hover::before, .lk-big:focus-visible::before, .lk-row:focus-visible::before { transform: none; transform-origin: left; }

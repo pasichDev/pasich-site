@@ -111,6 +111,7 @@ const jsonLd = structuredData ?? defaultStructuredData;
 
   <!-- Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <noscript><style>.reveal { opacity: 1; transform: none; animation: none; }</style></noscript>
   
   <ViewTransitions />
 </head>
@@ -166,7 +167,8 @@ const jsonLd = structuredData ?? defaultStructuredData;
   <style is:global>
     .skip { position: fixed; left: 12px; top: -60px; z-index: 200; padding: 10px 14px; background: var(--color-accent); color: var(--color-accent-ink); font: 500 12px var(--font-mono); }
     .skip:focus { top: 12px; }
-    .scr-live { position: absolute; left: 0; top: 0; white-space: nowrap; pointer-events: none; }
+    .scr-box { position: relative; display: block; }
+    .scr-live { position: absolute; inset: 0; pointer-events: none; }
     .cursor { will-change: transform; }
 
     /* ── Navigation ─────────────────────────────── */
@@ -243,18 +245,22 @@ const jsonLd = structuredData ?? defaultStructuredData;
       const glyphs = Array.from({ length: n }, () => GLYPHS[(Math.random() * GLYPHS.length) | 0]);
       const TICK_MS = 90;
 
-      let target: HTMLElement = el, done = () => { el.textContent = final; };
+      let target: HTMLElement = el;
+      const done = () => { el.textContent = final; };
       if (getComputedStyle(el).display !== 'inline') {
+        // box = the element's content box; the overlay fills it and wraps
+        // exactly like the hidden real text underneath.
+        const box = document.createElement('span');
         const ghost = document.createElement('span');
         const live = document.createElement('span');
+        box.className = 'scr-box';
         ghost.textContent = final;
         ghost.style.visibility = 'hidden';
         live.setAttribute('aria-hidden', 'true');
         live.className = 'scr-live';
-        if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-        el.replaceChildren(ghost, live);
+        box.append(ghost, live);
+        el.replaceChildren(box);
         target = live;
-        done = () => { el.textContent = final; };
       }
 
       const t0 = performance.now() + delay;
@@ -274,7 +280,6 @@ const jsonLd = structuredData ?? defaultStructuredData;
       raf = requestAnimationFrame(frame);
       onCleanup(() => { cancelAnimationFrame(raf); done(); });
     }
-    (window as any).__scramble = scramble;
 
     function whenVisible(el: Element, fn: () => void, threshold = 0.3) {
       const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { io.disconnect(); fn(); } }), { threshold });
@@ -291,8 +296,12 @@ const jsonLd = structuredData ?? defaultStructuredData;
       onCleanup(() => removeEventListener('scroll', onScroll));
 
       // Reveal on scroll
-      document.querySelectorAll('.reveal').forEach((el, i) => {
-        (el as HTMLElement).style.transitionDelay = `${(i % 4) * 0.07}s`;
+      document.querySelectorAll<HTMLElement>('.reveal').forEach((el, i) => {
+        // Already shown by the CSS fallback (the script came late): keep it shown
+        const fallbackDone = el.getAnimations?.().some((a) => (a as CSSAnimation).animationName === 'reveal-fallback' && a.playState === 'finished');
+        if (fallbackDone) { el.classList.add('in', 'is-armed'); return; }
+        el.style.setProperty('--rd', `${(i % 4) * 0.07}s`);
+        el.classList.add('is-armed');
         whenVisible(el, () => el.classList.add('in'), 0.15);
       });
 
@@ -328,7 +337,7 @@ const jsonLd = structuredData ?? defaultStructuredData;
         };
         const enter = () => { centers = letters.map((s) => { const b = s.getBoundingClientRect(); return b.left + b.width / 2; }); };
         const move = (e: PointerEvent) => { lx = e.clientX; if (!centers.length) enter(); if (!raf) raf = requestAnimationFrame(paint); };
-        const leave = () => { lx = -9999; centers = centers.length ? centers : []; if (!raf) raf = requestAnimationFrame(paint); };
+        const leave = () => { lx = -9999; if (!raf) raf = requestAnimationFrame(paint); };
         big.addEventListener('pointerenter', enter);
         big.addEventListener('pointermove', move);
         big.addEventListener('pointerleave', leave);
@@ -350,7 +359,7 @@ const jsonLd = structuredData ?? defaultStructuredData;
         const esc = (e: KeyboardEvent) => { if (e.key === 'Escape' && !menu.hidden) close(); };
         openBtn.addEventListener('click', open);
         closeBtn.addEventListener('click', close);
-        menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.hidden = true; document.documentElement.style.overflow = ''; }));
+        menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); document.documentElement.style.overflow = ''; }));
         addEventListener('keydown', esc);
         onCleanup(() => { removeEventListener('keydown', esc); document.documentElement.style.overflow = ''; });
       }

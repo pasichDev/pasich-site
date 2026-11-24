@@ -27,7 +27,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   // Show the path the visitor actually tried, so the joke lands on their URL.
   document.addEventListener('astro:page-load', () => {
     const el = document.querySelector('[data-lost-path]');
-    if (el) el.textContent = decodeURIComponent(location.pathname).slice(0, 60) || '/';
+    if (!el) return;
+    let path = location.pathname;
+    try { path = decodeURIComponent(path); } catch { /* malformed %-escape: show it raw */ }
+    el.textContent = path.slice(0, 60) || '/';
   });
 </script>
 

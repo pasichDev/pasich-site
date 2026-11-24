@@ -298,15 +298,18 @@ const structuredData = {
         const sp = 0.6 + Math.random() * 1.8;
         return { x: Math.random() * W, lane: Math.random() * 2 - 1, sp, b: Math.min(BUCKETS - 1, Math.floor(((sp - 0.6) / 1.8) * BUCKETS)), len: 4 + Math.random() * 14, ox: 0, oy: 0 };
       });
+      kick();
     };
     const laneY = (x, lane, t) => {
       const c = W * 0.52, d = Math.min(1, Math.abs(x - c) / c);
       return H * 0.5 + lane * H * (0.035 + 0.5 * Math.pow(d, 1.7)) + Math.sin(x * 0.004 + t * 0.0006 + lane * 3) * 10 * d;
     };
-    const draw = (t) => {
+    const draw = (now) => {
       cx.fillStyle = 'rgba(9,9,10,.34)';
       cx.fillRect(0, 0, W, H);
       const c = W * 0.52, still = reduceMotion(), hasMouse = mouse.x > -500;
+      const t = still ? 0 : now;
+      let easing = false;
       const paths = Array.from({ length: BUCKETS * 2 }, () => new Path2D());
       for (const p of parts) {
         if (!still) p.x += p.sp;
@@ -315,8 +318,9 @@ const structuredData = {
         if (hasMouse || p.ox || p.oy) {
           const dx = p.x - mouse.x, dy = y - mouse.y, dist = Math.hypot(dx, dy) || 1;
           const push = hasMouse && dist < 140 ? (140 - dist) / 140 : 0;
-          p.ox += ((dx / dist) * push * 40 - p.ox) * 0.08;
-          p.oy += ((dy / dist) * push * 40 - p.oy) * 0.08;
+          const sx = ((dx / dist) * push * 40 - p.ox) * 0.08, sy = ((dy / dist) * push * 40 - p.oy) * 0.08;
+          p.ox += sx; p.oy += sy;
+          if (Math.abs(sx) > 0.02 || Math.abs(sy) > 0.02) easing = true;
           if (Math.abs(p.ox) < 0.05 && Math.abs(p.oy) < 0.05 && !push) p.ox = p.oy = 0;
         }
         const x = p.x + p.ox; y += p.oy;
@@ -328,10 +332,13 @@ const structuredData = {
       for (let i = 0; i < BUCKETS; i++) { cx.strokeStyle = PLAIN[i]; cx.stroke(paths[i]); }
       cx.lineWidth = 1.4;
       for (let i = 0; i < BUCKETS; i++) { cx.strokeStyle = ENC[i]; cx.stroke(paths[BUCKETS + i]); }
-      if (visible) raf = requestAnimationFrame(draw);
+      // Reduced motion: nothing drifts, so only keep drawing while particles
+      // are still easing around (or back from) the pointer.
+      raf = visible && (!still || easing) ? requestAnimationFrame(draw) : 0;
     };
-    const move = (e) => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; };
-    const leave = () => { mouse.x = mouse.y = -999; };
+    const kick = () => { if (visible && !raf) raf = requestAnimationFrame(draw); };
+    const move = (e) => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; kick(); };
+    const leave = () => { mouse.x = mouse.y = -999; kick(); };
     // Don't burn the GPU while the hero is scrolled away
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; cancelAnimationFrame(raf); if (visible) raf = requestAnimationFrame(draw); });
     let resizeTimer = 0;
@@ -372,7 +379,7 @@ const structuredData = {
     };
     const step = () => {
       cur += (target - cur) * 0.12;
-      if (Math.abs(target - cur) < 0.0004) cur = target;
+      if (Math.abs(target - cur) < 0.0004 || reduceMotion()) cur = target;
       track.style.transform = `translate3d(${(-cur * max).toFixed(1)}px,0,0)`;
       rail.style.transform = `scaleX(${cur.toFixed(4)})`;
       const n = String(Math.min(panels, 1 + Math.floor(cur * panels * 0.999))).padStart(2, '0');
@@ -389,12 +396,30 @@ const structuredData = {
     measure();
     target = cur = enabled ? Math.min(1, Math.max(0, (scrollY - top) / span)) : 0;
     if (enabled) step();
+    // Tabbing to a link on an off-screen panel: the browser would scroll the
+    // clipped pin sideways on top of our transform. Undo that and scroll the
+    // page to where the panel is in view instead.
+    const pin = track.parentElement;
+    const onPinScroll = () => { if (pin.scrollLeft) pin.scrollLeft = 0; };
+    const onFocus = (e) => {
+      if (!enabled) return;
+      const panel = e.target.closest('.panel');
+      if (!panel) return;
+      pin.scrollLeft = 0;
+      const x = panel.offsetLeft - (innerWidth - panel.offsetWidth) / 2;
+      const p = max ? Math.min(1, Math.max(0, x / max)) : 0;
+      scrollTo({ top: top + p * span, behavior: 'instant' });
+      target = cur = p;
+      step();
+    };
+    pin.addEventListener('scroll', onPinScroll);
+    track.addEventListener('focusin', onFocus);
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', onResize);
     // Images and fonts change the track width after first paint
     addEventListener('load', onResize, { once: true });
     document.fonts?.ready.then(onResize);
-    stop.push(() => { cancelAnimationFrame(raf); clearTimeout(resizeTimer); removeEventListener('scroll', onScroll); removeEventListener('resize', onResize); });
+    stop.push(() => { cancelAnimationFrame(raf); clearTimeout(resizeTimer); removeEventListener('scroll', onScroll); removeEventListener('resize', onResize); pin.removeEventListener('scroll', onPinScroll); track.removeEventListener('focusin', onFocus); });
 
     const hash = document.querySelector('[data-hash]');
     if (hash) {
@@ -422,7 +447,7 @@ const structuredData = {
       if (!reduceMotion()) phase += 1;
       a.setAttribute('points', pts(9.4, 9, 40));
       b.setAttribute('points', pts(18.8, 4, 8));
-      if (visible) raf = requestAnimationFrame(draw);
+      raf = visible && !reduceMotion() ? requestAnimationFrame(draw) : 0;
     };
     draw();
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; cancelAnimationFrame(raf); if (visible) raf = requestAnimationFrame(draw); });
@@ -441,7 +466,8 @@ const structuredData = {
     const cells = Array.from(boardEl.querySelectorAll('.ttt-cell'));
     const lineSvg = document.getElementById('ttt-line');
     const lineEl = lineSvg ? lineSvg.querySelector('line') : null;
-    let board, over;
+    let board, over, aiTimer = 0;
+    stop.push(() => clearTimeout(aiTimer));
 
     const COORDS = {
       '0,1,2': [8,16.7,92,16.7], '3,4,5': [8,50,92,50], '6,7,8': [8,83.3,92,83.3],
@@ -521,7 +547,8 @@ const structuredData = {
     function aiMove() {
       statusEl.textContent = 'AI thinking…';
       cells.forEach((c) => c.disabled = true);
-      setTimeout(() => {
+      clearTimeout(aiTimer);
+      aiTimer = setTimeout(() => {
         const { i } = minimax(board.slice(), AI, 0);
         board[i] = AI;
         if (!finish()) { statusEl.textContent = "Your move — you're X"; render(); }
@@ -529,6 +556,7 @@ const structuredData = {
     }
 
     function reset() {
+      clearTimeout(aiTimer);
       board = Array(9).fill('');
       over = false;
       clearLine();
@@ -577,7 +605,7 @@ const structuredData = {
 
   /* ── Work: vertical scroll drives a horizontal track ─ */
   .work { position: relative; height: 640vh; }
-  .work__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; }
+  .work__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; overflow: clip; display: grid; grid-template-rows: auto 1fr auto; }
   .work__head { display: flex; justify-content: space-between; align-items: end; padding-top: calc(var(--nav-height) + 12px); padding-bottom: 22px; }
   .work__head h2 { font-size: clamp(28px, 3vw, 46px); font-weight: 800; }
   .work__track { display: flex; gap: 22px; padding: 0 var(--pad); will-change: transform; }
