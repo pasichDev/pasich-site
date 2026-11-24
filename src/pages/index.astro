@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import GitHubHeatmap from '../components/ui/GitHubHeatmap.astro';
-import { Icon } from 'astro-icon/components';
 
 const skillGroups = [
   {
@@ -73,53 +72,41 @@ const skillGroups = [
   },
 ];
 
-const services = [
-  { icon: 'solar:cpu-bolt-linear',        title: 'System Services',    desc: 'Background services in C++ on Windows — lifecycle, IPC, native APIs' },
-  { icon: 'solar:server-linear',          title: 'Backends',           desc: 'Go — REST APIs, encryption at rest, reproducible builds' },
-  { icon: 'solar:diagram-up-linear',      title: 'Architecture',       desc: 'Keeping services, data and boundaries clean as things grow' },
-  { icon: 'solar:smartphone-linear',      title: 'Mobile Apps',        desc: 'Kotlin, Swift and Flutter — from first build to store release' },
-  { icon: 'solar:global-linear',          title: 'Web Apps',           desc: 'React / Next.js — fast, accessible, SEO-friendly' },
-  { icon: 'solar:refresh-circle-linear',  title: 'Realtime & Infra',   desc: 'Push, live updates, CI/CD and cloud — FCM, SSE, GitLab, AWS' },
+type Visual = 'shots' | 'notes' | 'hash' | 'disk' | 'link';
+const work: Array<{ n: string; kind: string; name: string; text: string; stack: string; href: string; cta: string; external?: boolean; theme: string; visual: Visual; shots?: string[] }> = [
+  { n: '01', kind: 'Android', name: 'Encly', theme: 'encly', visual: 'shots',
+    text: 'Encrypted notes and tasks. SQLCipher at rest, a PIN with optional biometrics, a 12-word recovery phrase. No internet permission at all.',
+    stack: 'Kotlin · Compose · SQLCipher', href: '/apps/encly/', cta: 'Open case',
+    shots: ['/assets/apps/encly/screen-1.webp', '/assets/apps/encly/screen-6.webp'] },
+  { n: '02', kind: 'Flutter', name: 'Felisca', theme: 'felisca', visual: 'shots',
+    text: 'A 30-second check-in for focus, energy and anxiety. Trends and achievements — nothing leaves the phone.',
+    stack: 'Flutter · Offline · Biometrics', href: '/apps/felisca/', cta: 'Open case',
+    shots: ['/assets/apps/felisca/screen-1.webp', '/assets/apps/felisca/screen-2.webp'] },
+  { n: '03', kind: 'Android', name: 'My Notes', theme: 'notes', visual: 'notes',
+    text: 'Offline-first notebook. The block-based editor is my own — no third-party editor libraries.',
+    stack: 'Kotlin · Room · 30k+ installs', href: '/apps/mynotes/', cta: 'Open case' },
+  { n: '04', kind: '2023 – 2024', name: 'Sova', theme: 'sova', visual: 'hash',
+    text: 'NosoCoin wallet. Hashing, signatures and the network protocol ported from Pascal to Dart; C++ through FFI where Dart was too slow.',
+    stack: 'Flutter · Dart FFI · C++', href: 'https://github.com/Noso-Project/NosoSova', cta: 'GitHub', external: true },
+  { n: '05', kind: 'Desktop', name: 'Chystik', theme: 'chystik', visual: 'disk',
+    text: 'Safety-first disk cleanup for developers. Finds build caches and stale dependencies, asks before it deletes.',
+    stack: 'Rust · egui', href: 'https://pasichdev.github.io/chystik/', cta: 'Website', external: true },
+  { n: '06', kind: 'Archived', name: 'Linqora', theme: 'linq', visual: 'link',
+    text: 'PC ↔ phone bridge: media control, resource monitoring and file transfer over WebSocket with mDNS discovery.',
+    stack: 'Go · Flutter · WebSocket', href: 'https://github.com/pasichDev/linqora', cta: 'GitHub', external: true },
 ];
 
-const projects = [
-  {
-    icon: 'solar:lock-keyhole-linear',
-    emoji: '◈',
-    title: 'Encly',
-    description: 'Offline, encrypted notes and tasks for Android. SQLCipher at rest, PIN lock with optional biometrics, a 12-word recovery phrase and encrypted backups. No account, no ads, no internet permission.',
-    tags: ['Kotlin', 'Compose', 'SQLCipher'],
-    href: '/apps/encly/',
-    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasich.encly',
-    fdroidHref: 'https://f-droid.org/packages/com.pasich.encly/',
-  },
-  {
-    icon: 'solar:notebook-linear',
-    emoji: '📓',
-    title: 'My Notes',
-    description: 'Offline-first Android notebook. Custom rich-text editor, local encryption, Room database, and zero tracking.',
-    tags: ['Kotlin', 'Room', 'MVVM'],
-    href: '/apps/mynotes',
-    playStoreHref: 'https://play.google.com/store/apps/details?id=com.pasich.mynotes',
-    downloads: '30k+',
-  },
-  {
-    icon: 'solar:wallet-linear',
-    emoji: '◎',
-    title: 'SovaWallet',
-    description: 'NosoCoin ecosystem wallet. Complex cryptographic implementation, node balancing, and custom binary protocols.',
-    tags: ['C++', 'Dart FFI', 'Flutter'],
-    href: 'https://github.com/Noso-Project/NosoSova',
-  },
-  {
-    icon: 'solar:devices-linear',
-    emoji: '⬡',
-    title: 'Linqora',
-    description: 'Research project: PC-mobile integration — media control, resource monitoring and file transfer over WebSocket with mDNS discovery. No longer maintained.',
-    tags: ['Go', 'Flutter', 'WebSocket'],
-    href: 'https://github.com/pasichDev/linqora',
-    archived: true,
-  },
+const path = [
+  { when: '2026.02 → now', who: 'InTallyCon', what: 'WireGuard plugin for Android, iOS, macOS and Windows. One Go data plane on wireguard-go, a P2P core, split DNS and LAN bypass, a C++ SYSTEM service on WireGuard-NT.' },
+  { when: '2026', who: 'Linux kernel', what: 'Single-core fast path for WireGuard on a 400 MHz router. A memory-leak fix sent to netdev.' },
+  { when: '2023 → 2024', who: 'NosoCoin', what: 'SovaWallet in Flutter. Pascal protocol ported to Dart, C++ through FFI.' },
+  { when: '2021 → now', who: 'Own apps', what: 'My Notes, Encly, Felisca. Offline-first, no accounts, no tracking.' },
+];
+
+const tools = [
+  { href: '/tools/privacy-policy', name: 'Privacy Policy Generator', text: 'A store-ready policy for your mobile app in minutes.' },
+  { href: '/tools/icon-generator', name: 'Flutter Icon Generator', text: 'One PNG in, every platform icon out as a ZIP.' },
+  { href: '/tools/qr-generator', name: 'QR Code Generator', text: 'Your colours, dot style and logo. PNG or SVG.' },
 ];
 
 const structuredData = {
@@ -138,269 +125,309 @@ const structuredData = {
   title="pasichDev — Software Engineer"
   description="Software engineer. C++ system services on Windows, Go backends, and mobile apps in Kotlin, Swift and Flutter."
   structuredData={structuredData}
+  bleed
 >
-  <div class="container animate-fade-in">
+  <section class="hero" aria-label="Intro">
+    <canvas class="hero__flow" data-flow aria-hidden="true"></canvas>
+    <p class="hero__tl mono up dim">Rivne · 50.62°N 26.25°E · UTC+2</p>
+    <h1 class="hero__name" aria-label="Andrii Pasichnyk">
+      <span class="hero__l1 wide" data-scramble aria-hidden="true">Andrii</span>
+      <span class="hero__l2 wide outline" data-scramble aria-hidden="true">Pasichnyk</span>
+    </h1>
+    <p class="hero__term mono dim" aria-hidden="true"><span data-type>$ wg show · peer rivne.ua · handshake ok · rtt 31 ms</span><span class="caret"></span></p>
+    <p class="hero__br mono dim">Software engineer. <strong>VPN tunnels, system services, encrypted storage</strong> — and the apps people actually touch on top.</p>
+  </section>
 
-    <!-- ── HERO ──────────────────────────────────── -->
-    <header class="hero">
-      <p class="eyebrow">
-        <span class="eyebrow-line"></span>
-        pasichDev / index
-      </p>
-
-      <h1 class="hero-name">Andrii Pasichnyk</h1>
-
-      <p class="hero-role">
-        Software Engineer<span class="cursor" aria-hidden="true"></span>
-      </p>
-
-      <p class="hero-tagline">
-        Full-stack, leaning to systems. I write <span class="hl">C++</span> services on Windows,
-        <span class="hl">Go</span> on the backend, and mobile apps in
-        <span class="hl">Kotlin, Swift &amp; Flutter</span>.
-      </p>
-
-      <div class="hero-meta">
-        <span class="location">Rivne, 🇺🇦 · UTC+2</span>
-        <span class="badge-avail">
-          <span class="badge-dot" aria-hidden="true"></span>
-          Available
-        </span>
-      </div>
-
-      <div class="hero-cta">
-        <a href="/cv" class="btn btn-primary">View CV ↗</a>
-        <a href="/tools" class="btn btn-outline">Tools</a>
-        <a href="/links" class="btn btn-outline">Contact</a>
-      </div>
-
-      <GitHubHeatmap />
-    </header>
-
-    <!-- ── STATS ─────────────────────────────────── -->
-    <div class="stats-strip reveal">
-      <div class="stat-item">
-        <span class="stat-val">5+</span>
-        <span class="stat-lbl">Years Exp</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-val">10+</span>
-        <span class="stat-lbl">Projects</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-val">30k+</span>
-        <span class="stat-lbl">Downloads</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-val">6</span>
-        <span class="stat-lbl">Languages</span>
-      </div>
+  <section class="manifesto shell">
+    <p class="manifesto__text"><span data-scramble="view">I build the part</span> <span class="faint" data-scramble="view">you don't see.</span> <span data-scramble="view">Tunnels, services, storage that</span> <span class="amber" data-scramble="view">stays encrypted.</span> <span data-scramble="view">Then</span> <span class="faint" data-scramble="view">an app on top</span> <span data-scramble="view">a person can use.</span></p>
+    <div class="manifesto__stats mono up">
+      <div class="reveal">Years<b class="wide" data-num="5" data-suffix="+">5+</b></div>
+      <div class="reveal">Platforms<b class="wide" data-num="4">4</b></div>
+      <div class="reveal">Installs<b class="wide" data-num="30" data-suffix="k+">30k+</b></div>
+      <div class="reveal">Languages<b class="wide" data-num="6">6</b></div>
     </div>
+  </section>
 
-    <!-- ── PROJECTS ──────────────────────────────── -->
-    <section class="section reveal" id="projects">
-      <div class="section-head">
-        <h2 class="section-title">Selected Work</h2>
-        <span class="section-num">01 — {String(projects.length).padStart(2, '0')}</span>
-      </div>
-
-      <div class="proj-grid">
-        {projects.map((p) => (
-          <div class="proj-card">
-            <div class="proj-body">
-              <div class="proj-top">
-                <div class="proj-icon">
-                  <Icon name={p.icon} width="18" height="18" />
-                </div>
-                {p.downloads && (
-                  <span class="proj-dl">
-                    <Icon name="solar:download-linear" width="10" height="10" />
-                    {p.downloads}
-                  </span>
-                )}
-                {p.archived && (
-                  <span class="proj-dl proj-soon">
-                    <Icon name="solar:archive-linear" width="10" height="10" />
-                    Archived
-                  </span>
-                )}
+  <section class="work" id="work" data-hscroll aria-label="Selected work">
+    <div class="work__pin">
+      <div class="work__head shell"><h2 class="wide">Selected work</h2><span class="mono up dim">Scroll →</span></div>
+      <div class="work__track" data-track>
+        {work.map((w) => (
+          <article class={`panel panel--${w.theme}`}>
+            <div class="panel__copy">
+              <div>
+                <span class="mono up">{w.n} / 06 · {w.kind}</span>
+                <h3 class="panel__name wide">{w.name}</h3>
+                <p>{w.text}</p>
               </div>
-              <h3 class="proj-name">{p.title}</h3>
-              <p class="proj-desc">{p.description}</p>
-              <div class="proj-tags">
-                {p.tags.map((t) => <span class="tag">{t}</span>)}
+              <div class="panel__meta">
+                <span class="mono up">{w.stack}</span>
+                <a class="panel__go mono up" href={w.href} {...(w.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{w.cta} {w.external ? '↗' : '→'}</a>
               </div>
             </div>
-            <div class="proj-actions">
-              <a
-                href={p.href}
-                target={p.href.startsWith('http') ? '_blank' : '_self'}
-                rel={p.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                class="btn-sm"
-              >
-                {p.href.startsWith('https://github.com') ? 'GitHub ↗' : 'Details →'}
-              </a>
-              {p.siteHref && (
-                <a
-                  href={p.siteHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-sm"
-                >
-                  <Icon name="solar:global-linear" width="12" height="12" />
-                  Website
-                </a>
-              )}
-              {p.playStoreHref && (
-                <a
-                  href={p.playStoreHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-sm"
-                >
-                  <Icon name="solar:smartphone-linear" width="12" height="12" />
-                  Play Store
-                </a>
-              )}
-              {p.fdroidHref && (
-                <a
-                  href={p.fdroidHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-sm"
-                >
-                  <Icon name="mdi:android" width="12" height="12" />
-                  F-Droid
-                </a>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- ── SKILLS ────────────────────────────────── -->
-    <section class="section reveal">
-      <div class="section-head">
-        <h2 class="section-title">Skills</h2>
-      </div>
-
-      <div class="skill-categories">
-        {skillGroups.map((group) => (
-          <div class="skill-cat">
-            <div class="cat-label">{group.label}</div>
-            <div class="cat-tags">
-              {group.skills.map((s) => (
-                <span
-                  class={`skill-tag level-${s.level}`}
-                  title={s.tooltip}
-                >
-                  <span class="skill-meter" aria-hidden="true">
-                    <i></i><i></i><i></i>
-                  </span>
-                  {s.name}
-                </span>
+            <div class="panel__visual" aria-hidden="true">
+              {w.visual === 'shots' && w.shots?.map((src, i) => (
+                <img class="shot" src={src} alt="" width="540" height="960" loading="lazy" decoding="async" style={i === 0 ? 'left:8%;top:10%' : 'left:48%;top:22%'} />
               ))}
+              {w.visual === 'notes' && (
+                <div class="gen-notes">
+                  <div><b>Groceries</b><span style="width:70%"></span><span style="width:45%"></span></div>
+                  <div><b>Ideas for the weekend</b><span style="width:85%"></span><span style="width:60%"></span><span style="width:30%"></span></div>
+                  <div><b>Router notes</b><span style="width:55%"></span></div>
+                </div>
+              )}
+              {w.visual === 'hash' && <div class="gen-hash" data-hash></div>}
+              {w.visual === 'disk' && (
+                <div class="gen-disk">
+                  <div class="cut"><span>node_modules</span><i style="--v:.92"></i><span>14.2 GB</span></div>
+                  <div class="cut"><span>target/</span><i style="--v:.71"></i><span>9.8 GB</span></div>
+                  <div class="cut"><span>.gradle</span><i style="--v:.48"></i><span>6.1 GB</span></div>
+                  <div><span>~/Documents</span><i style="--v:.33"></i><span>keep</span></div>
+                  <div><span>~/Photos</span><i style="--v:.58"></i><span>keep</span></div>
+                </div>
+              )}
+              {w.visual === 'link' && (
+                <svg class="gen-link" viewBox="0 0 400 400" fill="none" stroke="currentColor">
+                  <rect x="40" y="130" width="150" height="100" rx="6" stroke-width="1.5" />
+                  <rect x="290" y="110" width="70" height="140" rx="12" stroke-width="1.5" />
+                  <path d="M190 180 C 240 180, 240 180, 290 180" stroke-width="1.5" stroke-dasharray="6 6"><animate attributeName="stroke-dashoffset" from="24" to="0" dur=".8s" repeatCount="indefinite" /></path>
+                  <circle r="4" fill="currentColor"><animateMotion dur="1.6s" repeatCount="indefinite" path="M190 180 C 240 180, 240 180, 290 180" /></circle>
+                  <text x="40" y="270" font-family="IBM Plex Mono" font-size="11" fill="currentColor" stroke="none">_linqora._tcp.local</text>
+                </svg>
+              )}
             </div>
-          </div>
+          </article>
         ))}
       </div>
-    </section>
+      <div class="work__bar shell mono up"><span data-work-n>01</span><div class="rail"><i data-rail></i></div><span>06</span></div>
+    </div>
+  </section>
 
-    <!-- ── WHAT I BUILD ───────────────────────────── -->
-    <section class="section reveal" id="services">
-      <div class="section-head">
-        <h2 class="section-title">What I Build</h2>
+  <section class="kernel sec" id="kernel">
+    <div class="kernel__grid">
+      <div>
+        <span class="mono up amber">Open source · Linux kernel</span>
+        <h2 class="kernel__title">WireGuard on a single&#8209;core, 400&nbsp;MHz router chip.</h2>
       </div>
+      <div class="kernel__x narrow" aria-label="two times faster">2.0×</div>
+    </div>
+    <div class="scope reveal">
+      <svg viewBox="0 0 1000 280" preserveAspectRatio="none" aria-hidden="true"><polyline data-trace="a" fill="none" stroke="#8c887f" stroke-width="2" /><polyline data-trace="b" fill="none" stroke="#ffb547" stroke-width="2.5" /></svg>
+      <div class="scope__legend mono up"><span><i style="background:#8c887f"></i>Before · 9.4 Mbit/s · 108 ms</span><span class="amber"><i style="background:#ffb547"></i>After · 18.8 Mbit/s · 31 ms</span></div>
+    </div>
+    <div class="kernel__notes">
+      <div class="reveal"><b>Finding</b>The cipher wasn't the bottleneck. Profiling showed a context switch on almost every packet.</div>
+      <div class="reveal"><b>Patch</b>Skip WireGuard's multi-core worker queues when the machine has one CPU.</div>
+      <div class="reveal"><b>Bonus</b>A memory leak living in the kernel since 2019, fix sent to the netdev list.</div>
+    </div>
+    <a class="btn btn-outline kernel__repo" href="https://github.com/pasichDev/rtl8196e-wireguard" target="_blank" rel="noopener noreferrer">rtl8196e-wireguard ↗</a>
+  </section>
 
-      <div class="svc-grid">
-        {services.map((s) => (
-          <div class="svc-card">
-            <Icon name={s.icon} width="20" height="20" class="svc-icon" />
-            <div class="svc-title">{s.title}</div>
-            <p class="svc-desc">{s.desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+  <section class="sec" id="path">
+    <div class="sec-head"><h2 class="wide">Path</h2><a class="mono up dim" href="/cv">Full CV →</a></div>
+    {path.map((p) => (
+      <div class="log reveal mono"><span class="amber">{p.when}</span><span class="log__who">{p.who}</span><p>{p.what}</p></div>
+    ))}
+    <div class="activity reveal"><GitHubHeatmap /></div>
+  </section>
 
-    <!-- ── TIC-TAC-TOE ───────────────────────────── -->
-    <section class="section reveal" id="play">
-      <div class="section-head">
-        <h2 class="section-title">Tic-Tac-Toe</h2>
-        <span class="section-num">vs. AI</span>
-      </div>
-
-      <div class="ttt">
-        <div class="ttt-status" id="ttt-status">Your move — you're X</div>
-        <div class="ttt-board-wrap">
-          <div class="ttt-board" id="ttt-board">
-            <button class="ttt-cell" data-i="0" aria-label="cell 1"></button>
-            <button class="ttt-cell" data-i="1" aria-label="cell 2"></button>
-            <button class="ttt-cell" data-i="2" aria-label="cell 3"></button>
-            <button class="ttt-cell" data-i="3" aria-label="cell 4"></button>
-            <button class="ttt-cell" data-i="4" aria-label="cell 5"></button>
-            <button class="ttt-cell" data-i="5" aria-label="cell 6"></button>
-            <button class="ttt-cell" data-i="6" aria-label="cell 7"></button>
-            <button class="ttt-cell" data-i="7" aria-label="cell 8"></button>
-            <button class="ttt-cell" data-i="8" aria-label="cell 9"></button>
-          </div>
-          <svg class="ttt-line" id="ttt-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="0" y1="0" x2="0" y2="0"></line>
-          </svg>
+  <section class="sec" id="stack">
+    <div class="sec-head"><h2 class="wide">Stack</h2><span class="mono up dim">Hover for context</span></div>
+    <div class="stack">
+      {skillGroups.map((g) => (
+        <div class="stack__group reveal">
+          <h3 class="mono up dim">{g.label}</h3>
+          <ul>
+            {g.skills.map((s) => <li class:list={[{ 'is-expert': s.level === 'expert' }]} title={s.tooltip}>{s.name}</li>)}
+          </ul>
         </div>
-        <button class="ttt-reset" id="ttt-reset">↺ New game</button>
-      </div>
-    </section>
+      ))}
+    </div>
+  </section>
 
-  </div>
+  <section class="tools-rows" aria-label="Free tools">
+    <div class="sec-head shell"><h2 class="wide">Free tools</h2><a class="mono up dim" href="/tools">All tools →</a></div>
+    {tools.map((t) => (
+      <a class="tool-row" href={t.href}><h3>{t.name}</h3><p>{t.text}</p><span class="mono up">Open →</span></a>
+    ))}
+  </section>
+
+  <section class="sec play" id="play">
+    <div class="play__copy">
+      <span class="mono up amber">Intermission</span>
+      <h2 class="wide">Beat the minimax.</h2>
+      <p>It never loses. A draw counts as a win.</p>
+    </div>
+    <div class="ttt">
+      <div class="ttt-status mono up" id="ttt-status">Your move — you're X</div>
+      <div class="ttt-board-wrap">
+        <div class="ttt-board" id="ttt-board">
+          {Array.from({ length: 9 }, (_, i) => <button class="ttt-cell" data-i={i} aria-label={`cell ${i + 1}`}></button>)}
+        </div>
+        <svg class="ttt-line" id="ttt-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="0" x2="0" y2="0"></line></svg>
+      </div>
+      <button class="ttt-reset btn btn-outline" id="ttt-reset">↺ New game</button>
+    </div>
+  </section>
 </BaseLayout>
 
 <script>
-  function initReveal() {
-    document.querySelectorAll('.reveal').forEach((el) => el.classList.remove('in'));
+  // @ts-nocheck — the game below is plain JS carried over from the old page
+  const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let stop = [];
 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
+  function initFlow() {
+    // Packets stream through a tunnel; once past the throat they turn amber — encrypted.
+    // Drawn as six batched paths (3 speed buckets × 2 colours) instead of one
+    // stroke() per particle: that was ~1000 draw calls a frame.
+    const cv = document.querySelector('[data-flow]');
+    if (!cv) return;
+    const cx = cv.getContext('2d', { alpha: false });
+    const BUCKETS = 3;
+    const PLAIN = ['rgba(235,231,222,.16)', 'rgba(235,231,222,.25)', 'rgba(235,231,222,.36)'];
+    const ENC = ['rgba(255,181,71,.45)', 'rgba(255,181,71,.65)', 'rgba(255,181,71,.85)'];
+    let W = 0, H = 0, parts = [], raf = 0, visible = true;
+    const mouse = { x: -999, y: -999 };
+    const resize = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 1.5);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx.fillStyle = '#09090a'; cx.fillRect(0, 0, W, H);
+      const n = Math.round(Math.min(720, (W * H) / 2000));
+      parts = Array.from({ length: n }, () => {
+        const sp = 0.6 + Math.random() * 1.8;
+        return { x: Math.random() * W, lane: Math.random() * 2 - 1, sp, b: Math.min(BUCKETS - 1, Math.floor(((sp - 0.6) / 1.8) * BUCKETS)), len: 4 + Math.random() * 14, ox: 0, oy: 0 };
       });
-    }, { threshold: 0, rootMargin: '0px 0px -32px 0px' });
-
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-    setTimeout(() => {
-      document.querySelectorAll('.reveal:not(.in)').forEach((el) => el.classList.add('in'));
-    }, 1500);
+    };
+    const laneY = (x, lane, t) => {
+      const c = W * 0.52, d = Math.min(1, Math.abs(x - c) / c);
+      return H * 0.5 + lane * H * (0.035 + 0.5 * Math.pow(d, 1.7)) + Math.sin(x * 0.004 + t * 0.0006 + lane * 3) * 10 * d;
+    };
+    const draw = (t) => {
+      cx.fillStyle = 'rgba(9,9,10,.34)';
+      cx.fillRect(0, 0, W, H);
+      const c = W * 0.52, still = reduceMotion(), hasMouse = mouse.x > -500;
+      const paths = Array.from({ length: BUCKETS * 2 }, () => new Path2D());
+      for (const p of parts) {
+        if (!still) p.x += p.sp;
+        if (p.x > W + 20) { p.x = -20; p.lane = Math.random() * 2 - 1; }
+        let y = laneY(p.x, p.lane, t);
+        if (hasMouse || p.ox || p.oy) {
+          const dx = p.x - mouse.x, dy = y - mouse.y, dist = Math.hypot(dx, dy) || 1;
+          const push = hasMouse && dist < 140 ? (140 - dist) / 140 : 0;
+          p.ox += ((dx / dist) * push * 40 - p.ox) * 0.08;
+          p.oy += ((dy / dist) * push * 40 - p.oy) * 0.08;
+          if (Math.abs(p.ox) < 0.05 && Math.abs(p.oy) < 0.05 && !push) p.ox = p.oy = 0;
+        }
+        const x = p.x + p.ox; y += p.oy;
+        const path = paths[(p.x > c ? BUCKETS : 0) + p.b];
+        path.moveTo(x - p.len, laneY(p.x - p.len, p.lane, t) + p.oy);
+        path.lineTo(x, y);
+      }
+      cx.lineWidth = 1;
+      for (let i = 0; i < BUCKETS; i++) { cx.strokeStyle = PLAIN[i]; cx.stroke(paths[i]); }
+      cx.lineWidth = 1.4;
+      for (let i = 0; i < BUCKETS; i++) { cx.strokeStyle = ENC[i]; cx.stroke(paths[BUCKETS + i]); }
+      if (visible) raf = requestAnimationFrame(draw);
+    };
+    const move = (e) => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; };
+    const leave = () => { mouse.x = mouse.y = -999; };
+    // Don't burn the GPU while the hero is scrolled away
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; cancelAnimationFrame(raf); if (visible) raf = requestAnimationFrame(draw); });
+    let resizeTimer = 0;
+    const onResize = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 150); };
+    resize(); io.observe(cv);
+    addEventListener('resize', onResize);
+    cv.parentElement.addEventListener('pointermove', move);
+    cv.parentElement.addEventListener('pointerleave', leave);
+    stop.push(() => { cancelAnimationFrame(raf); io.disconnect(); clearTimeout(resizeTimer); removeEventListener('resize', onResize); });
   }
 
-  function initCounts() {
-    const els = document.querySelectorAll('.stat-val');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        const el = e.target;
-        io.unobserve(el);
-        const raw = el.dataset.raw || el.textContent.trim();
-        el.dataset.raw = raw;
-        const m = raw.match(/^(\d+)(.*)$/);
-        if (!m) return;
-        const target = parseInt(m[1], 10);
-        const suffix = m[2];
-        const dur = 900;
-        const start = performance.now();
-        function tick(now) {
-          const p = Math.min(1, (now - start) / dur);
-          const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(target * eased) + suffix;
-          if (p < 1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-      });
-    }, { threshold: 0.5 });
-    els.forEach((el) => io.observe(el));
+  function initTyping() {
+    const el = document.querySelector('[data-type]');
+    if (!el) return;
+    const full = el.textContent; let i = 0, timer = 0;
+    if (reduceMotion()) return;
+    el.textContent = '';
+    const type = () => { el.textContent = full.slice(0, ++i); if (i < full.length) timer = setTimeout(type, 28 + Math.random() * 40); };
+    timer = setTimeout(type, 1600);
+    stop.push(() => clearTimeout(timer));
+  }
+
+  function initWork() {
+    // Vertical scroll drives the horizontal track. Geometry is measured on
+    // resize only; the loop runs while the track is catching up and stops
+    // when it settles. Only transforms and (rarely) one counter are written.
+    const hs = document.querySelector('[data-hscroll]'), track = document.querySelector('[data-track]');
+    const rail = document.querySelector('[data-rail]'), num = document.querySelector('[data-work-n]');
+    if (!hs || !track) return;
+    const panels = track.children.length;
+    let top = 0, span = 1, max = 0, target = 0, cur = 0, raf = 0, shown = '', enabled = false;
+    const measure = () => {
+      enabled = innerWidth > 860;
+      if (!enabled) { track.style.transform = ''; rail.style.transform = ''; return; }
+      top = hs.getBoundingClientRect().top + scrollY;
+      span = Math.max(1, hs.offsetHeight - innerHeight);
+      max = Math.max(0, track.scrollWidth - innerWidth);
+    };
+    const step = () => {
+      cur += (target - cur) * 0.12;
+      if (Math.abs(target - cur) < 0.0004) cur = target;
+      track.style.transform = `translate3d(${(-cur * max).toFixed(1)}px,0,0)`;
+      rail.style.transform = `scaleX(${cur.toFixed(4)})`;
+      const n = String(Math.min(panels, 1 + Math.floor(cur * panels * 0.999))).padStart(2, '0');
+      if (n !== shown) { shown = n; num.textContent = n; }
+      raf = cur === target ? 0 : requestAnimationFrame(step);
+    };
+    const onScroll = () => {
+      if (!enabled) return;
+      target = Math.min(1, Math.max(0, (scrollY - top) / span));
+      if (!raf) raf = requestAnimationFrame(step);
+    };
+    let resizeTimer = 0;
+    const onResize = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { measure(); onScroll(); }, 150); };
+    measure();
+    target = cur = enabled ? Math.min(1, Math.max(0, (scrollY - top) / span)) : 0;
+    if (enabled) step();
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onResize);
+    // Images and fonts change the track width after first paint
+    addEventListener('load', onResize, { once: true });
+    document.fonts?.ready.then(onResize);
+    stop.push(() => { cancelAnimationFrame(raf); clearTimeout(resizeTimer); removeEventListener('scroll', onScroll); removeEventListener('resize', onResize); });
+
+    const hash = document.querySelector('[data-hash]');
+    if (hash) {
+      const hex = () => [...crypto.getRandomValues(new Uint8Array(32))].map((b) => b.toString(16).padStart(2, '0')).join('');
+      const fill = () => { hash.innerHTML = Array.from({ length: 18 }, (_, i) => (i === 7 ? `<em>${hex()}</em>` : hex())).join('<br>'); };
+      fill();
+      let timer = 0;
+      // Only rains while the panel is on screen
+      const io = new IntersectionObserver(([e]) => { clearInterval(timer); if (e.isIntersecting) timer = setInterval(fill, 900); });
+      io.observe(hash);
+      stop.push(() => { clearInterval(timer); io.disconnect(); });
+    }
+  }
+
+  function initScope() {
+    const a = document.querySelector('[data-trace="a"]'), b = document.querySelector('[data-trace="b"]');
+    if (!a || !b) return;
+    let phase = 0, raf = 0, visible = false;
+    const pts = (base, noise, spikes) => Array.from({ length: 101 }, (_, i) => {
+      const s = i + phase * 0.5;
+      const n = Math.sin(s * 0.9) * noise + Math.sin(s * 2.3) * noise * 0.5 + (Math.sin(s * 7.1) > 0.93 ? spikes : 0);
+      return `${i * 10},${(280 - base * 12 + n).toFixed(1)}`;
+    }).join(' ');
+    const draw = () => {
+      if (!reduceMotion()) phase += 1;
+      a.setAttribute('points', pts(9.4, 9, 40));
+      b.setAttribute('points', pts(18.8, 4, 8));
+      if (visible) raf = requestAnimationFrame(draw);
+    };
+    draw();
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; cancelAnimationFrame(raf); if (visible) raf = requestAnimationFrame(draw); });
+    io.observe(a.ownerSVGElement);
+    stop.push(() => { cancelAnimationFrame(raf); io.disconnect(); });
   }
 
   function initTTT() {
@@ -435,7 +462,7 @@ const structuredData = {
       lineEl.setAttribute('x1', x1); lineEl.setAttribute('y1', y1);
       lineEl.setAttribute('x2', x2); lineEl.setAttribute('y2', y2);
       const len = Math.hypot(x2 - x1, y2 - y1);
-      lineEl.style.stroke = mark === HU ? '#ffffff' : 'var(--color-green)';
+      lineEl.style.stroke = mark === HU ? 'var(--color-txt-main)' : 'var(--color-accent)';
       lineEl.style.transition = 'none';
       lineEl.style.strokeDasharray = len;
       lineEl.style.strokeDashoffset = len;
@@ -482,7 +509,7 @@ const structuredData = {
       if (info) {
         over = true;
         drawLine(info.line, info.mark);
-        statusEl.textContent = info.mark === HU ? 'You win — how?! 🎉' : 'AI wins';
+        statusEl.textContent = info.mark === HU ? 'You win — how?!' : 'AI wins';
       } else if (full(board)) {
         over = true;
         statusEl.textContent = 'Draw — well played';
@@ -523,594 +550,147 @@ const structuredData = {
   }
 
   document.addEventListener('astro:page-load', () => {
-    initReveal();
-    initCounts();
-    initTTT();
+    if (!document.querySelector('[data-flow]')) return;
+    initFlow(); initTyping(); initWork(); initScope(); initTTT();
   });
+  document.addEventListener('astro:before-swap', () => { stop.forEach((fn) => fn()); stop = []; });
 </script>
 
 <style>
-  /* ── HERO ──────────────────────────────────────── */
-  .hero {
-    padding-top: clamp(2.5rem, 6vw, 4rem);
-    padding-bottom: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 0;
-  }
+  /* ── Hero ─────────────────────────────────────── */
+  .hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; }
+  .hero__flow { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero__tl { position: absolute; left: var(--pad); top: calc(var(--nav-height) + 6px); }
+  .hero__name { position: absolute; inset: 0; display: grid; grid-template-rows: 1fr auto auto 1fr; padding: 0 var(--pad); margin: 0; pointer-events: none; font-size: clamp(54px, 11.4vw, 210px); font-weight: 800; line-height: .82; letter-spacing: -.02em; }
+  .hero__l1 { grid-row: 2; }
+  .hero__l2 { grid-row: 3; justify-self: end; }
+  .hero__term { position: absolute; left: var(--pad); bottom: 28px; max-width: calc(100% - 2 * var(--pad)); }
+  .hero__br { position: absolute; right: var(--pad); bottom: 28px; max-width: 420px; text-align: right; }
+  .hero__br strong { color: var(--color-txt-main); font-weight: 500; }
 
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-txt-dim);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .eyebrow-line {
-    display: inline-block;
-    width: 16px;
-    height: 1px;
-    background: var(--color-txt-dim);
-    flex-shrink: 0;
-  }
+  /* ── Manifesto ────────────────────────────────── */
+  .manifesto { padding-block: clamp(120px, 16vw, 240px); }
+  .manifesto__text { max-width: 22ch; color: var(--color-txt-main); font-weight: 600; font-size: clamp(34px, 5.4vw, 92px); line-height: 1; letter-spacing: -.01em; font-stretch: 112%; font-variation-settings: 'wdth' 112; }
+  .manifesto__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: clamp(70px, 9vw, 140px); border-top: 1px solid var(--color-border); color: var(--color-txt-dim); }
+  .manifesto__stats div { padding-top: 16px; }
+  .manifesto__stats b { display: block; margin-top: 8px; color: var(--color-txt-main); font: 700 clamp(40px, 4.6vw, 76px)/1 var(--font-sans); letter-spacing: 0; }
 
-  .hero-name {
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.0;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(100deg, #fff 20%, rgba(255,255,255,0.4) 45%, #fff 70%);
-    background-size: 220% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  @keyframes shimmer {
-    from { background-position: 180% center; }
-    to   { background-position: -80% center; }
-  }
+  /* ── Work: vertical scroll drives a horizontal track ─ */
+  .work { position: relative; height: 640vh; }
+  .work__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; }
+  .work__head { display: flex; justify-content: space-between; align-items: end; padding-top: calc(var(--nav-height) + 12px); padding-bottom: 22px; }
+  .work__head h2 { font-size: clamp(28px, 3vw, 46px); font-weight: 800; }
+  .work__track { display: flex; gap: 22px; padding: 0 var(--pad); will-change: transform; }
+  .panel { position: relative; flex: none; display: grid; grid-template-columns: 1fr 1.1fr; width: min(78vw, 1180px); height: 100%; overflow: hidden; border-radius: 6px; }
+  .panel__copy { position: relative; z-index: 2; display: grid; align-content: space-between; padding: clamp(22px, 3vw, 44px); }
+  .panel__name { margin-top: 14px; font-size: clamp(50px, 7vw, 128px); font-weight: 800; line-height: .82; letter-spacing: -.02em; }
+  .panel__copy p { max-width: 34ch; margin-top: 18px; font-size: 17px; color: inherit; opacity: .8; }
+  .panel__meta { display: flex; justify-content: space-between; align-items: end; gap: 16px; }
+  .panel__go { display: inline-flex; align-items: center; height: 42px; padding: 0 18px; border: 1px solid currentColor; border-radius: 99px; white-space: nowrap; transition: background .3s, color .3s; }
+  .panel__go:hover { background: currentColor; }
+  .panel__go:hover, .panel a.panel__go:hover { color: var(--pbg); }
+  .panel__visual { position: relative; }
+  .shot { position: absolute; width: 42%; height: auto; border-radius: 18px; box-shadow: 0 30px 70px rgba(0,0,0,.45); transition: transform .9s var(--ease); }
+  .panel:hover .shot:nth-child(1) { transform: translateY(-14px) rotate(-3deg); }
+  .panel:hover .shot:nth-child(2) { transform: translateY(10px) rotate(2deg); }
+  .work__bar { display: flex; align-items: center; gap: 18px; padding-block: 22px; color: var(--color-txt-dim); }
+  .work__bar .rail { position: relative; flex: 1; height: 1px; background: var(--color-border); }
+  .work__bar .rail i { position: absolute; inset: 0; background: var(--color-accent); transform: scaleX(0); transform-origin: left; will-change: transform; }
 
-  .hero-role {
-    font-family: var(--font-mono);
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    color: var(--color-txt-dim);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-  }
+  .panel { background: var(--pbg); }
+  .panel--encly { --pbg: #9a4524; color: #f4e8da; }
+  .panel--felisca { --pbg: #11131b; color: #e6e8f1; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+  .panel--felisca .panel__name { color: #36d39b; }
+  .panel--notes { --pbg: #e8e2d4; color: #1d1b17; }
+  .panel--sova { --pbg: #12261e; color: #e8dcae; }
+  .panel--chystik { --pbg: #ffb547; color: #120f0a; }
+  .panel--linq { --pbg: #171c2c; color: #c8d1f2; }
 
-  .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 2px;
-    background: var(--color-accent);
-    margin-left: 5px;
-    align-self: flex-end;
-    margin-bottom: 0.28em;
-    animation: blink 1.1s step-end infinite;
-  }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .gen-notes { position: absolute; inset: 9% 8% 9% 10%; display: grid; gap: 12px; align-content: start; }
+  .gen-notes div { padding: 18px; border-radius: 12px; background: #f6f2e9; box-shadow: 0 10px 30px rgba(40,30,10,.08); }
+  .gen-notes b { display: block; font-size: 22px; font-weight: 700; }
+  .gen-notes span { display: block; height: 8px; margin-top: 10px; border-radius: 4px; background: #dcd5c5; }
+  .gen-hash { position: absolute; inset: 8% 6%; overflow: hidden; font: 400 13px/1.7 var(--font-mono); color: rgba(232,220,174,.45); word-break: break-all; mask-image: linear-gradient(transparent, #000 20%, #000 80%, transparent); }
+  .gen-hash :global(em) { font-style: normal; color: #e8dcae; }
+  .gen-disk { position: absolute; inset: 14% 10%; display: grid; gap: 14px; align-content: center; }
+  .gen-disk div { display: grid; grid-template-columns: 140px 1fr 70px; gap: 14px; align-items: center; font: 500 13px var(--font-mono); }
+  .gen-disk i { height: 22px; background: #120f0a; transform-origin: left; transform: scaleX(var(--v)); }
+  .gen-disk .cut i { background: repeating-linear-gradient(45deg, #120f0a 0 6px, transparent 6px 12px); }
+  .gen-link { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-  .hero-tagline {
-    max-width: 46ch;
-    font-size: clamp(0.82rem, 1.9vw, 0.95rem);
-    line-height: 1.65;
-    color: var(--color-txt-dim);
-    margin-bottom: 1.75rem;
-  }
-  .hero-tagline .hl {
-    color: var(--color-txt-main);
-    font-weight: 500;
-  }
+  /* ── Kernel ───────────────────────────────────── */
+  .kernel__grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(30px, 5vw, 80px); align-items: end; }
+  .kernel__title { margin-top: 18px; font-size: clamp(40px, 5vw, 84px); font-weight: 700; line-height: .95; font-stretch: 110%; font-variation-settings: 'wdth' 110; }
+  .kernel__x { color: var(--color-accent); font-size: clamp(140px, 22vw, 380px); font-weight: 900; line-height: .78; letter-spacing: -.03em; }
+  .scope { position: relative; margin-top: 40px; border: 1px solid var(--color-border); background: linear-gradient(var(--color-border) 1px, transparent 1px) 0 0 / 100% 25%, linear-gradient(90deg, var(--color-border) 1px, transparent 1px) 0 0 / 10% 100%; }
+  .scope svg { display: block; width: 100%; height: 280px; }
+  .scope__legend { display: flex; flex-wrap: wrap; gap: 10px 24px; padding: 12px 16px; border-top: 1px solid var(--color-border); color: var(--color-txt-dim); }
+  .scope__legend i { display: inline-block; width: 18px; height: 2px; margin-right: 8px; vertical-align: 3px; }
+  .kernel__notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 60px; }
+  .kernel__notes div { padding-top: 14px; border-top: 1px solid var(--color-border); color: var(--color-txt-dim); font-size: 15px; }
+  .kernel__notes b { display: block; margin-bottom: 8px; color: var(--color-txt-main); font: 500 12px var(--font-mono); text-transform: uppercase; letter-spacing: .1em; }
+  .kernel__repo { margin-top: 40px; }
 
-  .hero-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.875rem;
-    margin-bottom: 1.75rem;
-    flex-wrap: wrap;
-  }
+  /* ── Path / activity ──────────────────────────── */
+  .log { display: grid; grid-template-columns: 170px 220px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px dashed var(--color-border); font-size: 13px; }
+  .log__who { color: var(--color-txt-main); font-weight: 500; }
+  .log p { color: var(--color-txt-dim); }
+  .activity { margin-top: 60px; }
 
-  .location {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-txt-dim);
-  }
+  /* ── Stack ────────────────────────────────────── */
+  .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 44px 30px; }
+  .stack__group h3 { padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--color-border); font-size: 12px; font-weight: 500; }
+  .stack__group ul { list-style: none; display: grid; gap: 6px; }
+  .stack__group li { width: fit-content; color: var(--color-txt-dim); font-size: 19px; font-weight: 500; cursor: help; transition: color .2s; }
+  .stack__group li.is-expert { color: var(--color-txt-main); }
+  .stack__group li.is-expert::after { content: ' ●'; color: var(--color-accent); font-size: 9px; vertical-align: 4px; }
+  .stack__group li:hover { color: var(--color-accent); }
 
-  .badge-avail {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #22c55e;
-    border: 1px solid rgba(34,197,94,0.28);
-    padding: 0.2rem 0.625rem;
-    border-radius: 999px;
-  }
+  /* ── Tools ────────────────────────────────────── */
+  .tools-rows { padding-top: clamp(80px, 11vw, 170px); border-top: 1px solid var(--color-border); }
+  .tool-row { position: relative; display: grid; grid-template-columns: 1fr 1.2fr auto; align-items: center; gap: 20px; padding: 28px var(--pad); border-top: 1px solid var(--color-border); overflow: hidden; isolation: isolate; }
+  .tool-row:last-child { border-bottom: 1px solid var(--color-border); }
+  .tool-row::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--color-accent); transform: scaleX(0); transform-origin: right; transition: transform .6s var(--ease); }
+  .tool-row:hover { color: var(--color-accent-ink); }
+  .tool-row:hover::before { transform: none; transform-origin: left; }
+  .tool-row h3 { font-size: clamp(24px, 2.6vw, 40px); font-weight: 700; font-stretch: 115%; font-variation-settings: 'wdth' 115; }
+  .tool-row p { transition: color .3s; }
+  .tool-row:hover p { color: rgba(18,15,10,.7); }
 
-  .badge-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #22c55e;
-    animation: pdot 2s ease-in-out infinite;
-  }
-  @keyframes pdot {
-    0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-    50%      { box-shadow: 0 0 0 4px rgba(34,197,94,0); }
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-
-  /* ── STATS ─────────────────────────────────────── */
-  .stats-strip {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    margin-bottom: clamp(3rem, 6vw, 4.5rem);
-    overflow: hidden;
-    background: var(--surface-sheen), var(--color-surface);
-    box-shadow: var(--shadow-md);
-  }
-
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: clamp(1rem, 3vw, 1.375rem) 0.5rem;
-    text-align: center;
-    position: relative;
-  }
-  .stat-item + .stat-item {
-    border-left: 1px solid var(--color-border);
-  }
-
-  .stat-val {
-    font-family: var(--font-mono);
-    font-size: clamp(1.1rem, 3vw, 1.5rem);
-    font-weight: 600;
-    color: var(--color-accent);
-    line-height: 1.1;
-    margin-bottom: 0.25rem;
-  }
-  .stat-lbl {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-txt-dim);
-  }
-
-  @media (max-width: 400px) {
-    .stats-strip { grid-template-columns: repeat(2, 1fr); }
-    .stat-item:nth-child(3) { border-left: none; }
-    .stat-item:nth-child(3),
-    .stat-item:nth-child(4) { border-top: 1px solid var(--color-border); }
-  }
-
-  /* ── SECTION ───────────────────────────────────── */
-  .section { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
-
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
-  }
-  .section-title {
-    font-size: clamp(0.875rem, 2.5vw, 1.05rem);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  .section-num {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--color-txt-dim);
-    letter-spacing: 0.06em;
-  }
-
-  /* ── PROJECTS ──────────────────────────────────── */
-  .proj-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(0.75rem, 2vw, 1rem);
-  }
-
-  @media (min-width: 600px) {
-    .proj-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .proj-card {
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    padding: clamp(1rem, 3vw, 1.375rem);
-    background: var(--surface-sheen), var(--color-surface);
-    box-shadow: var(--shadow-md);
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    transform: translateY(12px);
-    transition: border-color 0.2s, transform 0.3s, opacity 0.4s, box-shadow 0.3s;
-  }
-  .reveal.in .proj-card {
-    opacity: 1;
-    transform: none;
-  }
-  .reveal.in .proj-card:nth-child(1) { transition-delay: 0.05s; }
-  .reveal.in .proj-card:nth-child(2) { transition-delay: 0.12s; }
-  .reveal.in .proj-card:nth-child(3) { transition-delay: 0.19s; }
-  .reveal.in .proj-card:nth-child(4) { transition-delay: 0.26s; }
-  .reveal.in .proj-card:nth-child(5) { transition-delay: 0.33s; }
-  .reveal.in .proj-card:nth-child(6) { transition-delay: 0.40s; }
-
-  .proj-card:hover {
-    border-color: rgba(255,255,255,0.18);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-  }
-
-  /* body grows to fill card, pushes actions to bottom */
-  .proj-body { flex: 1; display: flex; flex-direction: column; }
-
-  .proj-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: clamp(0.75rem, 2vw, 1rem);
-  }
-
-  .proj-icon {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-txt-dim);
-    background: rgba(255,255,255,0.02);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .proj-dl {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    color: #22c55e;
-    border: 1px solid rgba(34,197,94,0.28);
-    padding: 0.15rem 0.45rem;
-    border-radius: 999px;
-  }
-  .proj-soon {
-    color: var(--color-txt-dim);
-    border-color: var(--color-border);
-  }
-
-  .proj-name {
-    font-size: clamp(0.875rem, 2vw, 1rem);
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
-  .proj-desc {
-    font-size: clamp(0.75rem, 1.5vw, 0.8rem);
-    color: var(--color-txt-dim);
-    line-height: 1.6;
-    margin-bottom: 0.875rem;
-    flex: 1;
-  }
-
-  .proj-tags {
-    display: flex;
-    gap: 0.375rem;
-    flex-wrap: wrap;
-    margin-bottom: 0;
-  }
-
-  .tag {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--color-txt-dim);
-    border: 1px solid var(--color-border);
-    padding: 0.15rem 0.5rem;
-    border-radius: 1px;
-    letter-spacing: 0.02em;
-  }
-
-  /* pinned to bottom of card */
-  .proj-actions {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    padding-top: clamp(0.875rem, 2vw, 1.125rem);
-    margin-top: auto;
-  }
-
-  .btn-sm {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.35rem 0.75rem;
-    border-radius: 2px;
-    border: 1px solid var(--color-border);
-    color: var(--color-txt-dim);
-    text-decoration: none;
-    transition: border-color 0.15s, color 0.15s, box-shadow 0.15s;
-    min-height: 32px;
-    box-shadow: var(--shadow-sm);
-  }
-  .btn-sm:hover { border-color: rgba(255,255,255,0.22); color: var(--color-accent); }
-
-  /* ── SKILLS ────────────────────────────────────── */
-  .skill-categories {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(1.5rem, 3vw, 2rem) clamp(2rem, 5vw, 3rem);
-  }
-  @media (max-width: 520px) {
-    .skill-categories { grid-template-columns: 1fr; }
-  }
-
-  .skill-cat { display: flex; flex-direction: column; gap: 0.625rem; }
-
-  .cat-label {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-txt-dim);
-  }
-
-  .cat-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
-
-  .skill-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    padding: 0.3rem 0.625rem;
-    border-radius: 2px;
-    border: 1px solid;
-    letter-spacing: 0.02em;
-    cursor: default;
-    transition: border-color 0.15s, color 0.15s, opacity 0.3s, transform 0.3s;
-  }
-  .skill-tag:hover { border-color: rgba(255,255,255,0.4); color: var(--color-accent); }
-
-  .level-expert       { border-color: rgba(255,255,255,0.35); color: #fff; background: rgba(255,255,255,0.03); box-shadow: var(--shadow-sm); }
-  .level-advanced     { border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.65); }
-  .level-intermediate { border-color: rgba(255,255,255,0.1);  color: rgba(255,255,255,0.38); }
-
-  /* level meter — signal-strength bars encode proficiency */
-  .skill-meter {
-    display: inline-flex;
-    align-items: flex-end;
-    gap: 2px;
-    height: 9px;
-    flex-shrink: 0;
-    line-height: 0;
-    position: relative;
-    top: -1px;
-  }
-  .skill-meter i {
-    display: block;
-    width: 2px;
-    border-radius: 1px;
-    background: rgba(255,255,255,0.16);
-    transition: background 0.2s ease, height 0.2s ease;
-  }
-  .skill-meter i:nth-child(1) { height: 4px; }
-  .skill-meter i:nth-child(2) { height: 7px; }
-  .skill-meter i:nth-child(3) { height: 10px; }
-
-  .level-expert   .skill-meter i               { background: rgba(255,255,255,0.9); }
-  .level-advanced .skill-meter i:nth-child(-n+2){ background: rgba(255,255,255,0.7); }
-  .level-intermediate .skill-meter i:nth-child(1){ background: rgba(255,255,255,0.55); }
-
-  .skill-tag:hover .skill-meter i { background: var(--color-accent); }
-
-  /* ── SERVICES ─────────────────────────────────── */
-  .svc-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(0.625rem, 1.5vw, 0.875rem);
-  }
-  @media (max-width: 640px) {
-    .svc-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 380px) {
-    .svc-grid { grid-template-columns: 1fr; }
-  }
-
-  .svc-card {
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    padding: clamp(0.875rem, 2.5vw, 1.125rem);
-    background: var(--surface-sheen), var(--color-surface);
-    box-shadow: var(--shadow-md);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    transition: border-color 0.15s, transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease, box-shadow 0.3s;
-  }
-  .svc-card:hover {
-    border-color: rgba(255,255,255,0.16);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .svc-icon {
-    color: var(--color-txt-dim);
-    flex-shrink: 0;
-  }
-
-  .svc-title {
-    font-size: clamp(0.78rem, 1.8vw, 0.875rem);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    margin-top: 0.125rem;
-  }
-
-  .svc-desc {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: var(--color-txt-dim);
-    line-height: 1.55;
-    margin: 0;
-  }
-
-  /* ── REVEAL ────────────────────────────────────── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1),
-                transform 0.55s cubic-bezier(0.4,0,0.2,1);
-  }
-  .reveal.in { opacity: 1; transform: none; }
-
-  /* hero animates immediately */
-  .hero .eyebrow    { animation: heroIn 0.5s 0.05s cubic-bezier(0.4,0,0.2,1) both; }
-  .hero .hero-name  { animation: heroIn 0.5s 0.12s cubic-bezier(0.4,0,0.2,1) both,
-                                 shimmer 7s 0.9s linear infinite; }
-  .hero .hero-role  { animation: heroIn 0.5s 0.19s cubic-bezier(0.4,0,0.2,1) both; }
-  .hero .hero-tagline { animation: heroIn 0.5s 0.26s cubic-bezier(0.4,0,0.2,1) both; }
-  .hero .hero-meta  { animation: heroIn 0.5s 0.33s cubic-bezier(0.4,0,0.2,1) both; }
-  .hero .hero-cta   { animation: heroIn 0.5s 0.40s cubic-bezier(0.4,0,0.2,1) both; }
-
-  @keyframes heroIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  /* ── TIC-TAC-TOE ───────────────────────────────── */
-  .ttt {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.1rem;
-    text-align: center;
-  }
-  .ttt-status {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-txt-dim);
-    min-height: 1em;
-    transition: color 0.2s;
-  }
-  .ttt-board-wrap {
-    position: relative;
-    width: clamp(200px, 62vw, 264px);
-    aspect-ratio: 1;
-  }
-  .ttt-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--color-border);
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  .ttt-line {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-  .ttt-line line {
-    stroke-width: 3.5;
-    stroke-linecap: round;
-    opacity: 0;
-    filter: drop-shadow(0 0 5px currentColor);
-  }
-  .ttt-line.show line { opacity: 1; }
-  .ttt-cell {
-    background: var(--color-bg);
-    border: none;
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    font-size: clamp(1.4rem, 6vw, 1.9rem);
-    font-weight: 500;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    aspect-ratio: 1;
-    transition: background 0.15s, color 0.15s;
-  }
-  .ttt-cell:hover:not(:disabled) { background: var(--color-surface); }
+  /* ── Play ─────────────────────────────────────── */
+  .play { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+  .play__copy h2 { margin-top: 16px; font-size: clamp(34px, 4.4vw, 72px); font-weight: 800; }
+  .play__copy p { margin-top: 14px; }
+  .ttt { display: grid; justify-items: center; gap: 18px; }
+  .ttt-status { color: var(--color-txt-dim); }
+  .ttt-board-wrap { position: relative; }
+  .ttt-board { display: grid; grid-template-columns: repeat(3, 96px); grid-template-rows: repeat(3, 96px); gap: 1px; background: var(--color-border-strong); }
+  .ttt-cell { display: grid; place-items: center; border: 0; background: var(--color-bg); color: var(--color-txt-main); font: 800 44px/1 var(--font-sans); font-stretch: 125%; font-variation-settings: 'wdth' 125; cursor: pointer; transition: background .2s; }
+  .ttt-cell:hover:not(:disabled) { background: var(--color-surface-2); }
   .ttt-cell:disabled { cursor: default; }
-  .ttt-cell.x { color: #fff; }
-  .ttt-cell.o { color: var(--color-green); }
-  .ttt-reset {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-txt-dim);
-    background: none;
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    padding: 0.4rem 0.8rem;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-  }
-  .ttt-reset:hover { border-color: rgba(255,255,255,0.22); color: var(--color-accent); }
+  .ttt-cell.o { color: var(--color-accent); }
+  .ttt-line { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; }
+  .ttt-line.show { opacity: 1; }
+  .ttt-line line { stroke-width: 2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 
-  /* ── STAGGERED ENTRANCE: skills + services ─────── */
-  .section.reveal .skill-tag,
-  .section.reveal .svc-card {
-    opacity: 0;
-    transform: translateY(8px);
+  @media (max-width: 860px) {
+    .hero__br { display: none; }
+    /* «PASICHNYK» at width 125 takes ~0.95em per letter, so 10vw fits a phone */
+    .hero__name { font-size: 10.2vw; }
+    .manifesto__stats { grid-template-columns: 1fr 1fr; }
+    .work { height: auto; }
+    .work__pin { position: static; height: auto; display: block; }
+    .work__track { flex-direction: column; transform: none !important; }
+    .panel { width: 100%; height: auto; grid-template-columns: 1fr; }
+    .panel__visual { height: 380px; }
+    .panel__meta { flex-wrap: wrap; margin-top: 26px; }
+    .work__bar { display: none; }
+    .kernel__grid, .kernel__notes { grid-template-columns: 1fr; }
+    .log { grid-template-columns: 1fr; gap: 4px; }
+    .stack { grid-template-columns: 1fr 1fr; }
+    .tool-row { grid-template-columns: 1fr; gap: 8px; }
+    .play { grid-template-columns: 1fr; }
+    .ttt-board { grid-template-columns: repeat(3, 84px); grid-template-rows: repeat(3, 84px); }
   }
-  .section.reveal.in .skill-tag,
-  .section.reveal.in .svc-card {
-    opacity: 1;
-    transform: none;
-  }
-  .cat-tags .skill-tag:nth-child(1) { transition-delay: 0.04s; }
-  .cat-tags .skill-tag:nth-child(2) { transition-delay: 0.08s; }
-  .cat-tags .skill-tag:nth-child(3) { transition-delay: 0.12s; }
-  .cat-tags .skill-tag:nth-child(4) { transition-delay: 0.16s; }
-  .cat-tags .skill-tag:nth-child(5) { transition-delay: 0.20s; }
-  .cat-tags .skill-tag:nth-child(6) { transition-delay: 0.24s; }
-  .svc-grid .svc-card:nth-child(1) { transition-delay: 0.05s; }
-  .svc-grid .svc-card:nth-child(2) { transition-delay: 0.10s; }
-  .svc-grid .svc-card:nth-child(3) { transition-delay: 0.15s; }
-  .svc-grid .svc-card:nth-child(4) { transition-delay: 0.20s; }
-  .svc-grid .svc-card:nth-child(5) { transition-delay: 0.25s; }
-  .svc-grid .svc-card:nth-child(6) { transition-delay: 0.30s; }
-
-  .svc-card:hover .svc-icon { color: var(--color-accent); transform: translateY(-1px); }
-  .svc-icon { transition: color 0.2s ease, transform 0.2s ease; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero .hero-name { animation: heroIn 0.5s 0.12s cubic-bezier(0.4,0,0.2,1) both; }
-    .cat-tags .skill-tag, .svc-grid .svc-card { transition-delay: 0s !important; }
-  }
+  @media (max-width: 520px) { .stack { grid-template-columns: 1fr; } }
 </style>
