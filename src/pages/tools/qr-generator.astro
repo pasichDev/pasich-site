@@ -20,14 +20,16 @@ const structuredData = {
   description="Create custom QR codes with colors, dot styles, logo. Supports URL, Email, Phone, Wi-Fi, vCard. Download PNG or SVG. Free, no sign-up."
   canonical="https://pasichdev.xyz/tools/qr-generator"
   structuredData={structuredData}
+  bleed
 >
-  <div class="container animate-fade-in" style="max-width:860px">
-    <header style="margin-top:3rem;margin-bottom:2rem">
-      <a href="/tools" class="back-link">← Tools</a>
-      <h1 style="font-size:clamp(1.25rem,3vw,1.75rem);letter-spacing:-0.02em;margin-bottom:.5rem">QR Code Generator</h1>
-      <p class="text-dim text-sm">Custom colors, dot styles, logo. Generates live as you type.</p>
-    </header>
+  <header class="page-hero">
+    <nav class="page-hero__crumbs mono up" aria-label="Breadcrumb"><a href="/">pasichdev</a><span><a href="/tools">tools</a></span><span>qr-generator</span></nav>
+    <h1 class="wide" data-scramble>QR code</h1>
+    <p class="page-hero__lede">Your colours, dot style and logo. URL, text, email, phone, Wi-Fi or vCard. Renders live as you type.</p>
+    <div class="page-hero__meta mono up"><span>Runs in your browser</span><span>PNG · SVG · Clipboard</span></div>
+  </header>
 
+  <div class="tool-shell">
     <div class="qr-layout">
 
       <!-- Controls -->
@@ -210,8 +212,8 @@ const structuredData = {
 
         <!-- Actions -->
         <div class="action-row">
-          <button id="btn-png" class="btn btn-primary" disabled>↓ PNG</button>
-          <button id="btn-svg" class="btn btn-outline" disabled>↓ SVG</button>
+          <button id="btn-png" class="btn btn-primary" disabled>Download PNG</button>
+          <button id="btn-svg" class="btn btn-outline" disabled>SVG</button>
           <button id="btn-copy" class="btn btn-outline" disabled>Copy</button>
         </div>
       </div>
@@ -220,12 +222,12 @@ const structuredData = {
       <div class="qr-preview-col">
         <div class="qr-preview-wrap" id="qr-wrap">
           <div id="qr-placeholder" class="qr-placeholder">
-            <Icon name="solar:qr-code-linear" width="48" height="48" style="opacity:.12" />
-            <p class="text-xs text-dim" style="margin-top:.75rem">Preview here</p>
+            <span class="qr-ph-grid" aria-hidden="true"></span>
+            <p class="mono up dim">Preview here</p>
           </div>
           <canvas id="qr-canvas" style="display:none;max-width:100%;border-radius:4px"></canvas>
         </div>
-        <p class="preview-note">Generates automatically</p>
+        <p class="preview-note mono up"><span class="dot"></span>Live preview</p>
       </div>
 
     </div>
@@ -377,8 +379,9 @@ const structuredData = {
       tmp.style.cssText = 'position:fixed;visibility:hidden;pointer-events:none';
       document.body.appendChild(tmp);
 
+      let qr: any;
       try {
-        new window.QRCode(tmp, { text: content, width: size, height: size, colorDark: fg, colorLight: bg, correctLevel: ecMap[ecLevel] });
+        qr = new window.QRCode(tmp, { text: content, width: size, height: size, colorDark: fg, colorLight: bg, correctLevel: ecMap[ecLevel] });
       } catch {
         document.body.removeChild(tmp); return;
       }
@@ -392,14 +395,25 @@ const structuredData = {
       const fgG = parseInt(fg.slice(3, 5), 16);
       const fgB = parseInt(fg.slice(5, 7), 16);
 
-      qrMatrix = Array.from({ length: src.height }, (_, row) =>
-        Array.from({ length: src.width }, (_, col) => {
-          const i = (row * src.width + col) * 4;
-          return Math.abs(imgData.data[i] - fgR) < 40 &&
-                 Math.abs(imgData.data[i + 1] - fgG) < 40 &&
-                 Math.abs(imgData.data[i + 2] - fgB) < 40;
-        })
-      );
+      // Use the real QR modules (e.g. 33×33) from qrcodejs's model. Sampling
+      // the rendered canvas gave a 256×256 "matrix" where every dot was smaller
+      // than a pixel: the Dots/Rounded styles did nothing and light colours
+      // came out muddy. Pixel sampling stays only as a fallback.
+      const model = qr?._oQRCode;
+      if (model && typeof model.getModuleCount === 'function') {
+        const count = model.getModuleCount();
+        qrMatrix = Array.from({ length: count }, (_, row) =>
+          Array.from({ length: count }, (_, col) => !!model.isDark(row, col)));
+      } else {
+        qrMatrix = Array.from({ length: src.height }, (_, row) =>
+          Array.from({ length: src.width }, (_, col) => {
+            const i = (row * src.width + col) * 4;
+            return Math.abs(imgData.data[i] - fgR) < 40 &&
+                   Math.abs(imgData.data[i + 1] - fgG) < 40 &&
+                   Math.abs(imgData.data[i + 2] - fgB) < 40;
+          })
+        );
+      }
 
       const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
       canvas.width = size; canvas.height = size;
@@ -407,7 +421,7 @@ const structuredData = {
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, size, size);
 
-      const n    = src.width;
+      const n    = qrMatrix.length;
       const cell = size / (n + margin * 2);
       for (let row = 0; row < n; row++)
         for (let col = 0; col < n; col++)
@@ -564,95 +578,98 @@ const structuredData = {
 </script>
 
 <style>
-  .qr-layout {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 2rem;
-    margin-bottom: 4rem;
-    align-items: start;
-  }
-  @media (max-width: 680px) { .qr-layout { grid-template-columns: 1fr; } }
+  .tool-shell { padding: clamp(50px, 7vw, 100px) var(--pad) clamp(80px, 10vw, 140px); }
+  .qr-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 460px); gap: clamp(30px, 5vw, 90px); align-items: start; }
 
-  .qr-controls { display: flex; flex-direction: column; gap: 1.25rem; }
+  .qr-controls { display: flex; flex-direction: column; gap: 28px; }
 
-  /* Field basics */
-  .field-group { display: flex; flex-direction: column; gap: .375rem; }
-  .field-label { font-size: .6rem; font-family: var(--font-mono); color: var(--color-txt-dim); text-transform: uppercase; letter-spacing: .07em; }
+  /* Fields */
+  .field-group { display: flex; flex-direction: column; gap: 10px; }
+  .field-label { font: 500 11px/1.4 var(--font-mono); color: var(--color-txt-dim); text-transform: uppercase; letter-spacing: .1em; }
+  .field-label span { color: var(--color-accent); }
   .field-input {
-    background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 2px;
-    color: var(--color-txt-main); font-family: var(--font-sans); font-size: .875rem;
-    padding: .625rem .875rem; outline: none; transition: border-color .15s; width: 100%;
+    width: 100%; height: 50px; padding: 0 16px;
+    border: 1px solid var(--color-border-strong); border-radius: 6px;
+    background: var(--color-surface); color: var(--color-txt-main);
+    font: 400 16px var(--font-sans); outline: none; transition: border-color .2s, box-shadow .2s;
   }
-  .field-input:focus { border-color: rgba(255,255,255,.2); }
-  .field-textarea { resize: vertical; min-height: 72px; }
-  .field-select { cursor: pointer; }
-
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .ctrl-divider { border: none; border-top: 1px solid var(--color-border); margin: .125rem 0; }
-
-  /* Type tabs */
-  .type-tabs {
-    display: flex; flex-wrap: wrap; gap: .375rem; margin-top: .375rem;
+  .field-input::placeholder { color: var(--color-txt-faint); }
+  .field-input:hover { border-color: rgba(235,231,222,.45); }
+  .field-input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(255,181,71,.16); }
+  .field-textarea { height: auto; min-height: 96px; padding: 14px 16px; resize: vertical; line-height: 1.5; }
+  .field-select {
+    appearance: none; cursor: pointer; padding-right: 44px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23ffb547' stroke-width='1.6'/></svg>");
+    background-repeat: no-repeat; background-position: right 16px center;
   }
-  .type-tab {
-    font-family: var(--font-mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .06em;
-    padding: .25rem .625rem; border: 1px solid var(--color-border); border-radius: 2px;
-    background: none; color: var(--color-txt-dim); cursor: pointer; transition: all .15s;
+  .field-select option { background: var(--color-surface-2); }
+  .content-panel { display: flex; flex-direction: column; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .ctrl-divider { height: 1px; background: var(--color-border); }
+
+  /* Segmented pills: type tabs, dot styles, EC level */
+  .type-tabs, .dot-style-row, .ec-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .type-tab, .dot-card, .ec-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    height: 40px; padding: 0 16px;
+    border: 1px solid var(--color-border-strong); border-radius: 999px;
+    background: none; color: var(--color-txt-dim);
+    font: 500 12px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
+    cursor: pointer; transition: color .2s, border-color .2s, background .2s;
   }
-  .type-tab:hover { color: var(--color-accent); border-color: rgba(255,255,255,.2); }
-  .type-tab.active { border-color: rgba(255,255,255,.35); color: var(--color-accent); background: rgba(255,255,255,.04); }
+  .type-tab:hover, .dot-card:hover, .ec-btn:hover { color: var(--color-txt-main); border-color: rgba(235,231,222,.5); }
+  .type-tab.active, .dot-card.active, .ec-btn.active { color: var(--color-accent-ink); background: var(--color-accent); border-color: var(--color-accent); }
+  .ec-btn { width: 40px; padding: 0; }
+  .ec-hint { margin-left: 8px; font: 400 12px var(--font-mono); color: var(--color-txt-dim); }
 
-  /* Colors */
-  .color-wrap { display: flex; align-items: center; gap: .625rem; }
-  .color-input { width: 40px; height: 36px; border: 1px solid var(--color-border); border-radius: 2px; background: none; cursor: pointer; padding: 2px; flex-shrink: 0; }
-  .color-label { font-family: var(--font-mono); font-size: .7rem; color: var(--color-txt-dim); }
+  /* Colours */
+  .color-wrap { display: flex; align-items: center; gap: 12px; height: 50px; padding: 0 8px; border: 1px solid var(--color-border-strong); border-radius: 6px; background: var(--color-surface); }
+  .color-input { width: 34px; height: 34px; flex-shrink: 0; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; }
+  .color-input::-webkit-color-swatch-wrapper { padding: 0; }
+  .color-input::-webkit-color-swatch { border: 1px solid var(--color-border-strong); border-radius: 50%; }
+  .color-input::-moz-color-swatch { border: 1px solid var(--color-border-strong); border-radius: 50%; }
+  .color-label { font: 400 13px var(--font-mono); color: var(--color-txt-main); text-transform: uppercase; }
 
-  /* Dot style */
-  .dot-style-row { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .25rem; }
-  .dot-card {
-    display: inline-flex; align-items: center; gap: .5rem;
-    padding: .4rem .75rem; border: 1px solid var(--color-border); border-radius: 2px;
-    color: var(--color-txt-dim); cursor: pointer; font-size: .75rem; transition: all .15s;
-  }
-  .dot-card:hover { border-color: rgba(255,255,255,.2); color: var(--color-accent); }
-  .dot-card.active { border-color: rgba(255,255,255,.35); color: var(--color-accent); background: rgba(255,255,255,.04); }
-
-  /* EC buttons */
-  .ec-row { display: flex; align-items: center; gap: .375rem; flex-wrap: wrap; margin-top: .25rem; }
-  .ec-btn {
-    width: 32px; height: 32px; font-family: var(--font-mono); font-size: .7rem; font-weight: 600;
-    border: 1px solid var(--color-border); border-radius: 2px; background: none;
-    color: var(--color-txt-dim); cursor: pointer; transition: all .15s;
-  }
-  .ec-btn:hover { border-color: rgba(255,255,255,.2); color: var(--color-accent); }
-  .ec-btn.active { border-color: rgba(255,255,255,.35); color: var(--color-accent); background: rgba(255,255,255,.04); }
-  .ec-hint { font-family: var(--font-mono); font-size: .55rem; color: var(--color-txt-dim); margin-left: .25rem; }
-
-  /* Range inputs */
-  .range-input { width: 100%; accent-color: var(--color-accent); margin-top: .25rem; }
+  /* Range: hairline track, amber thumb */
+  .range-input { width: 100%; height: 22px; margin: 0; background: none; appearance: none; cursor: pointer; }
+  .range-input::-webkit-slider-runnable-track { height: 2px; background: var(--color-border-strong); }
+  .range-input::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; margin-top: -8px; border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 0 5px rgba(255,181,71,.15); }
+  .range-input::-moz-range-track { height: 2px; background: var(--color-border-strong); }
+  .range-input::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: var(--color-accent); }
+  .range-input:focus-visible { outline: none; }
+  .range-input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px rgba(255,181,71,.35); }
 
   /* Logo upload */
   .logo-upload {
-    display: flex; align-items: center; gap: .5rem;
-    padding: .625rem .875rem; border: 1px dashed var(--color-border); border-radius: 2px;
-    cursor: pointer; font-size: .8rem; color: var(--color-txt-dim); transition: border-color .15s;
+    display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 16px;
+    border: 1px dashed var(--color-border-strong); border-radius: 6px;
+    color: var(--color-txt-dim); font: 400 13px var(--font-mono); cursor: pointer; transition: border-color .2s, color .2s;
   }
-  .logo-upload:hover { border-color: rgba(255,255,255,.25); color: var(--color-accent); }
+  .logo-upload:hover { border-color: var(--color-accent); color: var(--color-accent); }
 
-  /* Actions */
-  .action-row { display: flex; gap: .5rem; flex-wrap: wrap; padding-top: .25rem; }
+  .action-row { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 8px; }
 
-  /* Preview */
-  .qr-preview-col { position: sticky; top: 80px; }
+  /* Preview: a framed «screen» with corner marks */
+  .qr-preview-col { position: sticky; top: calc(var(--nav-height) + 24px); }
   .qr-preview-wrap {
-    border: 1px solid var(--color-border); border-radius: 2px; aspect-ratio: 1;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--color-surface); overflow: hidden;
+    position: relative; display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 1; padding: 28px; overflow: hidden;
+    border: 1px solid var(--color-border); border-radius: 6px;
+    background: radial-gradient(circle at 50% 40%, rgba(255,181,71,.07), transparent 60%), var(--color-surface);
   }
-  .qr-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .preview-note {
-    font-family: var(--font-mono); font-size: .52rem; text-transform: uppercase;
-    letter-spacing: .06em; color: var(--color-txt-dim); text-align: center;
-    margin-top: .75rem; opacity: .6;
+  .qr-preview-wrap::before, .qr-preview-wrap::after { content: ''; position: absolute; width: 22px; height: 22px; border-color: var(--color-accent); border-style: solid; }
+  .qr-preview-wrap::before { left: 12px; top: 12px; border-width: 1px 0 0 1px; }
+  .qr-preview-wrap::after { right: 12px; bottom: 12px; border-width: 0 1px 1px 0; }
+  .qr-placeholder { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .qr-ph-grid { width: 90px; height: 90px; opacity: .18; background: repeating-conic-gradient(var(--color-txt-main) 0 25%, transparent 0 50%) 0 0 / 18px 18px; }
+  .preview-note { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; color: var(--color-txt-dim); }
+  .preview-note .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-green); animation: pulse 2s infinite; }
+
+  @media (max-width: 860px) {
+    .qr-layout { grid-template-columns: 1fr; }
+    .qr-preview-col { position: static; order: -1; }
+    .qr-preview-wrap { max-width: 420px; margin: 0 auto; }
   }
+  @media (max-width: 520px) { .two-col { grid-template-columns: 1fr; } }
 </style>
