@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/tool-page.css';
 import { Icon } from 'astro-icon/components';
 
 const structuredData = {
@@ -20,25 +21,28 @@ const structuredData = {
   description="Free Flutter icon generator: upload one PNG, get icons for Android, iOS, macOS, Windows, Linux and Web in a ZIP. Edit background, padding, logo. Runs in browser, nothing uploaded."
   canonical="https://pasichdev.xyz/tools/icon-generator"
   structuredData={structuredData}
+  bleed
 >
-  <div class="container animate-fade-in" style="max-width:800px">
+  <header class="page-hero">
+    <nav class="page-hero__crumbs mono up" aria-label="Breadcrumb"><a href="/">pasichdev</a><span><a href="/tools">tools</a></span><span>icon-generator</span></nav>
+    <h1 class="wide" data-scramble>Icon generator</h1>
+    <p class="page-hero__lede">One PNG in. Edit background and layout, get icons for every Flutter platform in a single ZIP.</p>
+    <div class="page-hero__meta mono up"><span>Android · iOS · macOS · Windows · Linux · Web</span><span>Nothing is uploaded</span></div>
+  </header>
 
-    <header style="margin-top:3rem;margin-bottom:2rem">
-      <a href="/tools" class="back-link">← Tools</a>
-      <h1 style="font-size:clamp(1.25rem,3vw,1.75rem);letter-spacing:-0.02em;margin-bottom:.5rem">Flutter Icon Generator</h1>
-      <p class="text-dim text-sm">Upload one PNG — edit background & layout, download icons for all platforms as ZIP.</p>
-    </header>
+  <div class="tool-shell tool-shell--narrow">
 
     <!-- Drop zone -->
     <div id="drop-zone" class="drop-zone">
-      <Icon name="solar:upload-linear" width="32" height="32" style="color:var(--color-txt-dim);margin-bottom:1rem" />
-      <p class="text-dim text-sm">Drop PNG here or <label for="file-input" class="file-label">browse</label></p>
-      <p class="text-xs text-dim" style="margin-top:.5rem;opacity:.5">1024×1024 px recommended</p>
+      <span class="drop-zone__mark" aria-hidden="true"><Icon name="solar:upload-linear" width="28" height="28" /></span>
+      <p class="drop-zone__title wide">Drop a PNG</p>
+      <p class="drop-zone__sub">or <label for="file-input" class="file-label">browse your files</label></p>
+      <p class="drop-zone__hint mono up">1024 × 1024 px recommended · PNG, JPEG, WebP</p>
       <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" style="display:none" />
     </div>
 
     <!-- Main section -->
-    <div id="preview-section" style="display:none;margin-bottom:4rem">
+    <div id="preview-section" style="display:none">
 
       <!-- Source info -->
       <div class="source-header">
@@ -46,14 +50,14 @@ const structuredData = {
           <img id="preview-img" src="" alt="Preview" class="source-thumb" />
         </div>
         <div class="source-meta">
-          <p id="preview-name" class="text-sm font-medium" style="color:var(--color-accent)"></p>
-          <p id="preview-dims" class="text-xs text-dim" style="margin-top:.2rem"></p>
-          <button id="btn-reset" class="btn btn-outline" style="font-size:.75rem;padding:.35rem .75rem;margin-top:.75rem">Change image</button>
+          <p id="preview-name" class="source-name"></p>
+          <p id="preview-dims" class="source-dims mono up"></p>
+          <button id="btn-reset" class="btn btn-outline btn-sm">Change image</button>
         </div>
       </div>
 
       <!-- Editor panel -->
-      <div class="section-label">Icon Editor</div>
+      <div class="section-label"><span>01</span>Editor</div>
       <div class="editor-panel">
 
         <div class="editor-left">
@@ -66,16 +70,16 @@ const structuredData = {
           <div class="ctrl-group">
             <div class="ctrl-label">Background</div>
             <div class="bg-options">
-              <button class="bg-opt active" data-bg="transparent">
+              <button class="pill pill--soft bg-opt active" data-bg="transparent">
                 <i class="bg-checker-icon"></i>None
               </button>
-              <button class="bg-opt" data-bg="#FFFFFF">
+              <button class="pill pill--soft bg-opt" data-bg="#FFFFFF">
                 <i class="bg-swatch" style="background:#fff"></i>White
               </button>
-              <button class="bg-opt" data-bg="#000000">
+              <button class="pill pill--soft bg-opt" data-bg="#000000">
                 <i class="bg-swatch" style="background:#111;border-color:#444"></i>Black
               </button>
-              <button class="bg-opt" id="bg-custom-btn">
+              <button class="pill pill--soft bg-opt" id="bg-custom-btn">
                 <i class="bg-swatch" id="bg-custom-swatch" style="background:#4F46E5"></i>Custom
               </button>
             </div>
@@ -87,7 +91,7 @@ const structuredData = {
               <span class="ctrl-label">Padding</span>
               <span class="ctrl-val" id="padding-val">0%</span>
             </div>
-            <input type="range" class="ctrl-slider" id="ctrl-padding" min="0" max="40" value="0" step="1" />
+            <input type="range" class="range" id="ctrl-padding" min="0" max="40" value="0" step="1" />
           </div>
 
           <div class="ctrl-group">
@@ -95,7 +99,7 @@ const structuredData = {
               <span class="ctrl-label">Scale</span>
               <span class="ctrl-val" id="scale-val">100%</span>
             </div>
-            <input type="range" class="ctrl-slider" id="ctrl-scale" min="40" max="100" value="100" step="1" />
+            <input type="range" class="range" id="ctrl-scale" min="40" max="100" value="100" step="1" />
           </div>
 
           <div class="ctrl-group">
@@ -103,7 +107,7 @@ const structuredData = {
               <span class="ctrl-label">Offset X</span>
               <span class="ctrl-val" id="offsetx-val">0%</span>
             </div>
-            <input type="range" class="ctrl-slider" id="ctrl-offsetx" min="-30" max="30" value="0" step="0.5" />
+            <input type="range" class="range" id="ctrl-offsetx" min="-30" max="30" value="0" step="0.5" />
           </div>
 
           <div class="ctrl-group">
@@ -111,34 +115,32 @@ const structuredData = {
               <span class="ctrl-label">Offset Y</span>
               <span class="ctrl-val" id="offsety-val">0%</span>
             </div>
-            <input type="range" class="ctrl-slider" id="ctrl-offsety" min="-30" max="30" value="0" step="0.5" />
+            <input type="range" class="range" id="ctrl-offsety" min="-30" max="30" value="0" step="0.5" />
           </div>
 
-          <button id="btn-reset-params" class="btn btn-outline" style="font-size:.7rem;padding:.3rem .75rem;margin-top:.5rem;width:100%;justify-content:center">
-            Reset edits
-          </button>
+          <button id="btn-reset-params" class="btn btn-outline btn-sm reset-params">Reset edits</button>
         </div>
       </div>
 
       <!-- Platform toggles -->
-      <div class="section-label" style="margin-top:2rem">Platforms</div>
+      <div class="section-label"><span>02</span>Platforms</div>
       <div class="platform-toggles" id="platform-toggles">
-        <button class="ptoggle active" data-platform="android">
+        <button class="pill ptoggle active" data-platform="android">
           <Icon name="solar:smartphone-linear" width="14" height="14" /> Android
         </button>
-        <button class="ptoggle active" data-platform="ios">
+        <button class="pill ptoggle active" data-platform="ios">
           <Icon name="mdi:apple" width="14" height="14" /> iOS
         </button>
-        <button class="ptoggle active" data-platform="macos">
+        <button class="pill ptoggle active" data-platform="macos">
           <Icon name="solar:monitor-linear" width="14" height="14" /> macOS
         </button>
-        <button class="ptoggle active" data-platform="windows">
+        <button class="pill ptoggle active" data-platform="windows">
           <Icon name="solar:window-frame-linear" width="14" height="14" /> Windows
         </button>
-        <button class="ptoggle active" data-platform="linux">
+        <button class="pill ptoggle active" data-platform="linux">
           <Icon name="solar:server-linear" width="14" height="14" /> Linux
         </button>
-        <button class="ptoggle active" data-platform="web">
+        <button class="pill ptoggle active" data-platform="web">
           <Icon name="solar:global-linear" width="14" height="14" /> Web
         </button>
       </div>
@@ -302,7 +304,7 @@ const structuredData = {
 
       <!-- Download -->
       <div class="download-bar">
-        <button id="btn-generate" class="btn btn-primary">
+        <button id="btn-generate" class="btn btn-primary btn-lg">
           <Icon name="solar:download-linear" />
           Download ZIP
         </button>
@@ -730,301 +732,78 @@ const structuredData = {
 </script>
 
 <style>
-  /* ── Section label ─────────────────────────────────────────────────────── */
-  .section-label {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-txt-dim);
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.625rem;
-    border-bottom: 1px solid var(--color-border);
-  }
 
-  /* ── Drop zone ─────────────────────────────────────────────────────────── */
+  /* Section label: amber step number + hairline */
+  .section-label { display: flex; align-items: baseline; gap: 14px; margin: 56px 0 22px; padding-bottom: 14px; border-bottom: 1px solid var(--color-border); color: var(--color-txt-main); font: 800 clamp(22px, 2.2vw, 30px)/1 var(--font-sans); font-stretch: 125%; font-variation-settings: 'wdth' 125; text-transform: uppercase; }
+  .section-label span { color: var(--color-accent); font: 500 12px var(--font-mono); letter-spacing: .1em; }
+
+  /* ── Drop zone ── */
   .drop-zone {
-    border: 1px dashed var(--color-border);
-    border-radius: 2px;
-    padding: 3rem 2rem;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.15s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2rem;
+    position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 380px; padding: 60px 24px; text-align: center; cursor: pointer;
+    border: 1px dashed var(--color-border-strong); border-radius: 6px;
+    background: radial-gradient(circle at 50% 30%, rgba(255,181,71,.06), transparent 60%), var(--color-surface);
+    transition: border-color .25s, background-color .25s;
   }
-  .drop-zone:hover, .drop-zone.drag-over { border-color: rgba(255,255,255,.3); }
-  .file-label { color: var(--color-accent); cursor: pointer; text-decoration: underline; }
+  .drop-zone:hover, .drop-zone.drag-over { border-color: var(--color-accent); }
+  .drop-zone.drag-over { background-color: rgba(255,181,71,.05); }
+  .drop-zone__mark { display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 26px; border: 1px solid var(--color-border-strong); border-radius: 50%; color: var(--color-accent); transition: transform .5s var(--ease); }
+  .drop-zone:hover .drop-zone__mark { transform: translateY(-4px); }
+  .drop-zone__title { color: var(--color-txt-main); font-size: clamp(30px, 4.4vw, 64px); font-weight: 800; line-height: 1; }
+  .drop-zone__sub { margin-top: 14px; font-size: 17px; }
+  .drop-zone__hint { margin-top: 22px; color: var(--color-txt-faint); }
+  .file-label { color: var(--color-accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 
-  /* ── Source info ───────────────────────────────────────────────────────── */
-  .source-header {
-    display: flex;
-    gap: 1.25rem;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-  }
-  .source-thumb-wrap {
-    width: 64px; height: 64px;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    overflow: hidden;
-    flex-shrink: 0;
-    background: var(--color-surface);
-  }
+  /* ── Source ── */
+  .source-header { display: flex; align-items: center; gap: 20px; padding: 18px; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-surface); }
+  .source-thumb-wrap { width: 72px; height: 72px; flex-shrink: 0; overflow: hidden; border: 1px solid var(--color-border); border-radius: 14px; background: repeating-conic-gradient(#202022 0 25%, #18181a 0 50%) 0 0 / 10px 10px; }
   .source-thumb { width: 100%; height: 100%; object-fit: contain; }
+  .source-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; flex: 1; }
+  .source-name { color: var(--color-txt-main); font-size: 18px; font-weight: 600; }
+  .source-dims { color: var(--color-txt-dim); }
+  .source-meta .btn { margin-left: auto; }
+  .btn-sm { height: 38px; padding: 0 16px; font-size: 11px; }
 
-  /* ── Editor panel ──────────────────────────────────────────────────────── */
-  .editor-panel {
-    display: grid;
-    grid-template-columns: 256px 1fr;
-    gap: 1.5rem;
-    margin-bottom: 0;
-    padding: 1.25rem;
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    background: rgba(10,10,10,.5);
-  }
-  @media (max-width: 580px) {
-    .editor-panel { grid-template-columns: 1fr; }
-  }
-
-  .editor-canvas {
-    display: block;
-    width: 256px;
-    height: 256px;
-    cursor: grab;
-    background: repeating-conic-gradient(#2a2a2a 0% 25%, #181818 0% 50%) 0 0 / 12px 12px;
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    touch-action: none;
-  }
+  /* ── Editor ── */
+  .editor-panel { display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 4vw, 56px); padding: clamp(18px, 2.4vw, 30px); border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-surface); }
+  .editor-canvas { display: block; width: 256px; height: 256px; cursor: grab; touch-action: none; border: 1px solid var(--color-border-strong); border-radius: 4px; background: repeating-conic-gradient(#232325 0% 25%, #17171a 0% 50%) 0 0 / 12px 12px; }
   .editor-canvas:active { cursor: grabbing; }
+  .editor-hint { margin-top: 12px; color: var(--color-txt-faint); font: 400 11px var(--font-mono); letter-spacing: .08em; text-align: center; text-transform: uppercase; }
+  .editor-right { display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+  .ctrl-group { display: grid; gap: 10px; }
+  .ctrl-label-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .ctrl-label { color: var(--color-txt-dim); font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+  .ctrl-val { min-width: 3rem; color: var(--color-accent); font: 500 12px var(--font-mono); text-align: right; }
+  .reset-params { align-self: flex-start; }
 
-  .editor-hint {
-    font-family: var(--font-mono);
-    font-size: 0.52rem;
-    color: var(--color-txt-dim);
-    text-align: center;
-    margin-top: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: .7;
-  }
+  /* Background choices and platform toggles: .pill from styles/tool-page.css */
+  .bg-options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .bg-checker-icon { display: inline-block; width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; background: repeating-conic-gradient(#777 0% 25%, #3a3a3a 0% 50%) 0 0 / 7px 7px; }
+  .bg-swatch { display: inline-block; width: 14px; height: 14px; flex-shrink: 0; border: 1px solid rgba(235,231,222,.3); border-radius: 50%; }
+  #bg-color-input { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
 
-  /* ── Controls ──────────────────────────────────────────────────────────── */
-  .editor-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  /* ── Platforms ── */
+  .platform-toggles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .platform-previews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; overflow: hidden; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-border); }
+  .platform-card { display: flex; flex-direction: column; padding: 20px; background: var(--color-surface); transition: opacity .25s; }
+  .pcard-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+  .pcard-name { color: var(--color-txt-main); font: 800 18px/1 var(--font-sans); font-stretch: 125%; font-variation-settings: 'wdth' 125; text-transform: uppercase; }
+  .pcard-count { color: var(--color-accent); font: 400 11px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .pcard-previews { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; flex: 1; margin-bottom: 18px; }
+  .pcard-preview-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .pcard-preview-item span { color: var(--color-txt-dim); font: 400 10px var(--font-mono); }
+  .icon-preview { display: block; background: repeating-conic-gradient(#232325 0% 25%, #17171a 0% 50%) 0 0 / 8px 8px; }
+  .pcard-files { padding-top: 12px; border-top: 1px solid var(--color-border); color: var(--color-txt-dim); font: 400 11px/1.6 var(--font-mono); }
 
-  .ctrl-group { margin-bottom: .875rem; }
+  /* ── Download ── */
+  .download-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--color-border); }
+  .download-bar p { font: 400 12px var(--font-mono); color: var(--color-txt-dim); }
 
-  .ctrl-label-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: .375rem;
-  }
-
-  .ctrl-label {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-txt-dim);
-    display: block;
-    margin-bottom: .375rem;
-  }
-
-  .ctrl-label-row .ctrl-label { margin-bottom: 0; }
-
-  .ctrl-val {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--color-accent);
-    min-width: 2.5rem;
-    text-align: right;
-  }
-
-  .ctrl-slider {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 3px;
-    background: var(--color-border);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
-  .ctrl-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 13px; height: 13px;
-    background: var(--color-accent);
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  .ctrl-slider::-moz-range-thumb {
-    width: 13px; height: 13px;
-    background: var(--color-accent);
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-  }
-
-  /* ── Background options ────────────────────────────────────────────────── */
-  .bg-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .375rem;
-    margin-top: .375rem;
-  }
-
-  .bg-opt {
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: .25rem .5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    background: none;
-    color: var(--color-txt-dim);
-    cursor: pointer;
-    transition: border-color .15s, color .15s;
-  }
-  .bg-opt:hover { border-color: rgba(255,255,255,.2); color: var(--color-accent); }
-  .bg-opt.active { border-color: rgba(255,255,255,.35); color: var(--color-accent); background: rgba(255,255,255,.04); }
-
-  .bg-checker-icon {
-    display: inline-block;
-    width: 10px; height: 10px;
-    background: repeating-conic-gradient(#555 0% 25%, #333 0% 50%) 0 0 / 5px 5px;
-    flex-shrink: 0;
-  }
-
-  .bg-swatch {
-    display: inline-block;
-    width: 10px; height: 10px;
-    border: 1px solid rgba(255,255,255,.2);
-    flex-shrink: 0;
-  }
-
-  #bg-color-input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-    width: 0; height: 0;
-  }
-
-  /* ── Platform toggles ──────────────────────────────────────────────────── */
-  .platform-toggles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .ptoggle {
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: .3rem .75rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    background: none;
-    color: var(--color-txt-dim);
-    cursor: pointer;
-    transition: border-color .15s, color .15s, background .15s;
-  }
-  .ptoggle.active {
-    border-color: rgba(255,255,255,.35);
-    color: var(--color-accent);
-    background: rgba(255,255,255,.04);
-  }
-
-  /* ── Platform cards ────────────────────────────────────────────────────── */
-  .platform-previews {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: .875rem;
-    margin-bottom: 1.75rem;
-  }
-  @media (max-width: 540px) { .platform-previews { grid-template-columns: 1fr; } }
-
-  .platform-card {
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    padding: 1rem;
-    background: var(--color-surface);
-    transition: opacity .2s;
-  }
-
-  .pcard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: .875rem;
-  }
-  .pcard-name {
-    font-family: var(--font-mono);
-    font-size: .7rem;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    color: var(--color-txt-main);
-  }
-  .pcard-count {
-    font-family: var(--font-mono);
-    font-size: .55rem;
-    color: var(--color-txt-dim);
-  }
-
-  .pcard-previews {
-    display: flex;
-    align-items: flex-end;
-    gap: .75rem;
-    margin-bottom: .75rem;
-    flex-wrap: wrap;
-  }
-  .pcard-preview-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .3rem;
-  }
-  .pcard-preview-item span {
-    font-family: var(--font-mono);
-    font-size: .5rem;
-    color: var(--color-txt-dim);
-  }
-
-  .icon-preview {
-    display: block;
-    background: repeating-conic-gradient(#252525 0% 25%, #181818 0% 50%) 0 0 / 8px 8px;
-  }
-
-  .pcard-files {
-    font-family: var(--font-mono);
-    font-size: .55rem;
-    color: var(--color-txt-dim);
-    border-top: 1px solid var(--color-border);
-    padding-top: .625rem;
-    line-height: 1.6;
-  }
-
-  /* ── Download bar ──────────────────────────────────────────────────────── */
-  .download-bar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  @media (max-width: 960px) { .platform-previews { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) {
+    .editor-panel { grid-template-columns: 1fr; justify-items: center; }
+    .editor-right { width: 100%; }
+    .platform-previews { grid-template-columns: 1fr; }
+    .source-meta .btn { margin-left: 0; }
   }
 </style>

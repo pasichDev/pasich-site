@@ -1,6 +1,5 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-import { Icon } from 'astro-icon/components';
 import '../styles/global.css';
 export interface Props {
   title: string;
@@ -11,6 +10,8 @@ export interface Props {
   noIndex?: boolean;
   hideNav?: boolean;
   hideFooter?: boolean;
+  /** Page draws its own top spacing (full-bleed hero); otherwise content clears the nav. */
+  bleed?: boolean;
   structuredData?: object;
 }
 
@@ -23,8 +24,18 @@ const {
   noIndex = false,
   hideNav = false,
   hideFooter = false,
+  bleed = false,
   structuredData
 } = Astro.props;
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+const navLinks = [
+  { href: '/#work', label: 'Work', match: '/apps' },
+  { href: '/cv', label: 'CV', match: '/cv' },
+  { href: '/tools', label: 'Tools', match: '/tools' },
+  { href: '/links', label: 'Links', match: '/links' },
+];
 
 const siteName = 'pasichDev';
 const fullTitle = title.includes('pasichDev') ? title : `${title} | ${siteName}`;
@@ -55,7 +66,7 @@ const jsonLd = structuredData ?? defaultStructuredData;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,336 +107,291 @@ const jsonLd = structuredData ?? defaultStructuredData;
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <noscript><style>.reveal { opacity: 1; transform: none; animation: none; }</style></noscript>
   
   <ViewTransitions />
 </head>
-<body class="antialiased">
-  <!-- Background Grid -->
-  <div class="bg-grid"></div>
-  
-  <!-- Navigation -->
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="cursor no-print" aria-hidden="true" data-cursor transition:persist></div>
+
   {!hideNav && (
-    <nav class="glass no-print" style="position: fixed; top: 0; width: 100%; z-index: 50; border-bottom: 1px solid var(--color-border); box-shadow: 0 10px 30px -18px rgba(0,0,0,0.9);">
-      <div class="container flex items-center justify-between" style="height: var(--nav-height);">
-        <a href="/" class="flex items-center gap-2" style="text-decoration: none;">
-          <img src="/assets/favicon.svg" width="24" height="24" alt="" class="nav-logo">
-          <span class="font-medium text-sm tracking-tight">pasichDev</span>
-        </a>
-
-        <div class="nav-links flex items-center gap-6 text-xs font-medium tracking-wide">
-          <a href="/" class="text-dim nav-link">INDEX</a>
-          <a href="/tools" class="text-dim nav-link">TOOLS</a>
-          <a href="/#play" class="text-dim nav-link">PLAY</a>
-          <a href="/cv" class="text-dim nav-link">CV</a>
-          <a href="https://github.com/pasichDev" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-dim nav-link">
-            GITHUB <Icon name="solar:arrow-right-up-linear" />
-          </a>
-        </div>
-
-        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </nav>
+    <header class="nav no-print" data-nav>
+      <a href="/" class="nav__home mono up" aria-label="pasichDev — home">pasichdev<span class="amber">.</span>xyz</a>
+      <nav class="nav__links mono up" aria-label="Main">
+        {navLinks.map((l) => (
+          <a href={l.href} class:list={[{ 'is-active': isActive(l.match) }]} aria-current={isActive(l.match) ? 'page' : undefined}>{l.label}</a>
+        ))}
+        <a href="https://github.com/pasichDev" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </nav>
+      <button class="nav__menu mono up" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>Menu</button>
+    </header>
   )}
 
-  <div class="nav-overlay no-print" id="nav-overlay"></div>
-  <div class="nav-drawer no-print" id="nav-drawer">
-    <div class="nav-drawer-header">
-      <span class="nav-drawer-logo">pasichDev</span>
-      <button class="nav-drawer-close" id="nav-drawer-close" aria-label="Close menu">
-        <Icon name="mdi:close" width="18" height="18" />
-      </button>
+  <div class="menu no-print" id="menu" role="dialog" aria-modal="true" aria-label="Menu" data-menu hidden>
+    <div class="menu__top">
+      <span class="mono up dim">pasichdev<span class="amber">.</span>xyz</span>
+      <button class="mono up" type="button" data-menu-close>Close ✕</button>
     </div>
-    <div class="nav-drawer-links">
-      <a href="/" class="nav-drawer-link">Index</a>
-      <a href="/tools" class="nav-drawer-link">Tools</a>
-      <a href="/#play" class="nav-drawer-link">Play</a>
-      <a href="/cv" class="nav-drawer-link">CV</a>
-      <a href="https://github.com/pasichDev" target="_blank" rel="noopener noreferrer" class="nav-drawer-link nav-drawer-ext">
-        GitHub <Icon name="solar:arrow-right-up-linear" width="14" height="14" />
-      </a>
-    </div>
+    <nav class="menu__links" aria-label="Main">
+      <a class="wide" href="/">Index</a>
+      {navLinks.map((l) => <a class="wide" href={l.href}>{l.label}</a>)}
+      <a class="wide" href="#contact">Contact</a>
+    </nav>
+    <div class="menu__foot mono up dim"><span>Rivne · UTC+2</span><a href="https://github.com/pasichDev" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
   </div>
-  
-  <!-- Main Content -->
-  <main style={`padding-top: ${hideNav ? '2rem' : 'calc(var(--nav-height) + 2rem)'}; padding-bottom: 5rem; min-height: 100vh;`}>
+
+  <main id="main" class:list={['site-main', { 'site-main--pad': !bleed && !hideNav }]}>
     <slot />
   </main>
-  
-  <!-- Footer / Contact -->
+
   {!hideFooter && (
-    <footer id="contact" class="no-print site-footer">
-      <div class="container">
-        <div class="contact-grid">
-        <div class="contact-intro">
-          <h2 class="contact-title">Have a problem that fights back?</h2>
-          <p class="contact-lead">Systems, security, or mobile — if it's low-level and it matters, I want to hear about it. Fastest to reach on Telegram.</p>
-        </div>
-        <div class="contact-actions">
-          <a href="https://t.me/pasichdev" target="_blank" rel="noopener noreferrer" class="contact-cta">
-            <Icon name="solar:plain-linear" width="16" height="16" />
-            <span>Message me on Telegram</span>
-            <Icon name="solar:arrow-right-up-linear" width="14" height="14" class="cta-arrow" />
-          </a>
-          <div class="contact-links">
-            <a href="https://github.com/pasichDev" target="_blank" rel="noopener noreferrer" class="contact-link">
-              <Icon name="solar:code-square-linear" width="15" height="15" /> GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/pasichdev/" target="_blank" rel="noopener noreferrer" class="contact-link">
-              <Icon name="mdi:linkedin" width="15" height="15" /> LinkedIn
-            </a>
-            <a href="mailto:apasichnik9@gmail.com" class="contact-link">
-              <Icon name="solar:letter-linear" width="15" height="15" /> Email
-            </a>
-          </div>
-        </div>
-        </div>
-        <div class="footer-bottom">
-          <span class="footer-meta">Ukraine · UTC+2</span>
-          <span class="footer-copy">© 2026 pasichDev</span>
-        </div>
+    <footer id="contact" class="foot no-print">
+      <span class="mono up amber">Low-level and it matters?</span>
+      <a class="foot__big" href="https://t.me/pasichdev" target="_blank" rel="noopener noreferrer" data-stretch>Open a tunnel</a>
+      <p class="foot__lede">Systems, security or mobile. Fastest on Telegram — I usually answer the same day.</p>
+      <div class="foot__links mono up">
+        <a href="https://t.me/pasichdev" target="_blank" rel="noopener noreferrer">Fastest<b>Telegram</b></a>
+        <a href="https://github.com/pasichDev" target="_blank" rel="noopener noreferrer">Code<b>GitHub</b></a>
+        <a href="https://www.linkedin.com/in/pasichdev/" target="_blank" rel="noopener noreferrer">Work<b>LinkedIn</b></a>
+        <a href="mailto:apasichnik9@gmail.com">Long form<b>Email</b></a>
       </div>
+      <div class="foot__bottom mono up dim"><span>© 2026 pasichDev</span><span>Rivne, Ukraine · UTC+2</span><span>Encrypted by default</span></div>
     </footer>
   )}
-  
-  <style>
-    .nav-link:hover { color: var(--color-accent); }
-    .nav-logo { display: block; transition: transform 0.3s; }
-    nav a:hover .nav-logo { transform: rotate(12deg); }
 
-    /* ── hamburger ───────────────────────────────── */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 32px;
-      height: 32px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .nav-hamburger span {
-      display: block;
-      width: 100%;
-      height: 1px;
-      background: var(--color-txt-main);
-      transition: opacity 0.2s;
-    }
-    .nav-hamburger:hover span { background: var(--color-accent); }
+  <style is:global>
+    .skip { position: fixed; left: 12px; top: -60px; z-index: 200; padding: 10px 14px; background: var(--color-accent); color: var(--color-accent-ink); font: 500 12px var(--font-mono); }
+    .skip:focus { top: 12px; }
+    .scr-box { position: relative; display: block; }
+    .scr-live { position: absolute; inset: 0; pointer-events: none; }
+    .cursor { will-change: transform; }
 
-    /* ── overlay ─────────────────────────────────── */
-    .nav-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 60;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-    }
-    .nav-overlay.is-open { opacity: 1; pointer-events: auto; }
+    /* ── Navigation ─────────────────────────────── */
+    .nav { position: fixed; inset: 0 0 auto; z-index: 60; display: flex; align-items: center; justify-content: space-between; height: var(--nav-height); padding: 0 var(--pad); transition: background .4s, backdrop-filter .4s, border-color .4s; border-bottom: 1px solid transparent; }
+    .nav.is-scrolled { background: rgba(9, 9, 10, .72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--color-border); }
+    .nav__home { color: var(--color-txt-main); }
+    .nav__links { display: flex; gap: 28px; }
+    .nav__links a { position: relative; color: var(--color-txt-dim); transition: color .25s; }
+    .nav__links a::before, .nav__links a::after { position: absolute; top: 0; color: var(--color-accent); opacity: 0; transition: opacity .25s, transform .35s var(--ease); }
+    .nav__links a::before { content: '['; left: -10px; transform: translateX(4px); }
+    .nav__links a::after { content: ']'; right: -10px; transform: translateX(-4px); }
+    .nav__links a:hover, .nav__links a.is-active { color: var(--color-txt-main); }
+    .nav__links a:hover::before, .nav__links a:hover::after, .nav__links a.is-active::before, .nav__links a.is-active::after { opacity: 1; transform: none; }
+    .nav__menu { display: none; height: 38px; padding: 0 16px; border: 1px solid var(--color-border-strong); border-radius: 99px; background: none; color: var(--color-txt-main); cursor: pointer; }
 
-    /* ── drawer ──────────────────────────────────── */
-    .nav-drawer {
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 260px;
-      background: #0d0d0d;
-      border-left: 1px solid var(--color-border);
-      z-index: 70;
-      transform: translateX(100%);
-      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-    }
-    .nav-drawer.is-open { transform: translateX(0); }
+    .menu { position: fixed; inset: 0; z-index: 90; display: grid; grid-template-rows: auto 1fr auto; padding: 18px var(--pad) 28px; background: var(--color-bg); }
+    .menu[hidden] { display: none; }
+    .menu__top { display: flex; justify-content: space-between; align-items: center; height: 40px; }
+    .menu__top button { height: 38px; padding: 0 16px; border: 1px solid var(--color-border-strong); border-radius: 99px; background: none; color: var(--color-txt-main); cursor: pointer; }
+    .menu__links { display: grid; align-content: center; gap: 6px; }
+    .menu__links a { font-size: clamp(34px, 11vw, 64px); font-weight: 800; line-height: 1; opacity: 0; transform: translateY(20px); animation: menuIn .6s var(--ease) forwards; }
+    .menu__links a:nth-child(2) { animation-delay: .05s; } .menu__links a:nth-child(3) { animation-delay: .1s; } .menu__links a:nth-child(4) { animation-delay: .15s; } .menu__links a:nth-child(5) { animation-delay: .2s; } .menu__links a:nth-child(6) { animation-delay: .25s; }
+    @keyframes menuIn { to { opacity: 1; transform: none; } }
+    .menu__foot { display: flex; justify-content: space-between; }
 
-    .nav-drawer-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.25rem;
-      height: var(--nav-height);
-      border-bottom: 1px solid var(--color-border);
-      flex-shrink: 0;
-    }
-    .nav-drawer-logo {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--color-txt-dim);
-      text-transform: uppercase;
-    }
-    .nav-drawer-close {
-      background: none;
-      border: none;
-      color: var(--color-txt-dim);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      padding: 4px;
-      transition: color 0.15s;
-    }
-    .nav-drawer-close:hover { color: var(--color-accent); }
+    .site-main { display: block; min-height: 60vh; }
+    .site-main--pad { padding-top: calc(var(--nav-height) + 2rem); padding-bottom: 5rem; }
 
-    .nav-drawer-links {
-      display: flex;
-      flex-direction: column;
-      padding: 1rem 0;
-      flex: 1;
-    }
-    .nav-drawer-link {
-      display: flex;
-      align-items: center;
-      gap: 0.375rem;
-      padding: 0.875rem 1.25rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--color-txt-dim);
-      text-decoration: none;
-      border-bottom: 1px solid var(--color-border);
-      transition: color 0.15s, background 0.15s;
-    }
-    .nav-drawer-link:last-child { border-bottom: none; }
-    .nav-drawer-link:hover { color: var(--color-accent); background: rgba(255,255,255,0.02); }
-    .nav-drawer-ext { margin-top: auto; }
+    /* ── Footer ─────────────────────────────────── */
+    .foot { padding: clamp(110px, 14vw, 200px) var(--pad) 28px; border-top: 1px solid var(--color-border); }
+    .foot__big { display: block; margin-top: 18px; font-size: clamp(46px, 10vw, 190px); font-weight: 900; line-height: .86; letter-spacing: -.01em; text-transform: uppercase; }
+    .foot__big span { display: inline-block; font-variation-settings: 'wdth' var(--w, 80); font-stretch: calc(var(--w, 80) * 1%); transition: color .3s; }
+    .foot__big:hover span { color: var(--color-accent); }
+    .foot__lede { max-width: 44ch; margin-top: 26px; font-size: 17px; }
+    .foot__links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: clamp(50px, 6vw, 80px); border-top: 1px solid var(--color-border); }
+    .foot__links a { padding-top: 14px; color: var(--color-txt-dim); }
+    .foot__links b { display: block; margin-top: 6px; font: 600 24px/1 var(--font-sans); letter-spacing: 0; text-transform: none; color: var(--color-txt-main); transition: color .25s; }
+    .foot__links a:hover b { color: var(--color-accent); }
+    .foot__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; margin-top: 70px; }
 
-    @media (max-width: 640px) {
-      .nav-links     { display: none; }
-      .nav-hamburger { display: flex; }
-    }
+    /* ── Cursor ─────────────────────────────────── */
+    .cursor { position: fixed; z-index: 300; left: 0; top: 0; width: 8px; height: 8px; margin: -4px 0 0 -4px; background: var(--color-accent); pointer-events: none; opacity: 0; transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease), background .3s, opacity .3s; }
+    .cursor.is-on { opacity: 1; }
+    .cursor.is-big { width: 40px; height: 40px; margin: -20px 0 0 -20px; background: transparent; outline: 1px solid var(--color-accent); }
+    @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
-    .site-footer {
-      border-top: 1px solid var(--color-border);
-      padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(1.5rem, 4vw, 2.5rem);
-    }
-    .contact-grid {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 2rem 3rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-    .contact-intro { max-width: 36rem; }
-    .contact-title {
-      font-size: clamp(1.35rem, 3.5vw, 2rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 0.7rem;
-    }
-    .contact-lead {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: var(--color-txt-dim);
-      max-width: 34rem;
-    }
-
-    .contact-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.15rem;
-      padding-top: 0.35rem;
-    }
-    .contact-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      background: #fff;
-      color: #000;
-      font-size: 0.82rem;
-      font-weight: 500;
-      padding: 0.7rem 1.1rem;
-      border-radius: 2px;
-      text-decoration: none;
-      transition: transform 0.15s, opacity 0.15s;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 8px 24px -8px rgba(255,255,255,0.22);
-    }
-    .contact-cta:hover { transform: translateY(-1px); opacity: 0.88; }
-    .cta-arrow { opacity: 0.6; }
-
-    .contact-links {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1.4rem;
-    }
-    .contact-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-      color: var(--color-txt-dim);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .contact-link:hover { color: var(--color-txt-main); }
-    @media (max-width: 480px) {
-      .contact-actions { align-items: flex-start; flex-direction: column; gap: 1.1rem; }
-      .contact-cta { width: 100%; justify-content: center; }
-    }
-
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--color-border);
-    }
-    .footer-meta {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      color: var(--color-txt-dim);
-      letter-spacing: 0.04em;
-    }
-    .footer-copy {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      color: #2a2a2a;
-      letter-spacing: 0.04em;
+    @media (max-width: 860px) {
+      .nav__links { display: none; }
+      .nav__menu { display: inline-flex; align-items: center; }
+      .foot__links { grid-template-columns: 1fr 1fr; }
     }
   </style>
 
   <script>
-    function initDrawer() {
-      const hamburger = document.getElementById('nav-hamburger');
-      const drawer    = document.getElementById('nav-drawer');
-      const overlay   = document.getElementById('nav-overlay');
-      const closeBtn  = document.getElementById('nav-drawer-close');
-      if (!hamburger || !drawer) return;
+    // One script for the whole site. Astro's client router keeps this module
+    // alive between pages, so everything page-bound is (re)attached on
+    // astro:page-load and torn down on astro:before-swap.
+    const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+=<>/\\';
+    let cleanups: Array<() => void> = [];
+    const onCleanup = (fn: () => void) => cleanups.push(fn);
 
-      function open() {
-        drawer.classList.add('is-open');
-        overlay?.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-      }
-      function close() {
-        drawer.classList.remove('is-open');
-        overlay?.classList.remove('is-open');
-        document.body.style.overflow = '';
+    /** Random glyphs settle into the real text, left to right.
+        The text only changes on ~11 Hz ticks and is written only when it
+        differs, so a decode costs ~11 layouts a second instead of 60.
+        Block-level elements (the big names) keep their real text in the
+        layout and draw the noise in an overlay: wide glyphs vary in width,
+        and a right-aligned word would otherwise slide around while decoding. */
+    function scramble(el: HTMLElement, dur = 1800, delay = 0) {
+      const final = el.dataset.final ?? (el.dataset.final = el.textContent ?? '');
+      if (reduce()) { el.textContent = final; return; }
+      const n = final.length;
+      const settleAt = Array.from({ length: n }, (_, i) => (i / Math.max(1, n)) * 0.75 + Math.random() * 0.25);
+      const glyphs = Array.from({ length: n }, () => GLYPHS[(Math.random() * GLYPHS.length) | 0]);
+      const TICK_MS = 90;
+
+      let target: HTMLElement = el;
+      const done = () => { el.textContent = final; };
+      if (getComputedStyle(el).display !== 'inline') {
+        // box = the element's content box; the overlay fills it and wraps
+        // exactly like the hidden real text underneath.
+        const box = document.createElement('span');
+        const ghost = document.createElement('span');
+        const live = document.createElement('span');
+        box.className = 'scr-box';
+        ghost.textContent = final;
+        ghost.style.visibility = 'hidden';
+        live.setAttribute('aria-hidden', 'true');
+        live.className = 'scr-live';
+        box.append(ghost, live);
+        el.replaceChildren(box);
+        target = live;
       }
 
-      hamburger.addEventListener('click', open);
-      closeBtn?.addEventListener('click', close);
-      overlay?.addEventListener('click', close);
-      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+      const t0 = performance.now() + delay;
+      let lastTick = -Infinity, prev = '', raf = 0;
+      const frame = (t: number) => {
+        if (t - lastTick >= TICK_MS) {
+          lastTick = t;
+          const k = Math.max(0, Math.min(1, (t - t0) / dur));
+          for (let i = 0; i < n; i++) if (Math.random() < 0.6) glyphs[i] = GLYPHS[(Math.random() * GLYPHS.length) | 0];
+          let out = '';
+          for (let i = 0; i < n; i++) out += k >= settleAt[i] || final[i] === ' ' ? final[i] : glyphs[i];
+          if (out !== prev) { target.textContent = out; prev = out; }
+          if (k >= 1) { done(); return; }
+        }
+        raf = requestAnimationFrame(frame);
+      };
+      raf = requestAnimationFrame(frame);
+      onCleanup(() => { cancelAnimationFrame(raf); done(); });
     }
 
-    document.addEventListener('astro:page-load', initDrawer);
+    function whenVisible(el: Element, fn: () => void, threshold = 0.3) {
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { io.disconnect(); fn(); } }), { threshold });
+      io.observe(el);
+      onCleanup(() => io.disconnect());
+    }
+
+    function initPage() {
+      // Nav background after the first screenful
+      const nav = document.querySelector<HTMLElement>('[data-nav]');
+      const onScroll = () => nav?.classList.toggle('is-scrolled', scrollY > 40);
+      onScroll();
+      addEventListener('scroll', onScroll, { passive: true });
+      onCleanup(() => removeEventListener('scroll', onScroll));
+
+      // Reveal on scroll
+      document.querySelectorAll<HTMLElement>('.reveal').forEach((el, i) => {
+        // Already shown by the CSS fallback (the script came late): keep it shown
+        const fallbackDone = el.getAnimations?.().some((a) => (a as CSSAnimation).animationName === 'reveal-fallback' && a.playState === 'finished');
+        if (fallbackDone) { el.classList.add('in', 'is-armed'); return; }
+        el.style.setProperty('--rd', `${(i % 4) * 0.07}s`);
+        el.classList.add('is-armed');
+        whenVisible(el, () => el.classList.add('in'), 0.15);
+      });
+
+      // Scramble: on load, or when scrolled into view
+      document.querySelectorAll<HTMLElement>('[data-scramble]').forEach((el, i) => {
+        if (el.dataset.scramble === 'view') whenVisible(el, () => scramble(el, 1500));
+        else scramble(el, 2000, 200 + i * 300);
+      });
+
+      // Count up
+      document.querySelectorAll<HTMLElement>('[data-num]').forEach((b) => whenVisible(b, () => {
+        const to = Number(b.dataset.num), suf = b.dataset.suffix ?? '', t0 = performance.now();
+        if (reduce()) { b.textContent = to + suf; return; }
+        const f = (t: number) => { const k = Math.min(1, (t - t0) / 1200); b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + suf; if (k < 1) requestAnimationFrame(f); };
+        requestAnimationFrame(f);
+      }, 0.5));
+
+      // Letters widen near the pointer (Archivo's width axis). Letter centres
+      // are measured once when the pointer enters, so the loop only writes.
+      document.querySelectorAll<HTMLElement>('[data-stretch]').forEach((big) => {
+        if (!big.dataset.split) {
+          big.dataset.split = '1';
+          big.innerHTML = [...(big.textContent ?? '')].map((c) => (c === ' ' ? ' ' : `<span>${c}</span>`)).join('');
+        }
+        const letters = [...big.querySelectorAll<HTMLElement>('span')];
+        let centers: number[] = [], applied: number[] = [], lx = -9999, raf = 0;
+        const paint = () => {
+          raf = 0;
+          letters.forEach((s, i) => {
+            const w = Math.round(62 + 63 * Math.max(0, 1 - Math.abs(centers[i] - lx) / 260));
+            if (w !== applied[i]) { applied[i] = w; s.style.setProperty('--w', String(w)); }
+          });
+        };
+        const enter = () => { centers = letters.map((s) => { const b = s.getBoundingClientRect(); return b.left + b.width / 2; }); };
+        const move = (e: PointerEvent) => { lx = e.clientX; if (!centers.length) enter(); if (!raf) raf = requestAnimationFrame(paint); };
+        const leave = () => { lx = -9999; if (!raf) raf = requestAnimationFrame(paint); };
+        big.addEventListener('pointerenter', enter);
+        big.addEventListener('pointermove', move);
+        big.addEventListener('pointerleave', leave);
+        onCleanup(() => { cancelAnimationFrame(raf); big.removeEventListener('pointerenter', enter); big.removeEventListener('pointermove', move); big.removeEventListener('pointerleave', leave); });
+      });
+
+      // Mobile menu
+      const menu = document.querySelector<HTMLElement>('[data-menu]');
+      const openBtn = document.querySelector<HTMLElement>('[data-menu-open]');
+      const closeBtn = document.querySelector<HTMLElement>('[data-menu-close]');
+      if (menu && openBtn && closeBtn) {
+        const set = (open: boolean) => {
+          menu.hidden = !open;
+          openBtn.setAttribute('aria-expanded', String(open));
+          document.documentElement.style.overflow = open ? 'hidden' : '';
+          (open ? closeBtn : openBtn).focus();
+        };
+        const open = () => set(true), close = () => set(false);
+        const esc = (e: KeyboardEvent) => { if (e.key === 'Escape' && !menu.hidden) close(); };
+        openBtn.addEventListener('click', open);
+        closeBtn.addEventListener('click', close);
+        menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); document.documentElement.style.overflow = ''; }));
+        addEventListener('keydown', esc);
+        onCleanup(() => { removeEventListener('keydown', esc); document.documentElement.style.overflow = ''; });
+      }
+
+      // Cursor grows over anything clickable
+      const cur = document.querySelector<HTMLElement>('[data-cursor]');
+      if (cur) {
+        const over = (e: Event) => { if ((e.target as Element).closest?.('a, button, [role="button"], input, select, textarea, label')) cur.classList.add('is-big'); };
+        const out = (e: Event) => { if ((e.target as Element).closest?.('a, button, [role="button"], input, select, textarea, label')) cur.classList.remove('is-big'); };
+        document.addEventListener('pointerover', over);
+        document.addEventListener('pointerout', out);
+        onCleanup(() => { document.removeEventListener('pointerover', over); document.removeEventListener('pointerout', out); cur.classList.remove('is-big'); });
+      }
+    }
+
+    // The cursor follows the pointer for the whole session, not per page.
+    const cursor = document.querySelector<HTMLElement>('[data-cursor]');
+    if (cursor && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      let mx = 0, my = 0, cx = 0, cy = 0, raf = 0;
+      // Runs only while the cursor is catching up with the pointer.
+      const follow = () => {
+        cx += (mx - cx) * 0.3; cy += (my - cy) * 0.3;
+        if (Math.abs(mx - cx) < 0.1 && Math.abs(my - cy) < 0.1) { cx = mx; cy = my; raf = 0; }
+        else raf = requestAnimationFrame(follow);
+        cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+      };
+      addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; cursor.classList.add('is-on'); if (!raf) raf = requestAnimationFrame(follow); }, { passive: true });
+      document.addEventListener('pointerleave', () => cursor.classList.remove('is-on'));
+    }
+
+    document.addEventListener('astro:page-load', initPage);
+    document.addEventListener('astro:before-swap', () => { cleanups.forEach((fn) => fn()); cleanups = []; });
   </script>
 </body>
 </html>

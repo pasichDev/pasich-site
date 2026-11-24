@@ -40,7 +40,7 @@
     while (grid.firstChild) grid.removeChild(grid.firstChild);
     for (var i = 0; i < DAYS; i++) {
       var s = document.createElement('div');
-      s.style.cssText = 'border-radius:2px;background:rgba(255,255,255,0.08);';
+      s.style.cssText = 'border-radius:1px;background:rgba(235,231,222,0.07);';
       grid.appendChild(s);
     }
 
@@ -77,7 +77,7 @@
         var cell = cells[offset + k];
         if (!cell) continue;
         var alpha = LEVELS[Math.min(days[k].level || 0, 4)];
-        cell.style.background = 'rgba(255,255,255,' + alpha + ')';
+        cell.style.background = alpha <= 0.08 ? 'rgba(235,231,222,0.07)' : 'rgba(255,181,71,' + alpha + ')';
         cell.title = days[k].date + ': ' + days[k].count;
       }
 
@@ -113,29 +113,27 @@
 <style>
   .gh-heatmap {
     border: 1px solid var(--color-border);
-    border-radius: 2px;
-    margin: 1.5rem 0;
+    border-radius: 6px;
     overflow: hidden;
-    background: var(--surface-sheen), var(--color-surface);
-    box-shadow: var(--shadow-md);
+    background: var(--color-surface);
   }
   .gh-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.875rem max(1rem, calc((100% - 725px) / 2)) 0.625rem;
+    padding: 1.1rem max(1rem, calc((100% - 725px) / 2)) 0.8rem;
   }
   .gh-label {
-    font-size: 0.6rem;
+    font-size: 12px;
     font-family: var(--font-mono);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     color: var(--color-txt-dim);
   }
   .gh-last {
-    font-size: 0.6rem;
+    font-size: 12px;
     font-family: var(--font-mono);
-    color: #555;
+    color: var(--color-accent);
   }
   .gh-scroll {
     overflow-x: auto;
@@ -157,9 +155,9 @@
       padding: 0 1rem 0.875rem;
     }
     .gh-count {
-      font-size: 0.6rem;
+      font-size: 12px;
       font-family: var(--font-mono);
-      color: #555;
+      color: var(--color-txt-dim);
     }
   }
 </style>

@@ -2,29 +2,48 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout 
+<BaseLayout
   title="404 - Not Found"
   description="The page you're looking for doesn't exist."
   noIndex={true}
+  bleed
 >
-  <div class="container" style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
-    <div class="text-center animate-fade-in">
-      <h1 class="error-code">404</h1>
-      <p class="text-sm font-mono text-dim tracking-widest uppercase mb-12">Page not found</p>
-      <a href="/" class="btn btn-outline" style="border-radius: 2px; font-size: 0.75rem;">
-        [ BACK TO INDEX ]
-      </a>
+  <section class="lost">
+    <p class="lost__tag mono up"><span class="amber">ERR</span> · route not found · ttl expired</p>
+    <h1 class="lost__code narrow" aria-label="404"><span data-scramble aria-hidden="true">404</span></h1>
+    <div class="lost__copy">
+      <p class="lost__lede">Packet dropped. The page you asked for never reached a peer.</p>
+      <pre class="lost__log mono" aria-hidden="true"><span class="dim">$</span> ping <span data-lost-path>/this-page</span>
+<span class="dim">3 packets transmitted, 0 received,</span> <span class="amber">100% packet loss</span></pre>
+      <div class="lost__actions">
+        <a class="btn btn-primary" href="/">Back to index →</a>
+        <a class="btn btn-outline" href="/cv">Read the CV</a>
+      </div>
     </div>
-  </div>
+  </section>
 </BaseLayout>
 
+<script>
+  // Show the path the visitor actually tried, so the joke lands on their URL.
+  document.addEventListener('astro:page-load', () => {
+    const el = document.querySelector('[data-lost-path]');
+    if (!el) return;
+    let path = location.pathname;
+    try { path = decodeURIComponent(path); } catch { /* malformed %-escape: show it raw */ }
+    el.textContent = path.slice(0, 60) || '/';
+  });
+</script>
+
 <style>
-  .error-code {
-    font-size: clamp(5rem, 15vw, 8rem);
-    font-weight: 300;
-    color: #FFF;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.05em;
+  .lost { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 20px 60px; min-height: 100svh; padding: calc(var(--nav-height) + 40px) var(--pad) clamp(40px, 6vw, 80px); }
+  .lost__tag { grid-column: 1 / -1; align-self: start; color: var(--color-txt-dim); }
+  .lost__code { color: var(--color-accent); font-size: clamp(170px, 34vw, 560px); font-weight: 900; line-height: .74; letter-spacing: -.04em; }
+  .lost__lede { max-width: 18ch; color: var(--color-txt-main); font-size: clamp(30px, 3.6vw, 58px); font-weight: 700; line-height: 1; font-stretch: 112%; font-variation-settings: 'wdth' 112; }
+  .lost__log { margin-top: 30px; padding: 16px 18px; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-surface); color: var(--color-txt-main); font-size: 13px; white-space: pre-wrap; word-break: break-all; }
+  .lost__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+  @media (max-width: 860px) {
+    .lost { grid-template-columns: 1fr; align-content: center; }
+    .lost__code { font-size: 52vw; }
   }
 </style>

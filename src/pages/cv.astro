@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Icon } from 'astro-icon/components';
 
 const experience = [
   {
@@ -87,326 +86,175 @@ const structuredData = {
   description="Resume of Andrii Pasichnyk, Software Engineer. Flutter, Go and C++: a cross-platform WireGuard VPN, Go backends, Yocto-based embedded Linux, Linux kernel patches."
   canonical="https://pasichdev.xyz/cv"
   structuredData={structuredData}
+  bleed
 >
-  <div class="container animate-fade-in">
-    
-    <!-- CV Header -->
-    <header class="cv-header">
+  <header class="page-hero cv-hero">
+    <nav class="page-hero__crumbs mono up no-print" aria-label="Breadcrumbs"><a href="/">Index</a><span>CV</span></nav>
+    <div class="cv-hero__grid">
       <div class="cv-id">
         <!-- Cryptographic fingerprint — regenerated on every print -->
         <div class="fp-tile" title="Document fingerprint">
           <svg class="fp-glyph" id="fp-glyph" viewBox="0 0 40 40" aria-hidden="true"></svg>
         </div>
         <div>
-          <h1 class="cv-name text-accent">Andrii Pasichnyk</h1>
+          <h1 class="cv-name wide" aria-label="Andrii Pasichnyk"><span data-scramble aria-hidden="true">Andrii</span><span class="outline" data-scramble aria-hidden="true">Pasichnyk</span></h1>
           <p class="cv-role">Software Engineer</p>
-          <div class="cv-loc">
-            <span><Icon name="solar:map-point-linear" width="14" height="14" />Rivne, Ukraine</span>
-            <span class="cv-tz"><Icon name="solar:clock-circle-linear" width="14" height="14" />UTC+2</span>
-          </div>
-          <div class="fp-meta">
-            <span class="fp-label">Fingerprint</span>
+          <p class="cv-loc mono up"><span>Rivne, Ukraine</span><span class="amber">UTC+2</span></p>
+          <div class="fp-meta mono">
+            <span class="fp-label up">Fingerprint</span>
             <span class="fp-hash" id="fp-hash">—</span>
             <span class="fp-date" id="fp-date"></span>
           </div>
         </div>
       </div>
-      <div class="contact-info">
-        <button id="cv-print" class="print-btn no-print" type="button">
-          <Icon name="solar:download-minimalistic-linear" width="15" height="15" />
-          Download PDF
-        </button>
+      <div class="contact-info mono">
+        <button id="cv-print" class="btn btn-primary no-print" type="button">Download PDF ↓</button>
         <a href="mailto:apasichnik9@gmail.com">apasichnik9@gmail.com</a>
         <a href="https://www.linkedin.com/in/pasichdev">linkedin.com/in/pasichdev</a>
       </div>
-    </header>
-    
-    <!-- Summary -->
-    <section class="section" style="margin-bottom: 3rem;">
-      <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-6">Profile</h2>
-      <p class="text-accent leading-relaxed" style="font-weight: 300; opacity: 0.9;">
-        I'm a software engineer at InTallyCon, where I work on our
-        <strong class="font-medium">WireGuard VPN</strong>: the Flutter plugin and apps on top, Go and C++ underneath,
-        on Android, iOS, macOS and Windows. I also write
-        <strong class="font-medium">Go backends</strong> and work on
-        <strong class="font-medium">Yocto-based embedded Linux</strong>.
-        Outside work I dig into the Linux kernel (my WireGuard patch doubled throughput on a single-core router)
-        and keep a couple of Android apps going.
-      </p>
-    </section>
-    
-    <!-- Experience -->
-    <section class="section" style="margin-bottom: 3rem;">
-      <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-8">Experience</h2>
-      
-      <div class="timeline">
-        {experience.map((job) => (
-          <div class="timeline-item">
-            <div class="timeline-header">
-              <h3 class="timeline-title">{job.title}</h3>
-              <span class="timeline-date">{job.period}</span>
-            </div>
-            <div class="timeline-subtitle">{job.company}</div>
-            <div class="timeline-content">
-              <ul>
-                {job.achievements.map((item) => (
-                  <li set:html={item} />
-                ))}
-              </ul>
-            </div>
+    </div>
+  </header>
+
+  <section class="cv-sec cv-profile">
+    <h2 class="cv-label mono up">Profile</h2>
+    <p class="cv-profile__text reveal">
+      I'm a software engineer at InTallyCon, where I work on our
+      <strong>WireGuard VPN</strong>: the Flutter plugin and apps on top, Go and C++ underneath,
+      on Android, iOS, macOS and Windows. I also write
+      <strong>Go backends</strong> and work on
+      <strong>Yocto-based embedded Linux</strong>.
+      Outside work I dig into the Linux kernel (my WireGuard patch doubled throughput on a single-core router)
+      and keep a couple of Android apps going.
+    </p>
+  </section>
+
+  <section class="cv-sec">
+    <h2 class="cv-label mono up">Experience</h2>
+    <div class="jobs">
+      {experience.map((job) => (
+        <article class="job reveal">
+          <div class="job__when mono up">{job.period}</div>
+          <div class="job__body">
+            <h3 class="job__title">{job.title}</h3>
+            <div class="job__company mono">{job.company}</div>
+            <ul class="job__list">
+              {job.achievements.map((item) => (
+                <li set:html={item} />
+              ))}
+            </ul>
             {job.tags.length > 0 && (
-              <div class="flex flex-wrap gap-2 mt-4">
+              <div class="job__tags">
                 {job.tags.map((tag) => (
                   <span class="tag">{tag}</span>
                 ))}
               </div>
             )}
           </div>
-        ))}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="cv-sec">
+    <h2 class="cv-label mono up">Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="reveal">
+        <h4>Programming Languages</h4>
+        <p>Go, Dart, C++, C, Kotlin, Swift, Java, SQL.</p>
       </div>
-    </section>
-    
-    <!-- Skills Grid -->
-    <section class="section" style="margin-bottom: 3rem;">
-      <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-6">Technical Skills</h2>
-      
-      <div class="skills-grid">
-        <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Programming Languages</h4>
-          <p class="text-sm text-dim leading-relaxed">
-            Go, Dart, C++, C, Kotlin, Swift, Java, SQL.
-          </p>
-        </div>
-
-        <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Networking & VPN</h4>
-          <p class="text-sm text-dim leading-relaxed">
-            WireGuard (wireguard-go, WireGuard-NT, Linux kernel), TCP/IP, UDP, DNS, NAT, iptables, P2P, REST, WebSocket, gRPC, Protocol Buffers.
-          </p>
-        </div>
-
-        <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Mobile & Desktop</h4>
-          <p class="text-sm text-dim leading-relaxed">
-            Flutter (platform plugins, Dart FFI, Bloc, Riverpod), Android (VpnService, Jetpack Compose, Room, Hilt, WorkManager), iOS/macOS (Network Extension, Keychain), Windows (Win32, services, named pipes, DPAPI, CNG).
-          </p>
-        </div>
-
-        <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Embedded Linux</h4>
-          <p class="text-sm text-dim leading-relaxed">
-            Yocto Project, OpenEmbedded, BitBake, cross-compilation, systemd, Linux kernel patches, kernel profiling.
-          </p>
-        </div>
-
-        <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Backend & Data</h4>
-          <p class="text-sm text-dim leading-relaxed">
-            Go services (REST, encryption at rest, SQLite without cgo), PostgreSQL, SQLite, Firebase.
-          </p>
-        </div>
-
-        <div>
-          <h4 class="text-accent text-sm font-medium mb-4">Practices</h4>
-          <p class="text-sm text-dim leading-relaxed">
-            Software architecture, Clean Architecture, MVVM, code review, Git, GitLab CI, GitHub Actions, unit testing.
-          </p>
-        </div>
+      <div class="reveal">
+        <h4>Networking & VPN</h4>
+        <p>WireGuard (wireguard-go, WireGuard-NT, Linux kernel), TCP/IP, UDP, DNS, NAT, iptables, P2P, REST, WebSocket, gRPC, Protocol Buffers.</p>
       </div>
-    </section>
-    
-    <!-- Languages -->
-    <section class="section" style="border-top: 1px solid var(--color-border); padding-top: 2rem; margin-bottom: 3rem;">
-      <h2 class="text-sm font-mono uppercase text-dim tracking-wide mb-6">Languages</h2>
-      <div class="flex gap-8 text-sm flex-wrap">
-        <div>
-          <span class="block text-dim text-xs uppercase mb-1">Ukrainian</span>
-          <span class="text-accent">Native</span>
-        </div>
-        <div>
-          <span class="block text-dim text-xs uppercase mb-1">English</span>
-          <span class="text-accent">A1 (Beginner)</span>
-        </div>
+      <div class="reveal">
+        <h4>Mobile & Desktop</h4>
+        <p>Flutter (platform plugins, Dart FFI, Bloc, Riverpod), Android (VpnService, Jetpack Compose, Room, Hilt, WorkManager), iOS/macOS (Network Extension, Keychain), Windows (Win32, services, named pipes, DPAPI, CNG).</p>
       </div>
-    </section>
-    
+      <div class="reveal">
+        <h4>Embedded Linux</h4>
+        <p>Yocto Project, OpenEmbedded, BitBake, cross-compilation, systemd, Linux kernel patches, kernel profiling.</p>
+      </div>
+      <div class="reveal">
+        <h4>Backend & Data</h4>
+        <p>Go services (REST, encryption at rest, SQLite without cgo), PostgreSQL, SQLite, Firebase.</p>
+      </div>
+      <div class="reveal">
+        <h4>Practices</h4>
+        <p>Software architecture, Clean Architecture, MVVM, code review, Git, GitLab CI, GitHub Actions, unit testing.</p>
+      </div>
+    </div>
+  </section>
 
-  </div>
+  <section class="cv-sec cv-langs">
+    <h2 class="cv-label mono up">Languages</h2>
+    <div class="langs">
+      <div><span class="mono up">Ukrainian</span><b>Native</b></div>
+      <div><span class="mono up">English</span><b>A1 (Beginner)</b></div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .cv-header {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 2rem;
-    margin-bottom: 3rem;
-  }
-  
-  @media (min-width: 768px) {
-    .cv-header {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-  }
-  
-  .contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: var(--color-txt-dim);
-  }
-  
-  @media (min-width: 768px) {
-    .contact-info {
-      text-align: right;
-    }
-  }
-  
-  .contact-info a:hover {
-    color: var(--color-accent);
-  }
-  
-  .skills-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  @media (min-width: 768px) {
-    .skills-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3rem 2rem;
-    }
-  }
-  
-  .skill-tag {
-    padding: 0.375rem 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 2px;
-    font-size: 0.75rem;
-    color: var(--color-accent);
-    background: var(--color-surface);
-  }
-  
-  .print-btn {
-    display: inline-flex;
-    align-items: center;
-    align-self: flex-start;
-    gap: 0.45rem;
-    margin-bottom: 0.4rem;
-    padding: 0.55rem 1rem;
-    border: 1px solid var(--color-accent);
-    border-radius: 999px;
-    background: var(--color-accent);
-    color: var(--color-bg);
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 8px 24px -8px rgba(255, 255, 255, 0.25);
-    transition: transform 0.15s, box-shadow 0.2s, background 0.15s;
-  }
-  @media (min-width: 768px) {
-    .print-btn { align-self: flex-end; }
-  }
-  .print-btn:hover {
-    transform: translateY(-1px);
-    background: #f2f2f2;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 12px 30px -8px rgba(255, 255, 255, 0.35);
-  }
-  .print-btn:focus-visible { outline: 2px solid var(--color-green); outline-offset: 3px; }
+  /* ── Hero ─────────────────────────────────────── */
+  .cv-hero__grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; }
+  .cv-id { display: flex; align-items: flex-start; gap: clamp(16px, 2.4vw, 34px); min-width: 0; }
+  .cv-name { display: grid; font-size: clamp(40px, 8.4vw, 140px); font-weight: 800; line-height: .84; letter-spacing: -.02em; }
+  .cv-role { margin-top: 22px; color: var(--color-txt-main); font-size: clamp(18px, 1.6vw, 24px); font-weight: 500; }
+  .cv-loc { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; color: var(--color-txt-dim); }
+  .fp-tile { flex-shrink: 0; width: clamp(64px, 7vw, 96px); height: clamp(64px, 7vw, 96px); margin-top: .4em; padding: 14px; border: 1px solid var(--color-border-strong); border-radius: 10px; background: var(--color-surface); color: var(--color-accent); }
+  .fp-glyph { display: block; width: 100%; height: 100%; fill: currentColor; }
+  .fp-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 14px; color: var(--color-txt-dim); min-width: 0; }
+  .fp-label { font-size: 11px; }
+  .fp-hash { color: var(--color-accent); word-break: break-all; }
+  .fp-date { font-size: 11px; opacity: .7; }
+  .contact-info { display: grid; justify-items: end; gap: 10px; color: var(--color-txt-dim); }
+  .contact-info .btn { margin-bottom: 8px; }
+  .contact-info a:hover { color: var(--color-accent); }
 
-  /* ── Cryptographic fingerprint ─────────────────── */
-  /* The identicon sits beside the name like an avatar, in the same pixel
-     style as the site logo; the hash and date run under the location line. */
-  .cv-id {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.25rem;
-  }
-  .cv-name {
-    font-size: 1.875rem;
-    line-height: 1.1;
-    margin-bottom: 0.3rem;
-  }
-  .cv-role {
-    font-size: 1.05rem;
-    font-weight: 300;
-    line-height: 1.3;
-    color: var(--color-txt-dim);
-  }
-  .cv-loc {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.4rem 1.1rem;
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    line-height: 1;
-    color: var(--color-txt-dim);
-  }
-  .cv-loc span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-  .cv-loc :global(svg) { flex-shrink: 0; opacity: 0.8; }
-  .cv-tz { color: var(--color-green); }
-  .fp-tile {
-    width: 76px;
-    height: 76px;
-    padding: 14px;
-    flex-shrink: 0;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    background: var(--surface-sheen), var(--color-surface);
-    box-shadow: var(--shadow-sm);
-    color: var(--color-accent);
-  }
-  .fp-glyph {
-    display: block;
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-  }
-  .fp-meta {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.25rem 0.6rem;
-    margin-top: 0.7rem;
-    font-family: var(--font-mono);
-    color: var(--color-txt-dim);
-    min-width: 0;
+  /* ── Sections ─────────────────────────────────── */
+  .cv-sec { display: grid; grid-template-columns: minmax(140px, 220px) 1fr; gap: clamp(20px, 4vw, 70px); padding: clamp(60px, 8vw, 120px) var(--pad); border-bottom: 1px solid var(--color-border); }
+  .cv-label { position: sticky; top: calc(var(--nav-height) + 20px); align-self: start; color: var(--color-accent); font-size: 12px; font-weight: 500; }
+  .cv-profile__text { max-width: 30ch; color: var(--color-txt-main); font-size: clamp(26px, 3.2vw, 50px); font-weight: 500; line-height: 1.12; letter-spacing: -.01em; font-stretch: 108%; font-variation-settings: 'wdth' 108; }
+  .cv-profile__text strong { color: var(--color-accent); font-weight: 600; }
+
+  .jobs { display: grid; }
+  .job { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 34px 0; border-top: 1px dashed var(--color-border); }
+  .job:first-child { padding-top: 0; border-top: 0; }
+  .job__when { color: var(--color-accent); padding-top: .55em; }
+  .job__title { font-size: clamp(24px, 2.6vw, 40px); font-weight: 700; line-height: 1.05; font-stretch: 112%; font-variation-settings: 'wdth' 112; }
+  .job__company { margin-top: 8px; color: var(--color-txt-dim); }
+  .job__list { margin-top: 20px; padding-left: 1.1em; display: grid; gap: 10px; max-width: 70ch; }
+  .job__list li { color: #c9c5bc; font-size: 16px; line-height: 1.6; }
+  .job__list li::marker { content: '→  '; color: var(--color-accent); font-family: var(--font-mono); font-size: 13px; }
+  .job__list :global(strong) { color: var(--color-txt-main); font-weight: 600; }
+  .job__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 40px; }
+  .skills-grid h4 { padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--color-border); color: var(--color-txt-main); font-size: 19px; font-weight: 600; }
+  .skills-grid p { font-size: 15.5px; line-height: 1.65; }
+
+  .langs { display: flex; flex-wrap: wrap; gap: 30px 70px; }
+  .langs span { display: block; color: var(--color-txt-dim); }
+  .langs b { display: block; margin-top: 6px; font-size: clamp(26px, 2.8vw, 40px); font-weight: 700; font-stretch: 115%; font-variation-settings: 'wdth' 115; }
+
+  @media (max-width: 860px) {
+    .cv-hero__grid { grid-template-columns: 1fr; }
+    .contact-info { justify-items: start; }
+    .cv-sec { grid-template-columns: 1fr; }
+    .cv-label { position: static; }
+    .job { grid-template-columns: 1fr; gap: 8px; }
+    .job__when { padding-top: 0; }
+    .skills-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 520px) {
-    .fp-tile { width: 56px; height: 56px; padding: 10px; border-radius: 10px; }
-    .cv-id { gap: 0.9rem; }
-  }
-  .fp-label {
-    font-size: 0.55rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    opacity: 0.7;
-  }
-  .fp-hash {
-    font-size: 0.72rem;
-    color: var(--color-accent);
-    letter-spacing: 0.02em;
-    word-break: break-all;
-  }
-  .fp-date {
-    font-size: 0.58rem;
-    opacity: 0.6;
+    .cv-id { flex-direction: column; }
+    /* «PASICHNYK» at width 125 ≈ 0.95em per letter: 10vw fits the phone width */
+    .cv-name { font-size: 10.2vw; }
+    .fp-tile { width: 54px; height: 54px; margin-top: 0; padding: 9px; }
   }
 
   /* ── Print: force readable black-on-white ──────── */
   @media print {
-    /* kill every stray glow/shadow/filter (incl. injected overlays) */
     :global(*), :global(*::before), :global(*::after) {
       box-shadow: none !important;
       filter: none !important;
@@ -414,63 +262,56 @@ const structuredData = {
       text-shadow: none !important;
       mask-image: none !important;
       -webkit-mask-image: none !important;
+      animation: none !important;
+      transition: none !important;
     }
     :global(html), :global(body) { background: #fff !important; }
     /* Slightly denser type on paper so the CV fits three pages. */
     :global(html) { font-size: 14.5px; }
-    :global(.bg-grid) { display: none !important; }
+    :global(body) { font-size: 14.5px; }
     :global(#claude-agent-glow-border),
     :global(#claude-phantom-cursor) { display: none !important; }
     :global(main) { padding: 0 !important; min-height: 0 !important; }
-    :global(.container), :global(.container-sm) {
-      max-width: 100% !important;
-      width: auto !important;
-      margin: 0 !important;
-      padding: 0 4mm !important;
-    }
 
     /* every bit of text dark on white — kills white-on-white */
     :global(main), :global(main *) {
       color: #1a1a1a !important;
       background: transparent !important;
-      box-shadow: none !important;
       -webkit-text-fill-color: #1a1a1a !important;
     }
-    :global(.text-dim),
-    .timeline-subtitle, .timeline-date, .contact-info,
-    .fp-label, .fp-date { color: #555 !important; -webkit-text-fill-color: #555 !important; }
+    .outline { -webkit-text-stroke: 0 !important; }
+    .job__company, .contact-info, .fp-label, .fp-date, .cv-loc, .skills-grid p, .langs span { color: #555 !important; -webkit-text-fill-color: #555 !important; }
     a { text-decoration: none !important; }
 
-    .cv-header {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .contact-info { text-align: right; }
-    .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 1.3rem 2rem; }
+    .page-hero { padding: 0 0 1rem !important; border-bottom: 1px solid #ccc !important; }
+    .cv-hero__grid { grid-template-columns: 1fr auto; align-items: end; gap: 1rem; }
+    .cv-name { display: block; font-size: 30px !important; line-height: 1.05; font-stretch: 100%; font-variation-settings: 'wdth' 100; }
+    .cv-name span + span::before { content: ' '; }
+    .cv-role { margin-top: .4rem; font-size: 16px; }
+    .contact-info { justify-items: end; text-align: right; }
+    .fp-tile { width: 60px; height: 60px; padding: 10px; border: 1px solid #ccc !important; }
+    .fp-glyph { fill: #111 !important; }
 
-    .timeline { border-left: 1px solid #ccc; }
-    .timeline-item::before { background: #fff !important; border: 1px solid #999 !important; }
-    .timeline-content :global(li)::marker { color: #999 !important; }
-    .timeline-date { white-space: nowrap; }
-    .timeline-header { gap: 1rem; }
+    .cv-sec { display: block; padding: 1.1rem 0 !important; border-bottom: 0 !important; }
+    .cv-label { position: static; margin-bottom: .7rem; color: #555 !important; -webkit-text-fill-color: #555 !important; }
+    .cv-profile__text { max-width: none; font-size: 15px; font-weight: 400; line-height: 1.55; font-stretch: 100%; font-variation-settings: 'wdth' 100; }
+    .job { grid-template-columns: 150px 1fr; gap: 1rem; padding: .9rem 0; border-top: 1px solid #ddd !important; }
+    .job:first-child { border-top: 0 !important; }
+    .job__when { padding-top: .25em; font-size: 10.5px; white-space: nowrap; }
+    .job__title { font-size: 17px; font-stretch: 100%; font-variation-settings: 'wdth' 100; }
+    .job__list { margin-top: .5rem; gap: .3rem; }
+    .job__list li { font-size: 13.5px; }
+    .job__list li::marker { color: #999 !important; }
+    .job__tags { margin-top: .6rem; }
+    .tag { color: #111 !important; background: #fff !important; border: 1px solid #bbb !important; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 1.1rem 2rem; }
+    .skills-grid h4 { font-size: 14px; border-bottom: 1px solid #ddd !important; }
+    .skills-grid p { font-size: 13px; }
+    .langs b { font-size: 16px; font-stretch: 100%; font-variation-settings: 'wdth' 100; }
 
-    .tag, .skill-tag {
-      color: #111 !important;
-      background: #fff !important;
-      border: 1px solid #bbb !important;
-    }
-
-    .fp-tile { border: 1px solid #ccc !important; }
-    .fp-glyph { fill: #111 !important; opacity: 1; }
-
-    /* Keep single entries whole, but let long sections flow across pages;
-       a whole section that can't break left page 1 nearly empty. */
-    .cv-header, .skills-grid > div, .timeline-content :global(li) { break-inside: avoid; }
-    h2, h4, .timeline-header, .timeline-subtitle { break-after: avoid; }
+    /* Keep single entries whole, but let long sections flow across pages. */
+    .page-hero, .skills-grid > div, .job__list li { break-inside: avoid; }
+    h2, h4, .job__title, .job__company { break-after: avoid; }
     @page { margin: 15mm 12mm; }
   }
 </style>
@@ -565,7 +406,10 @@ const structuredData = {
     generate();
     if (btn) btn.onclick = () => { generate(); window.print(); };
     window.addEventListener('beforeprint', generate);
+    stopFingerprint = () => window.removeEventListener('beforeprint', generate);
   }
 
+  let stopFingerprint = () => {};
   document.addEventListener('astro:page-load', initFingerprint);
+  document.addEventListener('astro:before-swap', () => { stopFingerprint(); stopFingerprint = () => {}; });
 </script>

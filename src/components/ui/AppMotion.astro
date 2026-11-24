@@ -1,0 +1,46 @@
+---
+// Scroll parallax for app pages: any element with data-speed drifts against
+// the scroll relative to the centre of its [data-parallax] scope.
+---
+
+<script>
+  let stop: (() => void) | null = null;
+
+  function initParallax() {
+    // Updates only on scroll, at most once per frame. All rects are read first,
+    // then all transforms written, so the browser never has to recalculate
+    // styles in the middle of the loop. Off-screen scopes are skipped.
+    const items = [...document.querySelectorAll<HTMLElement>('[data-speed]')];
+    if (!items.length || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const entries = items.map((el) => ({ el, scope: (el.closest('[data-parallax]') as HTMLElement) ?? el, k: parseFloat(el.dataset.speed || '0') }));
+    const visible = new Set<HTMLElement>();
+    const io = new IntersectionObserver((list) => {
+      list.forEach((e) => (e.isIntersecting ? visible.add(e.target as HTMLElement) : visible.delete(e.target as HTMLElement)));
+      schedule();
+    }, { rootMargin: '200px 0px' });
+    new Set(entries.map((e) => e.scope)).forEach((scope) => io.observe(scope));
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const vh = innerHeight;
+      const live = entries.filter((e) => visible.has(e.scope));
+      const offsets = live.map((e) => { const r = e.scope.getBoundingClientRect(); return r.top + r.height / 2 - vh / 2; });
+      live.forEach((e, i) => {
+        const d = offsets[i] * e.k;
+        // Individual translate/rotate compose with the entrance animation's
+        // transform (which is held by `forwards`), so both keep working.
+        e.el.style.translate = `0 ${d.toFixed(1)}px`;
+        e.el.style.rotate = `${(d * 0.015).toFixed(2)}deg`;
+      });
+    };
+    function schedule() { if (!raf) raf = requestAnimationFrame(update); }
+    addEventListener('scroll', schedule, { passive: true });
+    addEventListener('resize', schedule);
+    schedule();
+    stop = () => { cancelAnimationFrame(raf); io.disconnect(); removeEventListener('scroll', schedule); removeEventListener('resize', schedule); };
+  }
+
+  document.addEventListener('astro:page-load', initParallax);
+  document.addEventListener('astro:before-swap', () => { stop?.(); stop = null; });
+</script>

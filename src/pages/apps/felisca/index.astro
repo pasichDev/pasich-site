@@ -1,92 +1,96 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AppMotion from '../../../components/ui/AppMotion.astro';
 import { Icon } from 'astro-icon/components';
+import '../../../styles/app-page.css';
+
+const playUrl = 'https://play.google.com/store/apps/details?id=com.pasichdev.felisca';
+
+const screens = [
+  { src: '/assets/apps/felisca/screen-1.webp', alt: 'Check-in Screen', title: 'Quick Check-in', text: 'Log your mood in 30 seconds - focus, energy, and anxiety levels' },
+  { src: '/assets/apps/felisca/screen-2.webp', alt: 'Dashboard Screen', title: 'Pulse Dashboard', text: 'Powerful analytics with trends and intelligent insights' },
+  { src: '/assets/apps/felisca/screen-4.webp', alt: 'Achievements Screen', title: 'Achievements', text: 'Gamification system: unlock 14 achievements and build habits' },
+];
 ---
 
-<BaseLayout 
+<BaseLayout
   title="Felisca - Your Personal Mental Companion"
   description="Felisca - An innovative app for monitoring your mental state, focus, and energy with complete privacy. Offline-first, Privacy-first."
   canonical="https://pasichdev.xyz/apps/felisca"
+  bleed
 >
-  <div class="container container-md animate-fade-in">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content" style="text-align: center;">
-        <div class="hero-icon">
-          <img src="/assets/felisca-screenshots/felisca.png" alt="Felisca Logo" width="140" height="140" style="object-fit: contain;"/>
+  <div class="app app--felisca">
+
+    <header class="app-hero" data-parallax>
+      <div class="app-hero__copy">
+        <div>
+          <nav class="app-hero__crumbs mono up" aria-label="Breadcrumbs"><a href="/">pasichdev</a><a href="/#work">Work</a><span>Felisca</span></nav>
+          <img class="app-hero__icon" src="/assets/apps/felisca/felisca-icon.webp" alt="Felisca Logo" width="96" height="96" />
+          <h1>
+            <span class="app-hero__name wide" data-scramble>Felisca</span>
+            <span class="app-hero__tagline">Your Personal Mental Companion</span>
+          </h1>
+          <p class="app-hero__lede">
+            An innovative mobile app for deep monitoring of your mental state, focus, and energy with complete privacy.
+          </p>
         </div>
-        <h1 class="text-accent" style="font-size: 2.8rem; font-weight: 700; margin-bottom: 1rem;">
-          Felisca
-        </h1>
-        <p class="text-lg text-dim" style="margin-bottom: 0.5rem;">
-          Your Personal Mental Companion
-        </p>
-        <p class="text-base text-dim" style="margin-bottom: 2rem; opacity: 0.9;">
-          An innovative mobile app for deep monitoring of your mental state, focus, and energy with complete privacy.
-        </p>
-        
-        <!-- Google Play Badge -->
-        <div style="display: flex; justify-content: center;">
-          <a href="https://play.google.com/store/apps/details?id=com.pasichdev.felisca" target="_blank" rel="noopener noreferrer" class="coming-soon-badge" style="display: inline-flex;">
-            <Icon name="mdi:google-play" style="margin-right: 0.5rem;" />
-            <span>Download on Google Play</span>
-          </a>
+        <div class="app-hero__foot">
+          <div class="app-chips">
+            <span class="app-chip">Offline-first</span>
+            <span class="app-chip">Privacy-first</span>
+            <span class="app-chip">Flutter</span>
+          </div>
+          <div class="app-cta-row">
+            <a class="app-btn" href={playUrl} target="_blank" rel="noopener noreferrer"><Icon name="mdi:google-play" />Download on Google Play</a>
+          </div>
         </div>
+      </div>
+      <div class="app-hero__visual" aria-hidden="true">
+        <img decoding="async" class="app-shot" data-speed="-0.06" src="/assets/apps/felisca/screen-2.webp" alt="" width="540" height="1131" style="left:4%;top:16%" />
+        <img fetchpriority="high" decoding="async" class="app-shot" data-speed="0.08" src="/assets/apps/felisca/screen-1.webp" alt="" width="540" height="1131" style="left:32%;top:4%;z-index:2" />
+        <img decoding="async" class="app-shot" data-speed="-0.12" src="/assets/apps/felisca/screen-5.webp" alt="" width="540" height="1131" style="left:60%;top:24%" />
+      </div>
+    </header>
+
+    <section class="app-sec" id="screens">
+      <div class="sec-head"><h2 class="wide">App Screens</h2><span class="app-count mono up">01 — 03</span></div>
+      <div class="screens" style="--screens: 3">
+        {screens.map((s, i) => (
+          <figure class="screen reveal">
+            <img src={s.src} alt={s.alt} width="540" height="1131" loading="lazy" decoding="async" />
+            <figcaption>
+              <span class="mono up">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </figcaption>
+          </figure>
+        ))}
       </div>
     </section>
 
-    <!-- Screenshots Gallery -->
-    <section class="screenshots-section" style="margin-top: 5rem;">
-      <h2 class="section-title text-accent">App Screens</h2>
-      <div class="screenshots-gallery">
-     
-        <div class="screenshot-item">
-          <img src="/assets/felisca-screenshots/sr1.png" alt="Check-in Screen" class="screenshot-img"/>
-          <h3 class="text-accent">Quick Check-in</h3>
-          <p class="text-sm text-dim">Log your mood in 30 seconds - focus, energy, and anxiety levels</p>
-        </div>
-        <div class="screenshot-item">
-          <img src="/assets/felisca-screenshots/sr2.png" alt="Dashboard Screen" class="screenshot-img"/>
-          <h3 class="text-accent">Pulse Dashboard</h3>
-          <p class="text-sm text-dim">Powerful analytics with trends and intelligent insights</p>
-        </div>
-        <div class="screenshot-item">
-          <img src="/assets/felisca-screenshots/sr4.png" alt="Achievements Screen" class="screenshot-img"/>
-          <h3 class="text-accent">Achievements</h3>
-          <p class="text-sm text-dim">Gamification system: unlock 14 achievements and build habits</p>
-        </div>
-        
-      </div>
-    </section>
+    <section class="app-sec" id="features">
+      <div class="sec-head"><h2 class="wide">Key Features</h2><span class="app-count mono up">01 — 03</span></div>
 
-    <!-- Detailed Features -->
-    <section class="features-detailed" style="margin-top: 5rem;">
-      <h2 class="section-title text-accent">Key Features</h2>
-      
-      <div class="feature-detail-card">
-        <div class="feature-number-icon">
-          <Icon name="mdi:lightning-bolt" width="28" height="28" />
-        </div>
-        <div class="feature-content">
-          <h3 class="text-accent" style="font-size: 1.4rem; margin-bottom: 0.75rem;">Quick Check-in</h3>
-          <p class="text-dim" style="margin-bottom: 1.25rem;">The core of Felisca - log your mental state in just 30 seconds with three intuitive sliders.</p>
-          <ul class="feature-list">
-            <li><strong>3 Core Metrics:</strong> 🟢 Focus Level, 🟡 Energy Level, 🔴 Anxiety Level</li>
+      <article class="feat reveal">
+        <span class="feat__n mono up">01</span>
+        <h3 class="feat__title">Quick Check-in</h3>
+        <div class="feat__body">
+          <p>The core of Felisca - log your mental state in just 30 seconds with three intuitive sliders.</p>
+          <ul>
+            <li><strong>3 Core Metrics:</strong> <span class="metric metric--focus">Focus Level</span>, <span class="metric metric--energy">Energy Level</span>, <span class="metric metric--anxiety">Anxiety Level</span></li>
             <li><strong>Context Tags:</strong> Sleep hours and caffeine intake for better correlations</li>
             <li><strong>Notes:</strong> Add thoughts and observations with multi-line text support</li>
             <li><strong>Instant Feedback:</strong> Loading states and custom SnackBar confirmation</li>
           </ul>
         </div>
-      </div>
+      </article>
 
-      <div class="feature-detail-card">
-        <div class="feature-number-icon">
-          <Icon name="mdi:chart-line" width="28" height="28" />
-        </div>
-        <div class="feature-content">
-          <h3 class="text-accent" style="font-size: 1.4rem; margin-bottom: 0.75rem;">Pulse Dashboard</h3>
-          <p class="text-dim" style="margin-bottom: 1.25rem;">Comprehensive analytics dashboard to understand your wellbeing patterns and trends.</p>
-          <ul class="feature-list">
+      <article class="feat reveal">
+        <span class="feat__n mono up">02</span>
+        <h3 class="feat__title">Pulse Dashboard</h3>
+        <div class="feat__body">
+          <p>Comprehensive analytics dashboard to understand your wellbeing patterns and trends.</p>
+          <ul>
             <li><strong>Time Filters:</strong> Switch between Today, Week, and Month views</li>
             <li><strong>Radial Stats:</strong> Beautiful circular cards showing average metrics</li>
             <li><strong>Dynamic Charts:</strong> Line graphs visualizing your emotional journey</li>
@@ -95,508 +99,90 @@ import { Icon } from 'astro-icon/components';
             <li><strong>Social Sharing:</strong> Generate beautiful report images for social media</li>
           </ul>
         </div>
-      </div>
+      </article>
 
-      <div class="feature-detail-card">
-        <div class="feature-number-icon">
-          <Icon name="mdi:trophy" width="28" height="28" />
-        </div>
-        <div class="feature-content">
-          <h3 class="text-accent" style="font-size: 1.4rem; margin-bottom: 0.75rem;">Achievements System</h3>
-          <p class="text-dim" style="margin-bottom: 1.25rem;">Gamification to motivate consistent tracking and habit formation with 14 unique rewards.</p>
-          <ul class="feature-list">
+      <article class="feat reveal">
+        <span class="feat__n mono up">03</span>
+        <h3 class="feat__title">Achievements System</h3>
+        <div class="feat__body">
+          <p>Gamification to motivate consistent tracking and habit formation with 14 unique rewards.</p>
+          <ul>
             <li><strong>Achievement Grid:</strong> 14 unlockable badges with beautiful animations</li>
             <li><strong>Visual Feedback:</strong> Locked achievements appear grayed out, unlocked ones glow with gold accents</li>
             <li><strong>Confetti Celebrations:</strong> Explosive confetti animation when you unlock a new achievement</li>
             <li><strong>Detail View:</strong> Bottom sheet with descriptions, large icons, and share capabilities</li>
           </ul>
         </div>
-      </div>
+      </article>
     </section>
 
-    <!-- Privacy Notice -->
-    <section class="privacy-notice" style="margin-top: 5rem;">
-      <div class="notice-card">
-        <div class="notice-icon">
-          <Icon name="mdi:shield-check" width="32" height="32" />
-        </div>
-        <div>
-          <h3 class="text-accent" style="margin-bottom: 1rem;">Privacy is Our Priority</h3>
-          <p class="text-dim" style="margin-bottom: 1rem;">
+    <section class="app-sec privacy" id="privacy">
+      <div class="privacy__grid">
+        <div class="reveal">
+          <h2 class="privacy__title wide">Privacy is Our Priority</h2>
+          <p class="privacy__lede">
             Felisca is built as a completely offline-first app. Your emotions, focus levels, and energy data are personal and should never leave your device.
           </p>
-          <div style="display: flex; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap;">
-            <div>
-              <p class="text-sm text-accent" style="font-weight: 600; margin-bottom: 0.25rem;">✓ Local Storage</p>
-              <p class="text-sm text-dim">Everything stays on your device</p>
-            </div>
-            <div>
-              <p class="text-sm text-accent" style="font-weight: 600; margin-bottom: 0.25rem;">✓ No Sync Required</p>
-              <p class="text-sm text-dim">No cloud, no tracking, no servers</p>
-            </div>
-            <div>
-              <p class="text-sm text-accent" style="font-weight: 600; margin-bottom: 0.25rem;">✓ Biometric Security</p>
-              <p class="text-sm text-dim">FaceID or Fingerprint protection</p>
-            </div>
-          </div>
-          <a href="/apps/felisca/privacy-policy" class="read-policy-link" style="display: inline-flex; margin-top: 1.5rem;">
-            Read our full Privacy Policy
-            <Icon name="mdi:arrow-right" width="16" height="16" />
-          </a>
+          <a href="/apps/felisca/privacy-policy" class="privacy__link mono up">Read our full Privacy Policy →</a>
         </div>
+        <ul class="privacy__list">
+          <li class="reveal"><span class="mono up">01</span><div><h3>Local Storage</h3><p>Everything stays on your device</p></div></li>
+          <li class="reveal"><span class="mono up">02</span><div><h3>No Sync Required</h3><p>No cloud, no tracking, no servers</p></div></li>
+          <li class="reveal"><span class="mono up">03</span><div><h3>Biometric Security</h3><p>FaceID or Fingerprint protection</p></div></li>
+        </ul>
       </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="cta-section" style="margin-top: 5rem; margin-bottom: 3rem; text-align: center;">
-      <h2 class="text-accent" style="font-size: 1.5rem; margin-bottom: 2rem;">Start Tracking Your Wellbeing</h2>
-      <p class="text-dim" style="margin-bottom: 2rem;">
-        Download Felisca today and take control of your mental health with complete privacy.
-      </p>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="https://play.google.com/store/apps/details?id=com.pasichdev.felisca" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          <Icon name="mdi:google-play" style="margin-right: 0.5rem;" />
+    <section class="app-cta">
+      <h2 class="wide">Start Tracking Your Wellbeing</h2>
+      <p>Download Felisca today and take control of your mental health with complete privacy.</p>
+      <div class="app-cta-row">
+        <a href={playUrl} target="_blank" rel="noopener noreferrer" class="app-btn">
+          <Icon name="mdi:google-play" />
           Download on Google Play
         </a>
-        <a href="/apps/felisca/privacy-policy" class="btn btn-secondary">
+        <a href="/apps/felisca/privacy-policy" class="app-btn app-btn--ghost">
           Privacy Policy
         </a>
       </div>
     </section>
+
+    <nav class="app-links mono up" aria-label="Felisca links">
+      <a href="/apps/felisca/privacy-policy">Privacy Policy →</a>
+    </nav>
   </div>
+  <AppMotion />
 </BaseLayout>
 
 <style>
-  /* Hero Section */
-  .hero-section {
-    padding: 4rem 0;
-    text-align: center;
+  .app--felisca {
+    --brand: #11131b;
+    --brand-ink: #e6e8f1;
+    --brand-accent: #36d39b;
+    --name-fit: 6.8;
+    --name-fit-sm: 13;
   }
-
-  .hero-content {
-    animation: slideUp 0.6s ease-out;
-  }
-
-  .hero-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2rem;
-    color: var(--color-accent);
-    transition: all 0.3s ease;
-  }
-
-  .hero-icon:hover {
-    transform: translateY(-8px) rotate(5deg);
-  }
-
-  .hero-icon svg {
-    color: inherit;
-  }
-
-  .coming-soon-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-accent);
-    transition: all 0.3s ease;
-  }
-
-  .coming-soon-badge:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--color-accent);
-  }
-
-  /* Section Title */
-  .section-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 2.5rem;
-    text-align: center;
-  }
-
-  /* Uniqueness Section */
-  .uniqueness-section {
-    background: rgba(255, 255, 255, 0.02);
-    padding: 2.5rem;
-    border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .uniqueness-card {
-    margin-top: 1.5rem;
-  }
-
-  .key-advantages {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .advantage-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .advantage-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .advantage-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 2px;
-    flex-shrink: 0;
-    color: var(--color-accent);
-    transition: all 0.3s ease;
-  }
-
-  .advantage-item:hover .advantage-icon {
-    background: var(--color-accent);
-    color: var(--color-bg);
-  }
-
-  .advantage-item h4 {
-    margin-bottom: 0.25rem;
-    font-size: 1rem;
-  }
-
-  /* Screenshots Gallery */
-  .screenshots-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .screenshot-item {
-    text-align: center;
-    transition: all 0.3s ease;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .screenshot-item:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .screenshot-img {
-    width: 100%;
-    height: auto;
-    border-radius: 2px;
-    margin-bottom: 1rem;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
-    transition: all 0.3s ease;
-  }
-
-  .screenshot-item:hover .screenshot-img {
-    filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.3));
-  }
-
-  .screenshot-item h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-  }
-
-  /* Features Detailed */
-  .features-detailed {
-    margin-bottom: 3rem;
-  }
-
-  .feature-detail-card {
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    margin-bottom: 2rem;
-    align-items: flex-start;
-  }
-
-  .feature-detail-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.1);
-    transform: translateX(4px);
-  }
-
-  .feature-number-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    background: var(--color-accent);
-    color: var(--color-bg);
-    border-radius: 2px;
-    flex-shrink: 0;
-    transition: all 0.3s ease;
-  }
-
-  .feature-detail-card:hover .feature-number-icon {
-    transform: scale(1.1) rotate(-5deg);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
-
-  .feature-content {
-    flex: 1;
-  }
-
-  .feature-content h3 {
-    margin-bottom: 0.75rem;
-  }
-
-  .feature-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .feature-list li {
-    padding: 0.5rem 0;
-    padding-left: 1.5rem;
-    position: relative;
-    line-height: 1.7;
-  }
-
-  .feature-list li:before {
-    content: "▸";
-    position: absolute;
-    left: 0;
-    color: var(--color-accent);
-    font-weight: bold;
-  }
-
-  /* Privacy Notice */
-  .privacy-notice {
-    margin-bottom: 3rem;
-  }
-
-  .notice-card {
-    display: flex;
-    gap: 2rem;
-    padding: 2.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-left: 3px solid var(--color-accent);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .notice-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-left-color: var(--color-accent);
-  }
-
-  .notice-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 2px;
-    flex-shrink: 0;
-    color: var(--color-accent);
-    transition: all 0.3s ease;
-  }
-
-  .notice-card:hover .notice-icon {
-    background: var(--color-accent);
-    color: var(--color-bg);
-    transform: scale(1.1);
-  }
-
-  .read-policy-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-accent);
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    text-decoration: none;
-  }
-
-  .read-policy-link:hover {
-    gap: 0.75rem;
-    text-decoration: underline;
-  }
-
-  /* Call to Action */
-  .cta-section {
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  /* Buttons */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.875rem 2rem;
-    border-radius: 2px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  .btn-primary {
-    background: var(--color-accent);
-    color: var(--color-bg);
-  }
-
-  .btn-primary:hover {
-    opacity: 0.85;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--color-accent);
-    border: 2px solid var(--color-accent);
-  }
-
-  .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Flex utilities */
-  .flex {
-    display: flex;
-  }
-
-  .gap-4 {
-    gap: 1rem;
-  }
-
-  .justify-center {
-    justify-content: center;
-  }
-
-  .flex-wrap {
-    flex-wrap: wrap;
-  }
-
-  /* Animations */
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .section-title {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero-section {
-      padding: 2rem 0;
-    }
-
-    .uniqueness-section {
-      padding: 1.5rem;
-    }
-
-    .key-advantages {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .screenshots-gallery {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .feature-detail-card {
-      flex-direction: column;
-      gap: 1.5rem;
-      padding: 1.5rem;
-    }
-
-    .feature-number-icon {
-      width: 50px;
-      height: 50px;
-    }
-
-    .cta-section {
-      padding: 1.5rem;
-    }
-
-    .btn {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.875rem;
-    }
-
-    .gap-4 {
-      gap: 0.75rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .hero-section {
-      padding: 1.5rem 0;
-    }
-
-    .hero-content h1 {
-      font-size: 1.8rem;
-    }
-
-    .hero-icon {
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .screenshots-gallery {
-      grid-template-columns: 1fr;
-    }
-
-    .screenshot-item {
-      padding: 1rem;
-    }
-  }
+  /* Dark brand on a dark page: give the panels an edge, and the name its mint */
+  .app--felisca :global(.app-hero), .app--felisca :global(.app-cta) { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07); }
+  .app--felisca :global(.app-hero__name), .app--felisca :global(.app-cta h2) { color: #36d39b; }
+  .app--felisca :global(.app-btn) { --brand-ink: #36d39b; }
+  .app--felisca :global(.app-shot) { box-shadow: 0 0 0 1px rgba(255, 255, 255, .09), 0 40px 80px rgba(0, 0, 0, .55); }
+
+  .metric { white-space: nowrap; }
+  .metric::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; vertical-align: 1px; }
+  .metric--focus::before { background: #36d39b; }
+  .metric--energy::before { background: #fbbf24; }
+  .metric--anxiety::before { background: #f87171; }
+
+  .privacy__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(30px, 6vw, 100px); padding-top: 40px; border-top: 1px solid var(--color-border); }
+  .privacy__title { font-size: clamp(34px, 4.4vw, 72px); font-weight: 800; line-height: .92; }
+  .privacy__lede { max-width: 44ch; margin-top: 22px; font-size: 18px; }
+  .privacy__link { display: inline-block; margin-top: 28px; color: var(--brand-accent); }
+  .privacy__link:hover { color: var(--color-txt-main); }
+  .privacy__list { list-style: none; border-top: 1px solid var(--color-border); }
+  .privacy__list li { display: grid; grid-template-columns: 50px 1fr; gap: 16px; padding: 24px 0; border-bottom: 1px solid var(--color-border); }
+  .privacy__list .mono { color: var(--brand-accent); padding-top: 6px; }
+  .privacy__list h3 { font-size: 24px; font-weight: 700; }
+  .privacy__list p { margin-top: 4px; }
+  @media (max-width: 900px) { .privacy__grid { grid-template-columns: 1fr; } }
 </style>
